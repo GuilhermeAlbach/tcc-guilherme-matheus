@@ -1,0 +1,139 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Cliente | Editar {% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Cliente
+                        <small>Editar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Cliente</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/cliente/salvareditar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="id_cliente">Código</label>
+                                <input type="number" class="form-control" id="id_cliente" name="id_cliente" readonly value="{{ linha['id_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Nome do Cliente" required value="{{ linha['nome_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Cidade</label>
+                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Nome do Cliente" required value="{{ linha['cidade_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Endereço</label>
+                                <input type="text" class="form-control" id="endereço_cliente" name="endereço_cliente" placeholder="Nome do Cliente" value="{{ linha['endereço_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="cpf_cliente">CPF</label>
+                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Nome do Cliente" value="{{ linha['cpf_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone_cliente">Telefone</label>
+                                <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Nome do Cliente" value="{{ linha['telefone_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Sexo</label><br>
+                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required value="{{ linha['sexp_cliente'] }}">
+                                Masculino<br>
+                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required value="{{ linha['sexo_cliente'] }}">
+                                Feminino
+                            </div>
+                            <div class="form-group">
+                                <label for="data_nascimento_cliente">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nascimento_cliente" name="data_nascimento_cliente" placeholder="Nome do Cliente" required value="{{ linha['data_nascimento_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="observacao_cliente">Observação</label>
+                                <input type="text" class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Nome do Cliente" value="{{ linha['observacao_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Usuario</label>
+                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome do Cliente" value="{{ linha['usuario_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Senha</label>
+                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Nome do Cliente" value="{{ linha['senha_cliente'] }}">
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem,
+                            onClosed: function(){
+                                document.location = "/cliente";
+                            }
+                        });
+
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

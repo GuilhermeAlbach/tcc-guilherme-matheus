@@ -1,0 +1,130 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}|  Valores de Referência | Cadastrar{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1> Valores de Referência
+                        <small>Editar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active"> Valores de Referência</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/valorreferencia/salvareditar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="id_valorreferencia">Código</label>
+                                <input type="number" class="form-control" id="id_valorreferencia" name="id_valorreferencia" readonly value="{{ linha['id_valorreferencia'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exame_valorreferencia">Nome</label>
+                                <input type="text" class="form-control" id="exame_valorreferencia" name="exame_valorreferencia" placeholder="Nome do Convenio" required value="{{ linha['exame_valorreferencia'] }}">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="valorreferencia">CNPJ</label>
+                                <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="CNPJ do Convenio" value="{{ linha['valorreferencia'] }}">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="valorreferencia_min">Responsável</label>
+                                <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Responsável do Convenio" value="{{ linha['valorreferencia_min'] }}">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="valorreferencia_max">Nome</label>
+                                <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Telefone do Convenio" required value="{{ linha['valorreferencia_max'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_min">Nome</label>
+                                <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Telefone do Convenio" required value="{{ linha['idade_min'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_max">Nome</label>
+                                <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Telefone do Convenio" required value="{{ linha['idade_max'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo">Nome</label>
+                                <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Telefone do Convenio" required value="{{ linha['sexo'] }}">
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem,
+                            onClosed: function(){
+                                document.location = "/valorreferencia";
+                            }
+                        });
+
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

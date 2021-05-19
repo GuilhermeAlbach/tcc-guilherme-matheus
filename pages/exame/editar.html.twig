@@ -1,0 +1,137 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Exame | Cadastrar{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Exame
+                        <small>Editar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Exame</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/tipo/salvareditar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="id">Código</label>
+                                <input type="number" class="form-control" id="id" name="id" readonly value="{{ linha['id'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome_exame" placeholder="Nome do Tipo" required value="{{ linha['nome_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo_exame">Sexo</label>
+                                <select class="form-control" name="sexo_exame" id="sexo_exame">
+                                    <option value="" selected disabled >Selecione o Sexo</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Ambos">Ambos</option>       
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="requisicao_exame">Requisição</label>
+                                <input type="text" class="form-control" id="requisicao_exame" name="requisicao_exame" placeholder="Nome do Tipo" required value="{{ linha['requisicao_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="tempo_exame">Tempo</label>
+                                <input type="text" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Nome do Tipo" required value="{{ linha['tempo_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="unidademedida_exame">Unidade de Medida</label>
+                                <input type="text" class="form-control" id="unidademedida_exame" name="unidademedida_exame" placeholder="Nome do Tipo" required value="{{ linha['unidademedida_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="material_exame">Material</label>
+                                <input type="text" class="form-control" id="material_exame" name="material_exame" placeholder="Nome do Tipo" required value="{{ linha['material_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="metodo_exame">Metodo</label>
+                                <input type="text" class="form-control" id="metodo_exame" name="metodo_exame" placeholder="Nome do Tipo" required value="{{ linha['metodo_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="bancada_exame">Bancada</label>
+                                <input type="text" class="form-control" id="bancada_exame" name="bancada_exame" placeholder="Nome do Tipo" required value="{{ linha['bancada_exame'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="descricao_exame">Descrição</label>
+                                <input type="text" class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Nome do Tipo" required value="{{ linha['descricao_exame'] }}">
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem,
+                            onClosed: function(){
+                                document.location = "/tipo";
+                            }
+                        });
+
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

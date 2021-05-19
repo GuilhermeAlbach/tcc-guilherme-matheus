@@ -1,0 +1,121 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %} | Cliente | Listagem{% endblock %}
+{% block stylesheet %}
+    <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Cliente
+                        <small>Listagem</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Cliente</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+                <table id="grid-data" class="table table-condensed table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th data-column-id="id" >Código</th>
+                        <th data-column-id="nome_cliente" data-order="desc" data-sortable="true">Nome</th>
+                        <th data-column-id="cidade_cliente" data-order="desc" data-sortable="true">Cidade</th>
+                        <th data-column-id="endereço_cliente" data-order="desc" data-sortable="true">Endereço</th>
+                        <th data-column-id="cpf_cliente" data-order="desc" data-sortable="true">CPF</th>
+                        <th data-column-id="telefone_cliente" data-order="desc" data-sortable="true">Telefone</th>
+                        <th data-column-id="sexo_cliente" data-order="desc" data-sortable="true">Sexo</th>
+                        <th data-column-id="data_nascimento_cliente" data-order="desc" data-sortable="true">Data de Nascimento</th>
+                        <th data-column-id="observacao_cliente" data-order="desc" data-sortable="true">Observação</th>
+                        <th data-column-id="usuario_cliente" data-order="desc" data-sortable="true">Usuário</th>
+                        <th data-column-id="senha_cliente" data-order="desc" data-sortable="true">Senha</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.bootgrid.js"></script>
+    <script src="/dist/js/jquery.bootgrid.fa.js"></script>
+    <script src="/dist/js/iziToast.js"></script>
+    <script src="/dist/js/iziToastExcluir.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        var grid;
+        $(document).ready(function(){
+            grid = $("#grid-data").bootgrid({
+                ajax: true,
+                url: "/cliente/bootgrid",
+                formatters: {
+                    "commands": function(column, row)
+                    {
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_cliente   + "\"><span class=\"fas fa-edit\"></span></button> " +
+                            "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_cliente + "\"><span class=\"fa fa-trash\"></span></button>";
+                    }
+                }
+            }).on("loaded.rs.jquery.bootgrid", function()
+            {
+                grid.find(".command-edit").on("click", function(e)
+                {
+                    document.location = '/cliente/formeditar/' + $(this).data("row-id");
+                }).end().find(".command-delete").on("click", function(e)
+                {
+                    iziToastExcluir($(this).data("row-id"));
+                });
+            });
+        });
+
+
+        function excluir(id_cliente){
+            $.post(
+                "/cliente/excluir",
+                { id: id },
+                function( data ) {
+                    if (data.status==0){
+                        iziToast.error({
+                            message: data.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: data.mensagem
+                        });
+                        grid.bootgrid("reload");
+                    }
+                },
+                "json"
+            );
+        }
+    </script>
+
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

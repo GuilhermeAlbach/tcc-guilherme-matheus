@@ -1,0 +1,115 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %} | convenio | Listagem{% endblock %}
+{% block stylesheet %}
+    <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>convenio
+                        <small>Listagem</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">convenio</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+                <table id="grid-data" class="table table-condensed table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th data-column-id="id_convenio" >Código</th>
+                        <th data-column-id="nome_convenio" data-order="desc" data-sortable="true">Nome</th>
+                        <th data-column-id="cnpj_convenio" data-sortable="true">CNPJ</th>
+                        <th data-column-id="responsavel_convenio" data-sortable="true">Responsável</th>
+                        <th data-column-id="telefone_convenio" data-sortable="false">Telefone</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.bootgrid.js"></script>
+    <script src="/dist/js/jquery.bootgrid.fa.js"></script>
+    <script src="/dist/js/iziToast.js"></script>
+    <script src="/dist/js/iziToastExcluir.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        var grid;
+        $(document).ready(function(){
+            grid = $("#grid-data").bootgrid({
+                ajax: true,
+                url: "/convenio/bootgrid",
+                formatters: {
+                    "commands": function(column, row)
+                    {
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_convenio   + "\"><span class=\"fas fa-edit\"></span></button> " +
+                            "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_convenio + "\"><span class=\"fa fa-trash\"></span></button>";
+                    }
+                }
+            }).on("loaded.rs.jquery.bootgrid", function()
+            {
+                grid.find(".command-edit").on("click", function(e)
+                {
+                    document.location = '/convenio/formeditar/' + $(this).data("row-id");
+                }).end().find(".command-delete").on("click", function(e)
+                {
+                    iziToastExcluir($(this).data("row-id"));
+                });
+            });
+        });
+
+
+        function excluir(id_convenio){
+            $.post(
+                "/convenio/excluir",
+                { id_convenio: id_convenio },
+                function( data ) {
+                    if (data.status==0){
+                        iziToast.error({
+                            message: data.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: data.mensagem
+                        });
+                        grid.bootgrid("reload");
+                    }
+                },
+                "json"
+            );
+        }
+    </script>
+
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

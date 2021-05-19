@@ -1,0 +1,113 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Médico | Cadastrar{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Médico
+                        <small>Editar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Médico</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/medico/salvareditar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="id_medico">Código</label>
+                                <input type="number" class="form-control" id="id_medico" name="id_medico" readonly value="{{ linha['id'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nome_medico">Nome do Profissional</label>
+                                <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Nome do Profissional" required value="{{ linha['nome_medico'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="crm_medico">Conselho Regional</label>
+                                <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Conselho Regional do Profissional" required value="{{ linha['crm_medico'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone_medico">Nome</label>
+                                <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Telefone do Profissional" required value="{{ linha['telefone_medico'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="especialidade_medico">Nome</label>
+                                <select class="form-control" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem,
+                            onClosed: function(){
+                                document.location = "/medico";
+                            }
+                        });
+
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

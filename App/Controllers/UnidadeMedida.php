@@ -8,31 +8,31 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Tipo Extends Controller
+class unidademedida Extends Controller
 {
     public function index()
     {
-        echo $this->template->twig->render('tipo/listagem.html.twig');
+        echo $this->template->twig->render('unidademedida/listagem.html.twig');
     }
 
     public function formCadastrar()
     {
-        echo $this->template->twig->render('tipo/cadastrar.html.twig');
+        echo $this->template->twig->render('unidademedida/cadastrar.html.twig');
     }
 
-    public function formEditar($id)
+    public function formEditar($id_unidademedida)
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT * FROM tipo WHERE id=:id";
+        $sql = "SELECT * FROM unidadesMedida WHERE id_unidademedida=:id_unidademedida";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":id", $id);
+        $query->bindParam(":id_unidademedida", $id_unidademedida);
         $resultado = $query->execute();
 
         $linha = $query->fetch();
 
-        echo $this->template->twig->render('tipo/editar.html.twig', compact('linha'));
+        echo $this->template->twig->render('unidademedida/editar.html.twig', compact('linha'));
     }
 
 
@@ -41,14 +41,14 @@ class Tipo Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "INSERT INTO tipo (nome) VALUES (:nome)";
+        $sql = "INSERT INTO unidadesMedida (unidademedida) VALUES (:unidademedida)";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome", $_POST['nome']);
+        $query->bindParam(":unidademedida", $_POST['unidademedida']);
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Tipo cadastrado com sucesso');
+            $this->retornaOK('unidademedida cadastrado com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -58,15 +58,15 @@ class Tipo Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE tipo SET nome=:nome WHERE id=:id";
+        $sql = "UPDATE unidadesMedida SET unidademedida=:unidademedida WHERE id_unidademedida=:id_unidademedida";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome", $_POST['nome']);
-        $query->bindParam(":id", $_POST['id']);
+        $query->bindParam(":unidademedida", $_POST['unidademedida']);
+        $query->bindParam(":id_unidademedida", $_POST['id_unidademedida']);
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Tipo alterado com sucesso');
+            $this->retornaOK('unidademedida alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
@@ -75,10 +75,10 @@ class Tipo Extends Controller
     public function excluir(){
         $db = Conexao::connect();
 
-        $sql = "DELETE FROM tipo WHERE id=:id";
+        $sql = "DELETE FROM unidadesMedida WHERE id_unidademedida=:id_unidademedida";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":id", $_POST['id']);
+        $query->bindParam(":id_unidademedida", $_POST['id_unidademedida']);
         $query->execute();
 
         if ($query->rowCount()==1) {
@@ -92,11 +92,11 @@ class Tipo Extends Controller
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id`, `nome` FROM tipo WHERE 1 ";
+        $sql = "SELECT `id_unidademedida`, `unidademedida` FROM unidadesMedida WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (
-                        nome LIKE '%{$busca}%'
+                        unidademedida LIKE '%{$busca}%'
                         ) ";
         }
 

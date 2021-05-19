@@ -1,0 +1,119 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Valores de Referência | Cadastrar{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Valores de Referência
+                        <small>Cadastrar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Valores de Referência</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/valorreferencia/salvarcadastrar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exame_valorreferencia">Exame</label>
+                                <select class="form-control" id="exame_valorreferencia" name="exame_valorreferencia" required data-live-search="true">
+                                    <option value="" selected disabled>-Exame -</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="valorreferencia">Valor de Referência</label>
+                                <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="Valor de Referência - Fixo">
+                            </div>
+                            <div class="form-group">
+                                <label for="valorreferencia_min">Valor Mínimo</label>
+                                <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Valor de Referência Mínimo">
+                            </div>
+                            <div class="form-group">
+                                <label for="valorreferencia_max">Valor Máximo</label>
+                                <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Valor de Referência Máximo">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_min">Idade Min</label>
+                                <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Idade Min">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_max">Idade Max</label>
+                                <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Idade Max">
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo">Sexo</label>
+                                <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Sexo">
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem
+                        });
+                        $('.jsonForm').trigger("reset");
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
