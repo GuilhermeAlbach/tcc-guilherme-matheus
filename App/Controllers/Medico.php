@@ -17,22 +17,36 @@ class Medico Extends Controller
 
     public function formCadastrar()
     {
-        echo $this->template->twig->render('medico/cadastrar.html.twig');
+        $db = Conexao::connect();
+
+        $sql = "SELECT * FROM especialidades ORDER BY especialidade";
+        $query_especialidades = $db->prepare($sql);
+        $resultado_especialidades = $query_especialidades->execute();
+
+        $especialidades = $query_especialidades->fetchAll();
+
+        echo $this->template->twig->render('medico/cadastrar.html.twig', compact('especialidades'));
     }
 
     public function formEditar($id_medico)
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT * FROM medicos WHERE id_medico=:id_medico";
+        $sql = "SELECT * FROM medicos WHERE id_medico=:id_medico LIMIT 0, 1";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":id_medico)", $id_medico);
+        $query->bindParam(":id_medico", $id_medico);
         $resultado = $query->execute();
 
         $linha = $query->fetch();
 
-        echo $this->template->twig->render('medico/editar.html.twig', compact('linha'));
+        $sql = "SELECT * FROM especialidades ORDER BY especialidade";
+        $query_especialidades = $db->prepare($sql);
+        $resultado_especialidades = $query_especialidades->execute();
+
+        $especialidades = $query_especialidades->fetchAll();
+
+        echo $this->template->twig->render('medico/editar.html.twig', compact('linha', 'especialidades'));
     }
 
 
@@ -75,37 +89,42 @@ class Medico Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Tipo alterado com sucesso');
+            $this->retornaOK('Medico alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM medicos WHERE id_medico=:id_medico";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":id", $_POST['id']);
+        $query->bindParam(":id_medico", $_POST['id_medico']);
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Medico excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir os dados');
-        }
+            $this->retornaErro('Erro ao excluir medico');
+        }    
+    }catch (\PDOException $exception){
+            $this->retornaErro('Tipo não pode ser excluído.');
+    }
     }
 
 
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_medico`, `nome_medico` FROM medicos WHERE 1 ";
+        $sql = "SELECT `id_medico`, `nome_medico`, `crm_medico`, `telefone_medico`, `especialidade` FROM medicos INNER JOIN especialidades ON especialidade_medico = id_especialidade WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (
-                        nome_medico LIKE '%{$busca}%'
+                        nome_medico LIKE '%{$busca}%' OR
+                        especialidade LIKE '%{$busca}%'
                         ) ";
         }
 

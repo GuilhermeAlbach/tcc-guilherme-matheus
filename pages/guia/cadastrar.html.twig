@@ -1,9 +1,10 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Tipo | Cadastrar{% endblock %}
+{% block title %}| Guia | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -11,13 +12,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tipo
+                    <h1>Guia
                         <small>Cadastrar</small></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Tipo</li>
+                        <li class="breadcrumb-item active">Guia</li>
                     </ol>
                 </div>
             </div>
@@ -36,11 +37,46 @@
                 <div class="card card-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/tipo/salvarcadastrar" method="post" class="jsonForm">
+                    <form role="form" action="/guia/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Tipo" required>
+                                <label for="data_guia">Data da Guia</label>
+                                <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{data_guia}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente_guia">Cliente</label>
+                                <select id="cliente_guia" class="form-control select2" name="cliente_guia" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for clientes in clientes %}
+                                        <option value="{{ clientes.id_cliente }}">{{ clientes.nome_cliente }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="medico_guia">Médico</label>
+                                <select id="medico_guia" class="form-control select2" name="medico_guia" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for medicos in medicos %}
+                                        <option value="{{ medicos.id_medico }}">{{ medicos.nome_medico }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="convenio_guia">Convênio</label>
+                                <select id="convenio_guia" class="form-control select2" name="convenio_guia" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for convenios in convenios %}
+                                        <option value="{{ convenios.id_convenio }}">{{ convenios.nome_convenio }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="codigo_guia">Código</label>
+                                <input type="text" class="form-control" id="codigo_guia" name="codigo_guia" placeholder="Nome da guia" required value="{{codigo_guia}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="senha_guia">Senha</label>
+                                <input type="text" class="form-control" id="senha_guia" name="senha_guia" placeholder="Nome da guia" required value="{{senha_guia}}">
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -63,6 +99,7 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
@@ -78,9 +115,12 @@
                         });
                     }else{
                         iziToast.success({
-                            message: d.mensagem
+                            message: d.mensagem,
+                            onClosed: function(){
+                                document.location = "/guia/formcadastrarExame";
+                            }
                         });
-                        $('.jsonForm').trigger("reset");
+
                     }
                 }
 

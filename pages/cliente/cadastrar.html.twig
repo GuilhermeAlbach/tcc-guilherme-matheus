@@ -11,13 +11,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>cliente
+                    <h1>Cliente
                         <small>Cadastrar</small></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">cliente</li>
+                        <li class="breadcrumb-item active">Cliente</li>
                     </ol>
                 </div>
             </div>
@@ -44,19 +44,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="nome">Cidade</label>
-                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Nome do Cliente" required>
+                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Cidade do Cliente" required>
                             </div>
                             <div class="form-group">
-                                <label for="nome">Endereço</label>
-                                <input type="text" class="form-control" id="endereço_cliente" name="endereço_cliente" placeholder="Nome do Cliente" >
+                                <label for="endereco_cliente">Endereço</label>
+                                <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Endereço do Cliente" >
                             </div>
                             <div class="form-group">
                                 <label for="cpf_cliente">CPF</label>
-                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Nome do Cliente" >
+                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="CPF do Cliente" maxlength="14">
                             </div>
                             <div class="form-group">
                                 <label for="telefone_cliente">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Nome do Cliente" >
+                                <input type="tel" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Telefone do Cliente" maxlength="14" >
+                            </div>
+                            <div class="form-group">
+                                <label for="celular_cliente">Telefone</label>
+                                <input type="tel" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Celular do Cliente" maxlength="15" >
                             </div>
                             <div class="form-group">
                                 <label>Sexo</label><br>
@@ -66,20 +70,20 @@
                                 Feminino
                             </div>
                             <div class="form-group">
-                                <label for="data_nascimento_cliente">Data de Nascimento</label>
-                                <input type="date" class="form-control" id="data_nascimento_cliente" name="data_nascimento_cliente" placeholder="Nome do Cliente" required>
+                                <label for="datanascimento_cliente">Data de Nascimento</label>
+                                <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Data de nascimento do Cliente" required>
                             </div>
                             <div class="form-group">
                                 <label for="observacao_cliente">Observação</label>
-                                <input type="text" class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Nome do Cliente" >
+                                <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Observação sobre o Cliente" ></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="nome">Usuario</label>
-                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome do Cliente" >
+                                <label for="usuario_cliente">Usuario</label>
+                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome de usuario do Cliente" value="{{usuario_cliente}}">
                             </div>
                             <div class="form-group">
-                                <label for="nome">Senha</label>
-                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Nome do Cliente" >
+                                <label for="senha_cliente">Senha</label>
+                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Senha do Cliente" value="{{senha_cliente}}" >
                             </div>
                         </div>
 
@@ -103,11 +107,21 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
-    <script>
+    <script>   
         $(document).ready(function(){
+            $(cpf_cliente).inputmask('999.999.999-99');        
+            $('#telefone_cliente').inputmask('(99) 9999-9999');
+            $('#celular_cliente').inputmask('(99) 99999-9999');
+        
+            $('.select2').select2()
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 
@@ -126,7 +140,33 @@
 
             });
         });
-    </script>
+        </script>
+<script>
+        function TestaCPF(cpf_cliente)) {
+            var Soma;
+            var Resto;
+            Soma = 0;   
+        if (cpf_cliente) == "00000000000") return false;
+        
+        for (i=1; i<=9; i++)
+	        Soma = Soma + parseInt(cpf_cliente).substring(i-1, i)) * (11 - i); 
+            Resto = (Soma * 10) % 11;
+        if ((Resto == 10) || (Resto == 11)) 
+	        Resto = 0;
+        if (Resto != parseInt(cpf_cliente).substring(9, 10)) )
+	        return false;
+	        Soma = 0;
+        for (i = 1; i <= 10; i++)
+            Soma = Soma + parseInt(cpf_cliente).substring(i-1, i)) * (12 - i);
+            Resto = (Soma * 10) % 11;
+        if ((Resto == 10) || (Resto == 11)) 
+	        Resto = 0;
+        if (Resto != parseInt(cpf_cliente).substring(10, 11) ) )
+            return false;
+            return true;
+} 
+</script>
+
 {% endblock %}
 
 {% block javascript %}

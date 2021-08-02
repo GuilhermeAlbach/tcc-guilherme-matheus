@@ -48,9 +48,9 @@ class especialidade Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('especialidade cadastrado com sucesso');
+            $this->retornaOK('Especialidade cadastrada com sucesso');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $this->retornaErro('Erro ao inserir especialidade');
         }
     }
 
@@ -66,13 +66,14 @@ class especialidade Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('especialidade alterado com sucesso');
+            $this->retornaOK('Especialidade alterada com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
+        try {
         $db = Conexao::connect();
 
         $sql = "DELETE FROM especialidades WHERE id_especialidade=:id_especialidade";
@@ -82,10 +83,13 @@ class especialidade Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
-        }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            $this->retornaOK('Especialidade excluída com sucesso');
+        }else {
+            $this->retornaErro('Erro ao excluir especialidade');
         }
+    }catch (\PDOException $exception){
+        $this->retornaErro('Tipo não pode ser excluído.');
+}
     }
 
 

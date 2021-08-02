@@ -13,28 +13,27 @@ class Login Extends Controller
         echo $this->template->twig->render('login/login.html.twig');
     }
 
-    public function verificar()
+    public function verificaSenha()
     {
         session_start();
 
         $db = Conexao::connect();
 
-        $login = $_POST['login'];
-        $senha = $_POST['senha'];
+        $user_usuario = $_POST['user_usuario'];
+        $senha_usuario = $_POST['senha_usuario'];
 
-        $sql = "SELECT * FROM usuario WHERE login=:login AND senha=:senha";
+        $sql = "SELECT * FROM usuarios WHERE user_usuario=:user_usuario AND senha_usuario=:senha_usuario";
 
-        $resultados = $db ->prepare($sql);
+        $query = $db ->prepare($sql);
+        $query->bindParam(":user_usuario", $user_usuario);
+        $query->bindParam(":senha_usuario", $senha_usuario);
+        $query->execute();
 
-        $resultados->bindParam(":login", $login);
-        $resultados->bindParam(":senha", $senha);
-        $resultados->execute();
-
-        if($resultados->rowCount()==1){
-            $linha = $resultados->fetch();
+        if($query->rowCount()==1){
+            $linha = $query->fetch();
 
             $_SESSION['liberado'] = true;
-            $_SESSION['id'] = $linha->id; //Código da Pessoa que está logada
+//            $_SESSION['id_usuario'] = $linha->id_usuario; //Código da Pessoa que está logada
             $this->retornaOK('Acesso autorizado.');
 
         }else{

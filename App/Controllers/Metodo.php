@@ -48,7 +48,7 @@ class metodo Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('metodo cadastrado com sucesso');
+            $this->retornaOK('Metodo cadastrado com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -66,27 +66,31 @@ class metodo Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('metodo alterado com sucesso');
+            $this->retornaOK('Metodo alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
-        $db = Conexao::connect();
+        try{
+            $db = Conexao::connect();
 
-        $sql = "DELETE FROM metodos WHERE id_metodo=:id_metodo";
+            $sql = "DELETE FROM metodos WHERE id_metodo=:id_metodo";
 
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_metodo", $_POST['id_metodo']);
-        $query->execute();
+            $query = $db->prepare($sql);
+            $query->bindParam(":id_metodo", $_POST['id_metodo']);
+            $query->execute();
 
-        if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
-        }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Excluído com sucesso');
+            }else{
+                $this->retornaErro('Erro ao excluir os dados');
+            }
+        }catch (\PDOException $exception){
+            $this->retornaErro('Metodo não pode ser excluído.');
         }
-    }
+        }
 
 
     public function bootgrid()

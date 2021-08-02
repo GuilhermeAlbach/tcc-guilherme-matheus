@@ -48,9 +48,9 @@ class material Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('material cadastrado com sucesso');
+            $this->retornaOK('Material cadastrado com sucesso');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $this->retornaErro('Erro ao inserir material');
         }
     }
 
@@ -66,13 +66,14 @@ class material Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('material alterado com sucesso');
+            $this->retornaOK('Material alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM materiais WHERE id_material=:id_material";
@@ -82,11 +83,14 @@ class material Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Material excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            $this->retornaErro('Erro ao excluir material');
         }
+    }catch (\PDOException $exception){
+        $this->retornaErro("Este Material não pode ser excluído");
     }
+}
 
 
     public function bootgrid()

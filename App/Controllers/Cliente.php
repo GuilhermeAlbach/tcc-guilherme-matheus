@@ -17,10 +17,13 @@ class Cliente Extends Controller
 
     public function formCadastrar()
     {
-        echo $this->template->twig->render('cliente/cadastrar.html.twig');
+        $usuario_cliente = rand();
+        $senha_cliente   = uniqid("");
+
+        echo $this->template->twig->render('cliente/cadastrar.html.twig', compact('usuario_cliente','senha_cliente'));
     }
 
-    public function formEditar($id)
+    public function formEditar($id_cliente)
     {
         $db = Conexao::connect();
 
@@ -41,26 +44,30 @@ class Cliente Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereço_cliente,cpf_cliente,telefone_cliente,sexo_cliente,data_nascimento_cliente,observacao_cliente,usuario_cliente,senha_cliente) 
-                             VALUES (:nome_cliente,:cidade_cliente,:endereço_cliente,:cpf_cliente,:telefone_cliente,:sexo_cliente,:data_nascimento_cliente,:observacao_cliente,:usuario_cliente,:senha_cliente)";
+        $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,
+                            telefone_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
+                            usuario_cliente,senha_cliente) 
+                VALUES (:nome_cliente,:cidade_cliente,:endereco_cliente,:cpf_cliente,:telefone_cliente,
+                        :sexo_cliente,:datanascimento_cliente,:observacao_cliente,:usuario_cliente,
+                        :senha_cliente)";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome_cliente"           , $_POST['nome_cliente']);
-        $query->bindParam(":cidade_cliente"         , $_POST['cidade_cliente']);
-        $query->bindParam(":endereço_cliente"       , $_POST['endereço_cliente']);
-        $query->bindParam(":cpf_cliente"            , $_POST['cpf_cliente']);
-        $query->bindParam(":telefone_cliente"       , $_POST['telefone_cliente']);
-        $query->bindParam(":sexo_cliente"           , $_POST['sexo_cliente']);
-        $query->bindParam(":data_nascimento_cliente", $_POST['data_nascimento_cliente']);
-        $query->bindParam(":observacao_cliente"     , $_POST['observacao_cliente']);
-        $query->bindParam(":usuario_cliente"        , $_POST['usuario_cliente']);
-        $query->bindParam(":senha_cliente"          , $_POST['senha_cliente']);
+        $query->bindParam(":nome_cliente"          , $_POST['nome_cliente']);
+        $query->bindParam(":cidade_cliente"        , $_POST['cidade_cliente']);
+        $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
+        $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
+        $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
+        $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
+        $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
+        $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);
+        $query->bindParam(":usuario_cliente"       , $_POST['usuario_cliente']);
+        $query->bindParam(":senha_cliente"         , $_POST['senha_cliente']);
         $query->execute();
 
         if ($query->rowCount()==1) {
             $this->retornaOK('Cliente cadastrado com sucesso');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $this->retornaErro('Erro ao inserir cliente');
         }
     }
 
@@ -68,11 +75,23 @@ class Cliente Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE clientes SET nome_cliente=:nome_cliente WHERE id_cliente=:id_cliente";
+        $sql = "UPDATE clientes SET nome_cliente=:nome_cliente, endereco_cliente=:endereco_cliente, 
+                        cpf_cliente=:cpf_cliente, telefone_cliente=:telefone_cliente, senha_cliente=:senha_cliente,
+                        sexo_cliente=:sexo_cliente, datanascimento_cliente=:datanascimento_cliente, 
+                        observacao_cliente=:observacao_cliente, usuario_cliente=:usuario_cliente 
+                WHERE id_cliente=:id_cliente";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome_cliente", $_POST['nome_cliente']);
-        $query->bindParam(":id_cliente"  , $_POST['id_cliente']);
+        $query->bindParam(":nome_cliente"          , $_POST['nome_cliente']);
+        $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
+        $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
+        $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
+        $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
+        $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
+        $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);
+        $query->bindParam(":usuario_cliente"       , $_POST['usuario_cliente']);
+        $query->bindParam(":senha_cliente"         , $_POST['senha_cliente']);
+        $query->bindParam(":id_cliente"            , $_POST['id_cliente']);
         $query->execute();
 
         if ($query->rowCount()==1) {
@@ -92,9 +111,9 @@ class Cliente Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Cliente excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            $this->retornaErro('Erro ao excluir cliente');
         }
     }
 
@@ -102,7 +121,7 @@ class Cliente Extends Controller
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_cliente`, `nome_cliente` FROM clientes WHERE 1 ";
+        $sql = "SELECT * FROM clientes WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (

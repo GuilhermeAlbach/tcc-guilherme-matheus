@@ -52,9 +52,9 @@ class Convenio Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Tipo cadastrado com sucesso');
+            $this->retornaOK('Convenio cadastrado com sucesso');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $this->retornaErro('Erro ao inserir convenio');
         }
     }
 
@@ -73,13 +73,14 @@ class Convenio Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('convenio alterado com sucesso');
+            $this->retornaOK('Convenio alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM convenios WHERE id_convenio=:id_convenio";
@@ -89,17 +90,22 @@ class Convenio Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Convenio excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            $this->retornaErro('Erro ao excluir convenio');
         }
+    
+    }catch (\PDOException $exception){
+        $this->retornaErro('Tipo não pode ser excluído.');
+}
     }
+
 
 
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_convenio`, `nome_convenio` FROM convenios WHERE 1 ";
+        $sql = "SELECT `id_convenio`, `nome_convenio`,`cnpj_convenio`,`responsavel_convenio`,`telefone_convenio` FROM convenios WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (

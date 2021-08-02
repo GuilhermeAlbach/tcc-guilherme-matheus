@@ -48,7 +48,7 @@ class Bancada Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('bancada cadastrado com sucesso');
+            $this->retornaOK('Bancada cadastrada com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -66,25 +66,29 @@ class Bancada Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('bancada alterado com sucesso');
+            $this->retornaOK('Bancada alterada com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
-        $db = Conexao::connect();
+        try{
+            $db = Conexao::connect();
 
-        $sql = "DELETE FROM bancadas WHERE id_bancada=:id_bancada";
+            $sql = "DELETE FROM bancadas WHERE id_bancada=:id_bancada";
 
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_bancada", $_POST['id_bancada']);
-        $query->execute();
+            $query = $db->prepare($sql);
+            $query->bindParam(":id_bancada", $_POST['id_bancada']);
+            $query->execute();
 
-        if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
-        }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Bancada excluída com sucesso');
+            }else{
+                $this->retornaErro('Erro ao excluir Bancada');   
+        }
+        }catch (\PDOException $exception){
+            $this->retornaErro('Bancada não pode ser excluída.');
         }
     }
 

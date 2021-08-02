@@ -17,14 +17,36 @@ class Exame Extends Controller
 
     public function formCadastrar()
     {
-        echo $this->template->twig->render('exame/cadastrar.html.twig');
+        $db = Conexao::connect();
+
+        $sql = "SELECT * FROM bancadas ORDER BY bancada";
+        $query_bancadas = $db->prepare($sql);
+        $resultado_bancadas = $query_bancadas->execute();
+
+        $bancadas = $query_bancadas->fetchAll();
+
+
+        $sql = "SELECT * FROM metodos ORDER BY metodo";
+        $query_metodos = $db->prepare($sql);
+        $resultado_metodos = $query_metodos->execute();
+
+        $metodos = $query_metodos->fetchAll();
+
+
+        $sql = "SELECT * FROM materiais ORDER BY material";
+        $query_materiais = $db->prepare($sql);
+        $resultado_materiais = $query_materiais->execute();
+
+        $materiais = $query_materiais->fetchAll();
+
+        echo $this->template->twig->render('exame/cadastrar.html.twig', compact('bancadas','metodos','materiais'));
     }
 
     public function formEditar($id_exame)
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT * FROM exames WHERE id_exame=:id_exame";
+        $sql = "SELECT * FROM exames WHERE id_exame=:id_exame LIMIT 0, 1";
 
         $query = $db->prepare($sql);
         $query->bindParam(":id_exame", $id_exame);
@@ -32,7 +54,25 @@ class Exame Extends Controller
 
         $linha = $query->fetch();
 
-        echo $this->template->twig->render('exame/editar.html.twig', compact('linha'));
+        $sql = "SELECT * FROM bancadas ORDER BY bancada";
+        $query_bancadas = $db->prepare($sql);
+        $resultado_bancadas = $query_bancadas->execute();
+
+        $bancadas = $query_bancadas->fetchAll();
+
+        $sql = "SELECT * FROM metodos ORDER BY metodo";
+        $query_metodos = $db->prepare($sql);
+        $resultado_metodos = $query_metodos->execute();
+
+        $metodos = $query_metodos->fetchAll();
+
+        $sql = "SELECT * FROM materiais ORDER BY material";
+        $query_materiais = $db->prepare($sql);
+        $resultado_materiais = $query_materiais->execute();
+
+        $materiais = $query_materiais->fetchAll();
+
+        echo $this->template->twig->render('exame/editar.html.twig', compact('linha', 'bancadas','metodos','materiais'));
     }
 
 
@@ -42,26 +82,26 @@ class Exame Extends Controller
         $db = Conexao::connect();
 
         $sql = "INSERT INTO exames(nome_exame, sexo_exame, requisicao_exame, tempo_exame, 
-        undidade_exame, material_exame, metodo_exame, bancada_exame, descricao_exame) 
-                VALUES (:nome_exame, :sexo_exame, :requisicao_exame, :tempo_exame, 
-        :unidademedida_exame, :material_exame, :metodo_exame, :bancada_exame, :descricao_exame)";
+        material_exame, metodo_exame, bancada_exame, descricao_exame, preco_exame) 
+                VALUES (:nome_exame, :sexo_exame, :requisicao_exame, :tempo_exame,
+        :material_exame, :metodo_exame, :bancada_exame, :descricao_exame, :preco_exame)";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome_exame"         , $_POST['nome_exame']);
-        $query->bindParam(":sexo_exame"         , $_POST['sexo_exame']);
-        $query->bindParam(":requisicao_exame"   , $_POST['requisicao_exame']);
-        $query->bindParam(":tempo_exame"        , $_POST['tempo_exame']);
-        $query->bindParam(":unidademedida_exame", $_POST['unidademedida_exame']);
-        $query->bindParam(":material_exame"     , $_POST['material_exame']);
-        $query->bindParam(":metodo_exame"       , $_POST['metodo_exame']);
-        $query->bindParam(":bancada_exame"      , $_POST['bancada_exame']);
-        $query->bindParam(":descricao_exame"    , $_POST['descricao_exame']);
+        $query->bindParam(":nome_exame"      , $_POST['nome_exame']);
+        $query->bindParam(":sexo_exame"      , $_POST['sexo_exame']);
+        $query->bindParam(":requisicao_exame", $_POST['requisicao_exame']);
+        $query->bindParam(":tempo_exame"     , $_POST['tempo_exame']);
+        $query->bindParam(":material_exame"  , $_POST['material_exame']);
+        $query->bindParam(":metodo_exame"    , $_POST['metodo_exame']);
+        $query->bindParam(":bancada_exame"   , $_POST['bancada_exame']);
+        $query->bindParam(":descricao_exame" , $_POST['descricao_exame']);
+        $query->bindParam(":preco_exame"     , $_POST['preco_exame']);
         $query->execute();
 
         if ($query->rowCount()==1) {
             $this->retornaOK('Exame cadastrado com sucesso');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $this->retornaErro('Erro ao inserir exame');
         }
     }
 
@@ -69,23 +109,22 @@ class Exame Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE exames SET nome_exame=:nome_exame,sexo_exame=:sexo_exame,
-                    requisicao_exame=:requisicao_exame,tempo_exame=:tempo_exame,
-                    unidademedida_exame=:unidademedida_exame,material_exame=:material_exame,
-                    metodo_exame=:metodo_exame,bancada_exame=:bancada_exame,descricao_exame=:descricao_exame 
+        $sql = "UPDATE exames SET nome_exame=:nome_exame, sexo_exame=:sexo_exame, preco_exame=:preco_exame,
+                    requisicao_exame=:requisicao_exame, tempo_exame=:tempo_exame,material_exame=:material_exame,
+                    metodo_exame=:metodo_exame, bancada_exame=:bancada_exame, descricao_exame=:descricao_exame 
                 WHERE id_exame=:id_exame";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":nome_exame"         , $_POST['nome_exame']);
-        $query->bindParam(":sexo_exame"         , $_POST['sexo_exame']);
-        $query->bindParam(":requisicao_exame"   , $_POST['requisicao_exame']);
-        $query->bindParam(":tempo_exame"        , $_POST['tempo_exame']);
-        $query->bindParam(":unidademedida_exame", $_POST['unidademedida_exame']);
-        $query->bindParam(":material_exame"     , $_POST['material_exame']);
-        $query->bindParam(":metodo_exame"       , $_POST['metodo_exame']);
-        $query->bindParam(":bancada_exame"      , $_POST['bancada_exame']);
-        $query->bindParam(":descricao_exame"    , $_POST['descricao_exame']);
-        $query->bindParam(":id_exame"           , $_POST['id_exame']);
+        $query->bindParam(":nome_exame"      , $_POST['nome_exame']);
+        $query->bindParam(":sexo_exame"      , $_POST['sexo_exame']);
+        $query->bindParam(":requisicao_exame", $_POST['requisicao_exame']);
+        $query->bindParam(":tempo_exame"     , $_POST['tempo_exame']);
+        $query->bindParam(":material_exame"  , $_POST['material_exame']);
+        $query->bindParam(":metodo_exame"    , $_POST['metodo_exame']);
+        $query->bindParam(":bancada_exame"   , $_POST['bancada_exame']);
+        $query->bindParam(":descricao_exame" , $_POST['descricao_exame']);
+        $query->bindParam(":preco_exame"     , $_POST['preco_exame']);
+        $query->bindParam(":id_exame"        , $_POST['id_exame']);
         $query->execute();
 
         if ($query->rowCount()==1) {
@@ -96,6 +135,7 @@ class Exame Extends Controller
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM exames WHERE id_exame=:id_exame";
@@ -105,21 +145,30 @@ class Exame Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Exame excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir os dados');
+            $this->retornaErro('Erro ao excluir Exame');
         }
+    }catch (\PDOException $exception){
+        $this->retornaErro('Tipo não pode ser excluído.');
+}
     }
 
 
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_exame`, `nome_exame` FROM exames WHERE 1 ";
+        $sql = "SELECT `id_exame`, `nome_exame`, `sexo_exame`, `requisicao_exame`, `tempo_exame`, `descricao_exame`, `preco_exame`, `material`, `bancada`, `metodo` FROM exames INNER JOIN materiais ON material_exame = id_material INNER JOIN bancadas ON bancada_exame = id_bancada INNER JOIN metodos ON metodo_exame = id_metodo WHERE 1";
+       // $sql = "SELECT `id_exame`, `nome_exame`, `bancada` FROM exames INNER JOIN bancadas ON bancada_exame = id_bancada WHERE 1";
+       // $sql = "SELECT `id_exame`, `nome_exame`, `metodo` FROM exames INNER JOIN metodos ON metodo_exame = id_metodo WHERE 1";
 
         if ($busca!=''){
             $sql .= " and (
-                        nome_exame LIKE '%{$busca}%'
+                id_exame LIKE '%{$busca}%' OR        
+                nome_exame LIKE '%{$busca}%' OR
+                metodo LIKE '%{$busca}%' OR
+                material LIKE '%{$busca}%' OR
+                bancada LIKE '%{$busca}%'
                         ) ";
         }
 

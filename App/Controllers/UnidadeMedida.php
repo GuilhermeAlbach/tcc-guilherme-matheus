@@ -48,7 +48,7 @@ class unidademedida Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('unidademedida cadastrado com sucesso');
+            $this->retornaOK('Unida de medida cadastrada com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -66,13 +66,14 @@ class unidademedida Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('unidademedida alterado com sucesso');
+            $this->retornaOK('Unida de medida alterada com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM unidadesMedida WHERE id_unidademedida=:id_unidademedida";
@@ -86,7 +87,10 @@ class unidademedida Extends Controller
         }else{
             $this->retornaErro('Erro ao excluir os dados');
         }
+    }catch (\PDOException $exception){
+        $this->retornaErro('Unidade de Medida não pode ser excluída.');
     }
+}
 
 
     public function bootgrid()

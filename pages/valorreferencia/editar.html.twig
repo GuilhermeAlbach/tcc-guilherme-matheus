@@ -4,6 +4,8 @@
 {% block title %}|  Valores de Referência | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -43,38 +45,59 @@
                                 <input type="number" class="form-control" id="id_valorreferencia" name="id_valorreferencia" readonly value="{{ linha['id_valorreferencia'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="exame_valorreferencia">Nome</label>
-                                <input type="text" class="form-control" id="exame_valorreferencia" name="exame_valorreferencia" placeholder="Nome do Convenio" required value="{{ linha['exame_valorreferencia'] }}">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="valorreferencia">CNPJ</label>
-                                <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="CNPJ do Convenio" value="{{ linha['valorreferencia'] }}">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="valorreferencia_min">Responsável</label>
-                                <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Responsável do Convenio" value="{{ linha['valorreferencia_min'] }}">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="valorreferencia_max">Nome</label>
-                                <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Telefone do Convenio" required value="{{ linha['valorreferencia_max'] }}">
+                                <label for="exame_valorreferencia">Exame</label>
+                                <select id="exame_valorreferencia" class="form-control select2" name="exame_valorreferencia" required   >
+                                    <option value="">- Selecione -</option>
+                                    {% for exames in exames %}
+                                        {% set selected = '' %}
+                                        {% if exames.id_exame == linha['exame_valorreferencia'] %}
+                                            {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="idade_min">Nome</label>
-                                <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Telefone do Convenio" required value="{{ linha['idade_min'] }}">
+                                <label for="unidademedida_valorreferencia">Unidade de Medida</label>
+                                <select id="unidademedida_valorreferencia" class="form-control select2" name="unidademedida_valorreferencia" required   >
+                                    <option value="">- Selecione -</option>
+                                    {% for unidadesmedida in unidadesmedida %}
+                                        {% set selected = '' %}
+                                        {% if unidadesmedida.id_unidademedida == linha['unidademedida_valorreferencia'] %}
+                                            {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ unidadesmedida.id_unidademedida }}" {{ selected }}>{{ unidadesmedida.unidademedida }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="idade_max">Nome</label>
-                                <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Telefone do Convenio" required value="{{ linha['idade_max'] }}">
+                                <label for="valorreferencia">Valor Referência - Fixo</label>
+                                <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="Valor de Referencia Fixo" value="{{ linha['valorreferencia'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="sexo">Nome</label>
-                                <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Telefone do Convenio" required value="{{ linha['sexo'] }}">
+                                <label for="valorreferencia_min">Valor Referência - Mínimo</label>
+                                <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Valor de Referência Mínimo" value="{{ linha['valorreferencia_min'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="valorreferencia_max">Valor Referência - Máximo</label>
+                                <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Valor de Referência Máximo"  value="{{ linha['valorreferencia_max'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_min">Idade Máxima</label>
+                                <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Idade de Referência Mínima"  value="{{ linha['idade_min'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="idade_max">Idade Mínima</label>
+                                <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Idade de Referência Máxima"  value="{{ linha['idade_max'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo">Sexo</label>
+                                <select class="form-control select2" id="sexo" name="sexo" required>
+                                    <option value="" selected disabled>-Selecione-</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                    <option value="Ambos">Ambos</option>
+                                </select>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -97,11 +120,16 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+           
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

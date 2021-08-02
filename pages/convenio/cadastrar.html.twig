@@ -75,11 +75,14 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('#cnpj_convenio').inputmask('99.999.999/9999-99');        
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

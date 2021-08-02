@@ -46,22 +46,16 @@
                                 <label for="nome_convenio">Nome</label>
                                 <input type="text" class="form-control" id="nome_convenio" name="nome_convenio" placeholder="Nome do Convenio" required value="{{ linha['nome_convenio'] }}">
                             </div>
-                        </div>
-                        <div class="card-body">
                             <div class="form-group">
                                 <label for="cnpj_convenio">CNPJ</label>
                                 <input type="text" class="form-control" id="cnpj_convenio" name="cnpj_convenio" placeholder="CNPJ do Convenio" value="{{ linha['cnpj_convenio'] }}">
                             </div>
-                        </div>
-                        <div class="card-body">
                             <div class="form-group">
                                 <label for="responsavel_convenio">Responsável</label>
                                 <input type="text" class="form-control" id="responsavel_convenio" name="responsavel_convenio" placeholder="Responsável do Convenio" value="{{ linha['responsavel_convenio'] }}">
                             </div>
-                        </div>
-                        <div class="card-body">
                             <div class="form-group">
-                                <label for="telefone_convenio">Nome</label>
+                                <label for="telefone_convenio">Telefone</label>
                                 <input type="text" class="form-control" id="telefone_convenio" name="telefone_convenio" placeholder="Telefone do Convenio" required value="{{ linha['telefone_convenio'] }}">
                             </div>
                         </div>
@@ -85,11 +79,14 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('#cnpj_convenio').inputmask('99.999.999/9999-99');        
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

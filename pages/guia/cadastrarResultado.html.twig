@@ -1,0 +1,225 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Resultado | Cadastrar{% endblock %}
+{% block stylesheet %}
+    <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Resultado
+                        <small>Cadastrar</small></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="breadcrumb-item active">Resultado</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Dados da Guia
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="nome_cliente" class="col-sm-2 col-form-label">Cliente</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="nome_cliente" id="nome_cliente" value="{{linha['nome_cliente'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nome_medico" class="col-sm-2 col-form-label">Médico</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="nome_medico" id="nome_medico" value="{{linha['nome_medico'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="nome_convenio" class="col-sm-2 col-form-label">Convênio</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="nome_convenio" id="nome_convenio" value="{{linha['nome_convenio'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="precototal_guia" class="col-sm-2 col-form-label">Valor Total</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="R$ {{linha['precototal_guia'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="data_guia" class="col-sm-2 col-form-label">Data</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="data_guia" id="data_guia" value="{{linha['data_guia'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="codigo_guia" class="col-sm-2 col-form-label">Código da Guia</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="codigo_guia" id="codigo_guia" value="{{linha['codigo_guia'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="senha_guia" class="col-sm-2 col-form-label">Senha da Guia</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="prazo_guiaexame" class="col-sm-2 col-form-label">Prazo da Guia</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <table id="grid-data" class="table table-head-fixed text-nowrap table-hover table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th data-column-id="id_guiaexame" >Código</th>
+                            <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
+                            <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
+                            <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            <a href="exibirOrcamento.php?idAtendimento=<?php echo $_GET['idAtendimento'];?>" class="btn btn-success" style="float: right">Finalizar</a>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.bootgrid.js"></script>
+    <script src="/dist/js/jquery.bootgrid.fa.js"></script>
+    <script src="/dist/js/iziToast.js"></script>
+    <script src="/dist/js/iziToastExcluir.js"></script>
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>  
+        var grid;
+        $(document).ready(function(){
+            $("#exame_guiaexame").on('change', function () {
+                preco_guiaexame = $(this).find(':selected').data('preco-exame');
+                $("#preco_guiaexame").val(preco_guiaexame);
+        });
+            $("#exame_guiaexame").on('change', function () {
+                prazo_guiaexame = $(this).find(':selected').data('prazo-exame');
+                $("#prazo_guiaexame").val(prazo_guiaexame);
+        });
+
+            grid = $("#grid-data").bootgrid({
+                ajax: true,
+                url: "/guia/bootgridcadastrarexame",
+                formatters: {
+                    "commands": function(column, row)
+                    {
+                        return "<button type=\"button\" class=\"btn btn-primary command-cadastro\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button>";
+                    }
+                }
+            }).on("loaded.rs.jquery.bootgrid", function()
+            {
+                grid.find(".command-cadastro").on("click", function(e)
+                {
+                    document.location = '/guia/formeditarExame/' + $(this).data("row-id");
+                }).end().find(".command-delete").on("click", function(e)
+                {
+                    iziToastExcluir($(this).data("row-id"));
+                });
+            });
+        
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem
+                        });
+                    $('.jsonForm').trigger('reset');
+                    grid.bootgrid("reload");
+                    atualizaValorTotal();
+                    }
+                $("#adicionarguia").modal('hide');
+                }
+            });
+        });
+
+        function atualizaValorTotal() {
+            $.getJSON(
+                "guia/AtualizaValor",
+                { id_guia :id_guia},
+                function(data){
+                    $("#precototal_guia").val(data.precototal_guia);
+                },
+            );
+        }
+        atualizaValorTotal();
+
+        function excluir(id_guiaexame){
+            $.post(
+                "/guia/excluirExame",
+                { id_guiaexame: id_guiaexame },
+                function( data ) {
+                    if (data.status==0){
+                        iziToast.error({
+                            message: data.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: data.mensagem
+                        });
+                        grid.bootgrid("reload");
+                        atualizaValorTotal();
+
+                    }
+                },
+                "json"
+            );
+        }
+
+
+
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

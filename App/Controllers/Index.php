@@ -24,7 +24,7 @@ class Index Extends Controller
 
     public function edit($id){
         if ($id==''){
-            $this->errorNotFound('objeto não encontrado');
+            $this->errorNotFound('Objeto não encontrado');
         }
 
         $a = [ 'aaa' => '54654'];

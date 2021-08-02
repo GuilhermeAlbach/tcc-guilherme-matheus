@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Tipo | Cadastrar{% endblock %}
+{% block title %}| Usuário | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -11,13 +11,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tipo
+                    <h1>Usuário
                         <small>Editar</small></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Tipo</li>
+                        <li class="breadcrumb-item active">Usuário</li>
                     </ol>
                 </div>
             </div>
@@ -36,15 +36,39 @@
                 <div class="card card-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/tipo/salvareditar" method="post" class="jsonForm">
+                    <form role="form" action="/usuario/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="id">Código</label>
-                                <input type="number" class="form-control" id="id" name="id" readonly value="{{ linha['id'] }}">
+                                <label for="id_usuario">Código</label>
+                                <input type="number" class="form-control" id="id_usuario" name="id_usuario" readonly value="{{ linha['id_usuario'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Tipo" required value="{{ linha['nome'] }}">
+                                <label for="nome_usuario">Nome</label>
+                                <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" placeholder="Editar nome do usuário" required value="{{ linha['nome_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="cpf_usuario">CPF</label>
+                                <input type="text" class="form-control" id="cpf_usuario" name="cpf_usuario" placeholder="Editar nome do usuário" required value="{{ linha['cpf_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone_usuario">Telefone</label>
+                                <input type="text" class="form-control" id="telefone_usuario" name="telefone_usuario" placeholder="Editar nome do usuário" required value="{{ linha['telefone_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="celular_usuario">Telefone</label>
+                                <input type="text" class="form-control" id="celular_usuario" name="celular_usuario" placeholder="Editar nome do usuário" required value="{{ linha['celular_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="endereco_usuario">Endereço</label>
+                                <input type="text" class="form-control" id="endereco_usuario" name="endereco_usuario" placeholder="Editar nome do usuário" required value="{{ linha['endereco_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="user_usuario">Usuário</label>
+                                <input type="text" class="form-control" id="user_usuario" name="user_usuario" placeholder="Editar nome do usuário" required value="{{ linha['user_usuario'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="senha_usuario">Senha</label>
+                                <input type="text" class="form-control" id="senha_usuario" name="senha_usuario" placeholder="Editar nome do usuário" required value="{{ linha['senha_usuario'] }}">
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -67,11 +91,17 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('#cpf_usuario').inputmask('999.999.999-99');        
+            $('#telefone_usuario').inputmask('(99) 9999-9999');
+            $('#celular_usuario').inputmask('(99) 99999-9999');
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 
@@ -84,7 +114,7 @@
                         iziToast.success({
                             message: d.mensagem,
                             onClosed: function(){
-                                document.location = "/tipo";
+                                document.location = "/usuario";
                             }
                         });
 

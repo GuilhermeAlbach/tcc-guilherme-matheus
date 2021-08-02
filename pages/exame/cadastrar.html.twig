@@ -4,6 +4,7 @@
 {% block title %}| Exame | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -36,11 +37,11 @@
                 <div class="card card-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/tipo/salvarcadastrar" method="post" class="jsonForm">
+                    <form role="form" action="/exame/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="nome_exame">Nome</label>
-                                <input type="text" class="form-control" id="nome_exame" name="nome_exame" placeholder="Nome do Tipo" required>
+                                <input type="text" class="form-control" id="nome_exame" name="nome_exame" placeholder="Nome do exame" required>
                             </div>
                             <div class="form-group">
                                 <label for="sexo_exame">Sexo</label>
@@ -53,31 +54,50 @@
                             </div>
                             <div class="form-group">
                                 <label for="requisicao_exame">Requisição</label>
-                                <input type="text" class="form-control" id="requisicao_exame" name="requisicao_exame" placeholder="Nome do Tipo" required>
+                                <select class="form-control" name="requisicao_exame" id="requisicao_exame">
+                                    <option value="" selected disabled >- Selecione -</option>
+                                    <option value="sim">Sim</option>
+                                    <option value="nao">Não</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="tempo_exame">Tempo</label>
-                                <input type="number" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Nome do Tipo" required>
+                                <input type="number" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Tempo do exame" required>
                             </div>
                             <div class="form-group">
-                                <label for="unidademedida_exame">Unidade de Medida</label>
-                                <input type="text" class="form-control" id="unidademedida_exame" name="unidademedida_exame" placeholder="Nome do Tipo" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nome">Material</label>
-                                <input type="text" class="form-control" id="material_exame" name="material_exame" placeholder="Nome do Tipo" required>
+                                <label for="material_exame">Material</label>
+                                <select id="material_exame" class="form-control select2" name="material_exame" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for materiais in materiais %}
+                                        <option value="{{ materiais.id_material }}">{{ materiais.material }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="metodo_exame">Metodo</label>
-                                <input type="text" class="form-control" id="metodo_exame" name="metodo_exame" placeholder="Nome do Tipo" required>
+                                <select id="metodo_exame" class="form-control select2" name="metodo_exame" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for metodos in metodos %}
+                                        <option value="{{ metodos.id_metodo }}">{{ metodos.metodo }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="bancada_exame">Bancada</label>
-                                <input type="text" class="form-control" id="bancada_exame" name="bancada_exame" placeholder="Nome do Tipo" required>
+                                <select id="bancada_exame" class="form-control select2" name="bancada_exame" required>
+                                    <option value="">- Selecione -</option>
+                                    {% for bancadas in bancadas %}
+                                        <option value="{{ bancadas.id_bancada }}">{{ bancadas.bancada }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="preco_exame">Preço</label>
+                                <input type="number" class="form-control" id="preco_exame" name="preco_exame" placeholder="Preço do exame" required>
                             </div>
                             <div class="form-group">
                                 <label for="descricao_exame">Descrição</label>
-                                <input type="text" class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Nome do Tipo" required>
+                                <input type="text" class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Descrição do exame" required>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -100,11 +120,16 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

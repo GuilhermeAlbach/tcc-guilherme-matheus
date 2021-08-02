@@ -44,46 +44,53 @@
                             </div>
                             <div class="form-group">
                                 <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Nome do Cliente" required value="{{ linha['nome_cliente'] }}">
+                                <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Editar nome do Cliente" required value="{{ linha['nome_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="nome">Cidade</label>
-                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Nome do Cliente" required value="{{ linha['cidade_cliente'] }}">
+                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Editar cidade do Cliente" required value="{{ linha['cidade_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="nome">Endereço</label>
-                                <input type="text" class="form-control" id="endereço_cliente" name="endereço_cliente" placeholder="Nome do Cliente" value="{{ linha['endereço_cliente'] }}">
+                                <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Editar endereço do Cliente" value="{{ linha['endereco_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="cpf_cliente">CPF</label>
-                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Nome do Cliente" value="{{ linha['cpf_cliente'] }}">
+                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" maxlength="14" value="{{ linha['cpf_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="telefone_cliente">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Nome do Cliente" value="{{ linha['telefone_cliente'] }}">
+                                <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Editar telefone do Cliente" maxlength="14" value="{{ linha['telefone_cliente'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="celular_cliente">Telefone</label>
+                                <input type="text" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Editar celular do Cliente" maxlength="15" value="{{ linha['celular_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label>Sexo</label><br>
-                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required value="{{ linha['sexp_cliente'] }}">
-                                Masculino<br>
-                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required value="{{ linha['sexo_cliente'] }}">
-                                Feminino
+                                {% if (clientes.sexo_cliente == 'Masculino') %}{% set checked = "checked" %}{% endif %}
+                                {% if (linha[sexo_cliente] == 'Feminino') %}{% set checked = "checked" %}{% endif %}
+
+                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required {{checked}}>
+                                <label for="Masculino">Masculino</label><br>
+                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required {{checked}}>
+                                <label for="Feminino">Feminino</label>
                             </div>
                             <div class="form-group">
-                                <label for="data_nascimento_cliente">Data de Nascimento</label>
-                                <input type="date" class="form-control" id="data_nascimento_cliente" name="data_nascimento_cliente" placeholder="Nome do Cliente" required value="{{ linha['data_nascimento_cliente'] }}">
+                                <label for="datanascimento_cliente">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Editar data de nascimento do Cliente" required value="{{ linha['datanascimento_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="observacao_cliente">Observação</label>
-                                <input type="text" class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Nome do Cliente" value="{{ linha['observacao_cliente'] }}">
+                                <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Editar Observação sobre o Cliente">{{ linha['observacao_cliente'] }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="nome">Usuario</label>
-                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome do Cliente" value="{{ linha['usuario_cliente'] }}">
+                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Editar nome de usuario do Cliente" value="{{ linha['usuario_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="nome">Senha</label>
-                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Nome do Cliente" value="{{ linha['senha_cliente'] }}">
+                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Editar senha do Cliente" value="{{ linha['senha_cliente'] }}">
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -106,11 +113,19 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            
+            $('#cpf_cliente').inputmask('999.999.999-99');        
+            $('#telefone_cliente').inputmask('(99) 9999-9999');
+            $('#telefone_cliente').inputmask('(99) 99999-9999');
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

@@ -4,6 +4,8 @@
 {% block title %}| Médico | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -40,23 +42,31 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="id_medico">Código</label>
-                                <input type="number" class="form-control" id="id_medico" name="id_medico" readonly value="{{ linha['id'] }}">
+                                <input type="number" class="form-control" id="id_medico" name="id_medico" readonly value="{{ linha['id_medico'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="nome_medico">Nome do Profissional</label>
-                                <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Nome do Profissional" required value="{{ linha['nome_medico'] }}">
+                                <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Editar nome do Profissional" required value="{{ linha['nome_medico'] }}">
                             </div>
                             <div class="form-group">
                                 <label for="crm_medico">Conselho Regional</label>
-                                <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Conselho Regional do Profissional" required value="{{ linha['crm_medico'] }}">
+                                <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Editar conselho Regional do Profissional" required value="{{ linha['crm_medico'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="telefone_medico">Nome</label>
-                                <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Telefone do Profissional" required value="{{ linha['telefone_medico'] }}">
+                                <label for="telefone_medico">Telefone</label>
+                                <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Editar telefone do Profissional" required value="{{ linha['telefone_medico'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="especialidade_medico">Nome</label>
-                                <select class="form-control" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
+                                <label for="especialidade_medico">Especialidade</label>
+                                <select class="form-control select2" id="especialidade_medico" name="especialidade_medico">
+                                <option value="">- Selecione -</option>
+                                    {% for especialidades in especialidades %}
+                                        {% set selected = '' %}
+                                        {% if especialidades.id_especialidade == linha['especialidade_medico'] %}
+                                            {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ especialidades.id_especialidades }}" {{ selected }}>{{ especialidades.especialidade }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -80,11 +90,17 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
+
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

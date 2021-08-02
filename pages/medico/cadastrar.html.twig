@@ -4,6 +4,7 @@
 {% block title %}| Médico | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -52,8 +53,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="especialidade_medico">Especialidade</label>
-                                <select class="form-control" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
+                                <select class="form-control select2" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
                                     <option value="" selected disabled>-Selecione a Especialidade-</option>
+                                    {% for especialidades in especialidades %}
+                                        <option value="{{ especialidades.id_especialidade }}">{{ especialidades.especialidade }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -77,11 +81,17 @@
 {% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
+
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 
