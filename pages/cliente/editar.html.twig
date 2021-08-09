@@ -63,17 +63,22 @@
                                 <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Editar telefone do Cliente" maxlength="14" value="{{ linha['telefone_cliente'] }}">
                             </div>
                             <div class="form-group">
-                                <label for="celular_cliente">Telefone</label>
+                                <label for="celular_cliente">Celular</label>
                                 <input type="text" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Editar celular do Cliente" maxlength="15" value="{{ linha['celular_cliente'] }}">
                             </div>
                             <div class="form-group">
                                 <label>Sexo</label><br>
-                                {% if (clientes.sexo_cliente == 'Masculino') %}{% set checked = "checked" %}{% endif %}
-                                {% if (linha[sexo_cliente] == 'Feminino') %}{% set checked = "checked" %}{% endif %}
+                                {% if (clientes.sexo_cliente == 'Masculino') %}
+                                    {% set checked_M = "checked" %}
+                                    {% set checked_F = "" %}
+                                {% elseif (linha[sexo_cliente] == 'Feminino') %}
+                                    {% set checked_M = "" %}
+                                    {% set checked_F = "checked" %}
+                                {% endif %}
 
-                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required {{checked}}>
+                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required {{checked_M}}>
                                 <label for="Masculino">Masculino</label><br>
-                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required {{checked}}>
+                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required {{checked_F}}>
                                 <label for="Feminino">Feminino</label>
                             </div>
                             <div class="form-group">
@@ -124,7 +129,7 @@
             
             $('#cpf_cliente').inputmask('999.999.999-99');        
             $('#telefone_cliente').inputmask('(99) 9999-9999');
-            $('#telefone_cliente').inputmask('(99) 99999-9999');
+            $('#celular_cliente').inputmask('(99) 99999-9999');
 
             $('.jsonForm').ajaxForm({
                 dataType:  'json',

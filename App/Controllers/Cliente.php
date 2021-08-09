@@ -43,6 +43,9 @@ class Cliente Extends Controller
     public function salvarCadastrar()
     {
         $db = Conexao::connect();
+        if($_POST['TestaCPF'] = $_POST['cpf_cliente']){
+
+        }
 
         $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,
                             telefone_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,

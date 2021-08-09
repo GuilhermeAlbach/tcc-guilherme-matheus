@@ -91,12 +91,16 @@
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
     <script src="/plugins/select2/js/select2.full.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+
 
 {% endblock %}
 
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('#telefone_medico').inputmask('(99) 9999-9999');
+
             $('.select2').select2({
                 theme: 'bootstrap4'
             });

@@ -4,6 +4,7 @@
 {% block title %}| cliente | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -59,7 +60,7 @@
                                 <input type="tel" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Telefone do Cliente" maxlength="14" >
                             </div>
                             <div class="form-group">
-                                <label for="celular_cliente">Telefone</label>
+                                <label for="celular_cliente">Celular</label>
                                 <input type="tel" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Celular do Cliente" maxlength="15" >
                             </div>
                             <div class="form-group">
@@ -109,12 +110,13 @@
     <script src="/dist/js/iziToast.min.js"></script>
     <script src="/plugins/moment/moment.min.js"></script>
     <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
 {% endblock %}
 
 {% block jquery %}
     <script>   
         $(document).ready(function(){
-            $(cpf_cliente).inputmask('999.999.999-99');        
+            $('#cpf_cliente').inputmask('999.999.999-99');
             $('#telefone_cliente').inputmask('(99) 9999-9999');
             $('#celular_cliente').inputmask('(99) 99999-9999');
         
@@ -140,31 +142,6 @@
 
             });
         });
-        </script>
-<script>
-        function TestaCPF(cpf_cliente)) {
-            var Soma;
-            var Resto;
-            Soma = 0;   
-        if (cpf_cliente) == "00000000000") return false;
-        
-        for (i=1; i<=9; i++)
-	        Soma = Soma + parseInt(cpf_cliente).substring(i-1, i)) * (11 - i); 
-            Resto = (Soma * 10) % 11;
-        if ((Resto == 10) || (Resto == 11)) 
-	        Resto = 0;
-        if (Resto != parseInt(cpf_cliente).substring(9, 10)) )
-	        return false;
-	        Soma = 0;
-        for (i = 1; i <= 10; i++)
-            Soma = Soma + parseInt(cpf_cliente).substring(i-1, i)) * (12 - i);
-            Resto = (Soma * 10) % 11;
-        if ((Resto == 10) || (Resto == 11)) 
-	        Resto = 0;
-        if (Resto != parseInt(cpf_cliente).substring(10, 11) ) )
-            return false;
-            return true;
-} 
 </script>
 
 {% endblock %}

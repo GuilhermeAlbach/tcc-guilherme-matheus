@@ -105,7 +105,11 @@ class guia Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Médico cadastrado com sucesso');
+            $retorno['status'] = 1;
+            $retorno['mensagem'] = 'Guia cadastrada com sucesso';
+            $retorno['id_guia'] = $db->lastInsertId();
+
+            echo $this->jsonResponse($retorno);
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
