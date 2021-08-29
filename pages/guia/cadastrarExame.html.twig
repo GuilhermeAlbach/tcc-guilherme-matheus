@@ -66,7 +66,7 @@
                             <div class="input-group-prepend mr-1">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
                             </div>
-                            <input type="number" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="R$ {{linha['precototal_guia'] }} ">
+                            <input type="number" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="{{linha['precototal_guia'] }} ">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -88,12 +88,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="prazo_guiaexame" class="col-sm-2 col-form-label">Prazo da Guia</label>
+                        <label for="prazofinal_guia" class="col-sm-2 col-form-label">Prazo da Guia</label>
                         <div class="col-sm-10 d-flex flex-row">
                             <div class="input-group-prepend mr-1">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
                             </div>
-                            <input type="text" readonly class="form-control-plaintext" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
+                            <input type="text" readonly class="form-control-plaintext" name="prazofinal_guia" id="prazofinal_guia" value="{{linha['prazofinal_guia'] }} horas">
                         </div>
                     </div>
                 </div>
@@ -233,6 +233,7 @@
                     $('.jsonForm').trigger('reset');
                     grid.bootgrid("reload");
                     atualizaValorTotal();
+                    atualizaPrazoFinal();
                     }
                 $("#adicionarguia").modal('hide');
                 }
@@ -250,6 +251,18 @@
         }
         atualizaValorTotal();
 
+        function atualizaPrazoFinal() {
+            $.getJSON(
+                "/guia/AtualizaPrazo",
+                { id_guia :{{linha['id_guia'] }}},
+                function(data){
+                    $("#prazofinal_guia").val(data.prazofinal_guia);
+                },
+            );
+        }
+        atualizaPrazoFinal();
+
+
         function excluir(id_guiaexame){
             $.post(
                 "/guia/excluirExame",
@@ -265,15 +278,13 @@
                         });
                         grid.bootgrid("reload");
                         atualizaValorTotal();
+                        atualizaPrazoFinal();
 
                     }
                 },
                 "json"
             );
         }
-
-
-
     </script>
 {% endblock %}
 

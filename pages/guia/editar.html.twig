@@ -123,6 +123,55 @@
                         </tr>
                         </thead>
                     </table>
+                                <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="guia" role="tabpanel" aria-labelledby="guia-tab">
+
+                    <!-- Button trigger modal -->
+                    <br>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#adicionarguia">
+                        Editar Exame
+                    </button>
+
+                    <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="adicionarguiaLabel">Adicionando Exame</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" action="/guia/salvarcadastrarExame" method="post" class="jsonForm">
+                                        <div class="form-group">
+                                            <label for="exame_guiaexame">Exame</label>
+                                            <select class="form-control selectpicker" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
+                                                <option value="" selected disabled>- Selecione o Exame -</option>
+                                            {% for exames in exames %}
+                                                <option data-preco-exame='{{exames.preco_exame}}' data-prazo-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}">{{ exames.nome_exame }} </option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="preco_guiaexame">Valor</label>
+                                            <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prazo_guiaexame">Prazo</label>
+                                            <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="hidden" name="guia_guiaexame" value="{{linha['id_guia'] }}">
+                                            <button type="submit" class="btn btn-success" >Salvar</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -74,6 +74,7 @@
                     {
                         return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_guia   + "\"><span class=\"fas fa-pen\"></span></button> " +
                             "<button type=\"button\" class=\"btn btn-warning command-cadastro\" data-row-id=\"" + row.id_guia + "\"><span class=\"fas fa-edit\"></span></button> " +
+                            "<button type=\"button\" class=\"btn btn-success command-resultado\" data-row-id=\"" + row.id_guia + "\"><span class=\"fas fa-tasks\"></span></button> " +
                             "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guia + "\"><span class=\"fa fa-trash\"></span></button>";
                     }
                 }
@@ -83,6 +84,9 @@
                 {
                     document.location = '/guia/formcadastrarExame/' + $(this).data("row-id");
                 }).end().find(".command-cadastro").on("click", function(e)
+                {
+                    document.location = '/guia/formcadastrarResultado/' + $(this).data("row-id");
+                }).end().find(".command-resultado").on("click", function(e)
                 {
                     document.location = '/guia/formeditar/' + $(this).data("row-id");
                 }).end().find(".command-delete").on("click", function(e)

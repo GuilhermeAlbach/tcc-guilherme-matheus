@@ -354,6 +354,20 @@ class guia Extends Controller
     
         echo json_encode($ret);
     }
+    public function AtualizaPrazo()
+    {
+        $db =  Conexao::connect();
+
+        $query = $db->prepare("SELECT * FROM guias WHERE id_guia=:id_guia");
+        $query->bindValue(":id_guia", $_GET['id_guia']);
+        $query->execute();
+    
+        $linha = $query->fetchObject();
+    
+        $ret['prazofinal_guia'] = $linha->prazofinal_guia;
+    
+        echo json_encode($ret);
+    }
     
 public function formCadastrarResultado($id_guia)
 {

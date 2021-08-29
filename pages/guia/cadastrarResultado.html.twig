@@ -104,6 +104,49 @@
                         </thead>
                     </table>
 
+
+                    <!-- Button trigger modal -->
+                    <br>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#adicionarguia">
+                        Cadastrar resultado
+                    </button>
+
+                    <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="adicionarguiaLabel">Adicionando Resultado</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" action="/guia/salvarcadastrarResultado" method="post" class="jsonForm">
+                                        <div class="form-group">
+                                            <label for="resultado">Resultado</label>
+                                            <input type="text" class="form-control" id="resultado" name="resultado" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="responsavel_resultado">Responsável</label>
+                                            <select class="form-control selectpicker" id="responsavel_resultado" name="responsavel_resultado" required data-live-search="true">
+                                                <option value="" selected disabled>- Selecione o Responsável -</option>
+                                            {% for exames in exames %}
+                                                <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" name="guia_guiaexame" value="{{linha['id_guia'] }}">
+                                            <button type="submit" class="btn btn-success" >Salvar</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             <a href="exibirOrcamento.php?idAtendimento=<?php echo $_GET['idAtendimento'];?>" class="btn btn-success" style="float: right">Finalizar</a>
 
@@ -130,14 +173,6 @@
     <script>  
         var grid;
         $(document).ready(function(){
-            $("#exame_guiaexame").on('change', function () {
-                preco_guiaexame = $(this).find(':selected').data('preco-exame');
-                $("#preco_guiaexame").val(preco_guiaexame);
-        });
-            $("#exame_guiaexame").on('change', function () {
-                prazo_guiaexame = $(this).find(':selected').data('prazo-exame');
-                $("#prazo_guiaexame").val(prazo_guiaexame);
-        });
 
             grid = $("#grid-data").bootgrid({
                 ajax: true,
