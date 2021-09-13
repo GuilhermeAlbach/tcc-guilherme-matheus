@@ -63,10 +63,7 @@
                     <div class="form-group row">
                         <label for="precototal_guia" class="col-sm-2 col-form-label">Valor Total</label>
                         <div class="col-sm-10 d-flex flex-row">
-                            <div class="input-group-prepend mr-1">
-                                <span class="input-group-text" id="basic-addon1">R$</span>
-                            </div>
-                            <input type="number" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="{{linha['precototal_guia'] }} ">
+                            <span class="align-self-center mr-2">R$  </span><input type="number" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="{{linha['precototal_guia'] }} ">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -87,13 +84,10 @@
                             <input type="text" readonly class="form-control-plaintext" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row ">
                         <label for="prazofinal_guia" class="col-sm-2 col-form-label">Prazo da Guia</label>
-                        <div class="col-sm-10 d-flex flex-row">
-                            <div class="input-group-prepend mr-1">
-                                <span class="input-group-text" id="basic-addon1">R$</span>
-                            </div>
-                            <input type="text" readonly class="form-control-plaintext" name="prazofinal_guia" id="prazofinal_guia" value="{{linha['prazofinal_guia'] }} horas">
+                        <div class="col-sm-10 d-flex flex-row align-content-center">
+                            <span class="align-self-center mr-2">Horas  </span><input type="text" readonly class="form-control-plaintext" name="prazofinal_guia" id="prazofinal_guia" value="{{linha['prazofinal_guia'] }}">
                         </div>
                     </div>
                 </div>
@@ -104,9 +98,6 @@
 
                     <!-- Button trigger modal -->
                     <br>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#adicionarguia">
-                        Adicionar Exame
-                    </button>
 
                     <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -197,6 +188,12 @@
 
             grid = $("#grid-data").bootgrid({
                 ajax: true,
+                post: function ()
+                {
+                    return {
+                        id_guia: {{ linha['id_guia'] }}
+                    };
+                },
                 url: "/guia/bootgridcadastrarexame",
                 formatters: {
                     "commands": function(column, row)
@@ -208,7 +205,8 @@
             {
                 grid.find(".command-edit").on("click", function(e)
                 {
-                    document.location = '/guia/formeditarExame/' + $(this).data("row-id");
+                    $("#guia_guiaexame").val( $(this).data("row-id") );
+                    $("#adicionarguia").modal('show');
                 }).end().find(".command-delete").on("click", function(e)
                 {
                     iziToastExcluir($(this).data("row-id"));

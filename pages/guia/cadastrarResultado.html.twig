@@ -107,10 +107,6 @@
 
                     <!-- Button trigger modal -->
                     <br>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#adicionarguia">
-                        Cadastrar resultado
-                    </button>
-
                     <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -136,7 +132,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" name="guia_guiaexame" value="{{linha['id_guia'] }}">
+                                            <input type="hidden1" name="guia_guiaexame" id="guia_guiaexame">
                                             <button type="submit" class="btn btn-success" >Salvar</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         </div>
@@ -176,22 +172,26 @@
 
             grid = $("#grid-data").bootgrid({
                 ajax: true,
-                url: "/guia/bootgridcadastrarexame",
+                post: function ()
+                {
+                    return {
+                        id_guia: {{ linha['id_guia'] }}
+                    };
+                },                url: "/guia/bootgridcadastrarexame",
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-primary command-cadastro\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button>";
+                        return "<button type=\"button\" class=\"btn btn-primary command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()
             {
                 grid.find(".command-cadastro").on("click", function(e)
                 {
-                    document.location = '/guia/formeditarExame/' + $(this).data("row-id");
-                }).end().find(".command-delete").on("click", function(e)
-                {
-                    iziToastExcluir($(this).data("row-id"));
-                });
+                    $("#guia_guiaexame").val( $(this).data("row-id") );
+                    $("#adicionarguia").modal('show');
+                    //document.location = '/guia/formeditarExame/' + $(this).data("row-id");
+                }).end();
             });
         
             $('.select2').select2({

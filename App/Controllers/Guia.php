@@ -312,7 +312,8 @@ class guia Extends Controller
     public function bootgridCadastrarExame()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = id_guia ";
+        $id_guia = addslashes($_POST['id_guia']);
+        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = {$id_guia} ";
 
         if ($busca!=''){
             $sql .= " and (
@@ -328,7 +329,8 @@ class guia Extends Controller
     public function bootgridEditarExame()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = id_guia ";
+        $id_guia = addslashes($_POST['id_guia']);
+        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = {$id_guia} ";
 
         if ($busca!=''){
             $sql .= " and (
@@ -455,18 +457,20 @@ public function salvarCadastrarResultado()
 {
     $db = Conexao::connect();
 
-    $sql = "INSERT INTO guiasexames (exame_guiaexame, guia_guiaexame, preco_guiaexame, prazo_guiaexame)
-            VALUES (:exame_guiaexame, :guia_guiaexame, :preco_guiaexame, :prazo_guiaexame)";
+    $sql = "INSERT INTO resultados (data_resultado, guia_resultado, responsavel_resultado, resultado, laudo_resultado, observacao_resultado)
+            VALUES (:data_resultado, :guia_resultado, :responsavel_resultado, :resultado, :laudo_resultado, :observacao_resultado)";
 
     $query = $db->prepare($sql);
-    $query->bindParam(":guia_guiaexame" , $_POST['guia_guiaexame']);
-    $query->bindParam(":preco_guiaexame", $_POST['preco_guiaexame']);
-    $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
-    $query->bindParam(":exame_guiaexame", $_POST['exame_guiaexame']);
+    $query->bindParam(":data_resultado"       , $_POST['data_resultado']);
+    $query->bindParam(":guia_resultado"       , $_POST['guia_resultado']);
+    $query->bindParam(":responsavel_resultado", $_POST['responsavel_resultado']);
+    $query->bindParam(":resultado"            , $_POST['resultado']);
+    $query->bindParam(":laudo_resultado"      , $_POST['laudo_resultado']);
+    $query->bindParam(":observacao_resultado" , $_POST['observacao_resultado']);
     $query->execute();
 
     if ($query->rowCount()==1) {
-        $this->retornaOK('Médico cadastrado com sucesso');
+        $this->retornaOK('Resultado cadastrado com sucesso');
     }else{
         $this->retornaErro('Erro ao inserir os dados');
     }

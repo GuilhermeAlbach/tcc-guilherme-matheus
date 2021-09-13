@@ -128,10 +128,6 @@
 
                     <!-- Button trigger modal -->
                     <br>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#adicionarguia">
-                        Editar Exame
-                    </button>
-
                     <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -147,9 +143,13 @@
                                             <label for="exame_guiaexame">Exame</label>
                                             <select class="form-control selectpicker" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Exame -</option>
-                                            {% for exames in exames %}
-                                                <option data-preco-exame='{{exames.preco_exame}}' data-prazo-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}">{{ exames.nome_exame }} </option>
-                                            {% endfor %}
+                                                {% for exames in exames %}
+                                                    {% set selected = '' %}
+                                                    {% if exames.id_exame == linha['exame_guiaexame'] %}
+                                                        {% set selected = 'selected' %}
+                                                    {% endif %}
+                                                    <option value="{{ exames.id_exames }}" {{ selected }}>{{ exames.nome_exame }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -197,7 +197,12 @@
         $(document).ready(function(){
             grid = $("#grid-data").bootgrid({
                 ajax: true,
-                url: "/guia/bootgridEditarExame",
+                post: function ()
+                {
+                    return {
+                        id_guia: {{ linha['id_guia'] }}
+                    };
+                },                url: "/guia/bootgridEditarExame",
                 formatters: {
                     "commands": function(column, row)
                     {
@@ -208,7 +213,8 @@
             {
                 grid.find(".command-edit").on("click", function(e)
                 {
-                    document.location = '/guia/formeditarExame/' + $(this).data("row-id");
+                    $("#guia_guiaexame").val( $(this).data("row-id") );
+                    $("#adicionarguia").modal('show');
                 }).end().find(".command-delete").on("click", function(e)
                 {
                     iziToastExcluir($(this).data("row-id"));
