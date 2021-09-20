@@ -81,7 +81,14 @@ class guia Extends Controller
 
         $convenios = $query_convenios->fetchAll();
 
-        echo $this->template->twig->render('guia/editar.html.twig', compact('linha','linha2', 'medicos', 'clientes', 'convenios'));
+        $sql = "SELECT * FROM exames ORDER BY nome_exame";
+        $query_exames = $db->prepare($sql);
+        $resultado_exames = $query_exames->execute();
+
+        $exames = $query_exames->fetchAll();
+
+
+        echo $this->template->twig->render('guia/editar.html.twig', compact('linha','linha2', 'medicos', 'clientes', 'convenios', 'exames'));
     }
 
 
@@ -228,8 +235,13 @@ class guia Extends Controller
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT * FROM guiasexames WHERE id_guiaexame=:id_guiaexame LIMIT 0, 1";
+        $sql = "SELECT * FROM guias ORDER BY data_guia";
+        $query2 = $db->prepare($sql);
+        $resultado2 = $query2->execute();
 
+        $linha2 = $query2->fetch();
+
+        $sql = "SELECT `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE id_guiaexame=:id_guiaexame LIMIT 0, 1";
         $query = $db->prepare($sql);
         $query->bindParam(":id_guiaexame", $id_guiaexame);
         $resultado = $query->execute();
@@ -242,7 +254,7 @@ class guia Extends Controller
 
         $exames = $query_exames->fetchAll();
 
-        echo $this->template->twig->render('guia/editarExame.html.twig', compact('linha', 'exames'));
+        echo $this->template->twig->render('guia/editar.html.twig', compact('linha','linha2','exames'));
     }
 
 
@@ -262,7 +274,7 @@ class guia Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Médico cadastrado com sucesso');
+            $this->retornaOK('Exame cadastrado com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -285,7 +297,7 @@ class guia Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('guiaexame alterado com sucesso');
+            $this->retornaOK('Exame alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
@@ -376,10 +388,11 @@ public function formCadastrarResultado($id_guia)
     $db = Conexao::connect();
 
     date_default_timezone_set('America/Sao_Paulo');
-    $data_resultado = date("d-m-Y");
+    $data_resultado = date("Y-m-d H:i:s");
 
-    $sql = "SELECT * FROM resultados ORDER BY data_resultado";
+    $sql = "SELECT `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame`, `nome_usuario` FROM resultados INNER JOIN guiasexames ON guia_resultado = id_guiaexame INNER JOIN usuarios ON responsavel_resultado = id_usuario WHERE id_resultado=:id_resultado LIMIT 0, 1";
     $query2 = $db->prepare($sql);
+    $query2->bindParam(":id_resultado", $id_resultado);
     $resultado2 = $query2->execute();
 
     $linha2 = $query2->fetch();
@@ -421,7 +434,13 @@ public function formCadastrarResultado($id_guia)
 
     $exames = $query_exames->fetchAll();
 
-    echo $this->template->twig->render('guia/cadastrarResultado.html.twig', compact('linha', 'linha2','guiasexames', 'medicos', 'clientes', 'convenios','exames', 'data_resultado'));
+    $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
+    $query_usuarios = $db->prepare($sql);
+    $resultado_usuarios = $query_usuarios->execute();
+
+    $usuarios = $query_usuarios->fetchAll();
+
+    echo $this->template->twig->render('guia/cadastrarResultado.html.twig', compact('linha', 'linha2','guiasexames', 'medicos', 'clientes', 'convenios','exames', 'data_resultado', 'usuarios'));
 }
 
 public function formEditarResultado($id_resultado)

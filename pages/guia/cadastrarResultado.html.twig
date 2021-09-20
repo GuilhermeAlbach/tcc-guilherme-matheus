@@ -126,13 +126,15 @@
                                             <label for="responsavel_resultado">Responsável</label>
                                             <select class="form-control selectpicker" id="responsavel_resultado" name="responsavel_resultado" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Responsável -</option>
-                                            {% for exames in exames %}
+                                            {% for usuarios in usuarios %}
                                                 <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
                                             {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden1" name="guia_guiaexame" id="guia_guiaexame">
+                                            <input type="hidden" name="guia_guiaexame" id="guia_guiaexame">
+                                            <input type="hidden1" name="guia_resultado" id="guia_resultado" value="{{linha[guia_resultado]}}">
+                                            <input type="hidden" name="data_resultado" id="data_resultado" value="{{data_resultado}}">
                                             <button type="submit" class="btn btn-success" >Salvar</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         </div>
