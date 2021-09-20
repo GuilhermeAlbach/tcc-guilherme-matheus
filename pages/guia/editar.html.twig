@@ -138,7 +138,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
+                                    <form role="form" action="/guia/salvareditarExame" method="post" class="jsonForm">
                                         <div class="form-group">
                                             <label for="exame_guiaexame">Exame</label>
                                             <select class="form-control selectpicker" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
@@ -148,7 +148,7 @@
                                                     {% if exames.id_exame == linha['exame_guiaexame'] %}
                                                         {% set selected = 'selected' %}
                                                     {% endif %}
-                                                    <option value="{{ exames.id_exames }}" {{ selected }}>{{ exames.nome_exame }}</option>
+                                                    <option value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -163,6 +163,7 @@
 
                                         <div class="form-group">
                                             <input type="hidden" name="guia_guiaexame" value="{{linha['id_guia'] }}">
+                                            <input type="hidden" name="id_guiaexame" id="id_guiaexame" value="">
                                             <button type="submit" class="btn btn-success" >Salvar</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         </div>
@@ -213,12 +214,10 @@
             {
                 grid.find(".command-edit").on("click", function(e)
                 {
-                    $("#guia_guiaexame").val( $(this).data("row-id") );
+                    // c  onsole.log($(this).data("row-id"));
+                    $("#id_guiaexame").val( $(this).data("row-id") );
                     $("#adicionarguia").modal('show');
-                }).end().find(".command-delete").on("click", function(e)
-                {
-                    iziToastExcluir($(this).data("row-id"));
-                });
+                })
             });
 
             $('.select2').select2({

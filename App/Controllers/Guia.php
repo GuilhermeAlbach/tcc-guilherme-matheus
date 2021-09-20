@@ -299,7 +299,7 @@ class guia Extends Controller
         if ($query->rowCount()==1) {
             $this->retornaOK('Exame alterado com sucesso');
         }else{
-            $this->retornaOK('Nenhum dado alterado');
+            $this->retornaErro ('Nenhum dado alterado');
         }
     }
 
@@ -477,10 +477,9 @@ public function salvarCadastrarResultado()
     $db = Conexao::connect();
 
     $sql = "INSERT INTO resultados (data_resultado, guia_resultado, responsavel_resultado, resultado, laudo_resultado, observacao_resultado)
-            VALUES (:data_resultado, :guia_resultado, :responsavel_resultado, :resultado, :laudo_resultado, :observacao_resultado)";
+            VALUES (NOW(), :guia_resultado, :responsavel_resultado, :resultado, :laudo_resultado, :observacao_resultado)";
 
     $query = $db->prepare($sql);
-    $query->bindParam(":data_resultado"       , $_POST['data_resultado']);
     $query->bindParam(":guia_resultado"       , $_POST['guia_resultado']);
     $query->bindParam(":responsavel_resultado", $_POST['responsavel_resultado']);
     $query->bindParam(":resultado"            , $_POST['resultado']);
