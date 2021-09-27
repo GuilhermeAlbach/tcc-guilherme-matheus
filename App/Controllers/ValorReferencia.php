@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class ValorReferencia Extends Controller
+class ValorReferencia Extends ControllerSeguro
 {
     public function index()
     {

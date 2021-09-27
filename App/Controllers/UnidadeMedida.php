@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class unidademedida Extends Controller
+class unidademedida Extends ControllerSeguro
 {
     public function index()
     {

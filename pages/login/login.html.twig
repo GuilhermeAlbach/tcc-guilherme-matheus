@@ -1,27 +1,27 @@
-{% extends 'layouts/dashboard.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-{% block stylesheet %}
+    <title>Projeto Teste {% block title %}{% endblock %}</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
-{% endblock %}
 
-{% block breadcrumb %}
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Login
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-{% endblock %}
-
-{% block content %}
-    <section class="content">
+</head>
 
     <body class="hold-transition login-page">
         <div class="login-box">
@@ -30,7 +30,7 @@
                     <a href="../../index2.html" class="h4">Laboratório Santo Antônio</a>
                 </div>
                 <div class="card-body">
-                    <form role="form" action="/login/verificaSenha" method="post" class="jsonForm">
+                    <form role="form" action="/login/verificar" method="post" class="jsonForm">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Usuário" id="user_usuario" name="user_usuario" required>
                                 <div class="input-group-append">
@@ -48,24 +48,23 @@
                                 </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-                        </div>
                     </form>
 
                 </div>
             </div>
         </div>
-    </section>
 
-{% endblock %}
+    <!-- REQUIRED SCRIPTS -->
 
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="/dist/js/adminlte.js"></script>
 
-
-{% block javascriptPlugins %}
     <script src="/dist/js/jquery.form.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
-{% endblock %}
-
-{% block jquery %}
     <script>
         $(document).ready(function(){
             $('.jsonForm').ajaxForm({
@@ -80,7 +79,7 @@
                         iziToast.success({
                             message: d.mensagem,
                             onClosed: function(){
-                                document.location = "/inicial";
+                                document.location = "/guia";
                             }
                         });
 
@@ -90,7 +89,6 @@
             });
         });
     </script>
-{% endblock %}
 
-{% block javascript %}
-{% endblock %}
+</body>
+</html>

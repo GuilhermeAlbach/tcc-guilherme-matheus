@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Cliente Extends Controller
+class Cliente Extends ControllerSeguro
 {
     public function index()
     {
@@ -43,8 +43,9 @@ class Cliente Extends Controller
     public function salvarCadastrar()
     {
         $db = Conexao::connect();
-        if($_POST['TestaCPF'] = $_POST['cpf_cliente']){
 
+        if($this->validaCPF($_POST['cpf_cliente'])==false) {
+            $this->retornaErro('CPF Inválido.');
         }
 
         $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,
@@ -114,7 +115,7 @@ class Cliente Extends Controller
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Cliente excluído com sucesso');
+            $this->retornaOK('Cliente exclu�do com sucesso');
         }else{
             $this->retornaErro('Erro ao excluir cliente');
         }
@@ -134,6 +135,35 @@ class Cliente Extends Controller
 
         $bootgrid = new Bootgrid($sql);
         echo $bootgrid->show();
+    }
+
+    function validaCPF($cpf_cliente) {
+
+        // Extrai somente os números
+        $cpf_cliente = preg_replace( '/[^0-9]/is', '', $cpf_cliente );
+
+        // Verifica se foi informado todos os digitos corretamente
+        if (strlen($cpf_cliente) != 11) {
+            return false;
+        }
+
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        if (preg_match('/(\d)\1{10}/', $cpf_cliente)) {
+            return false;
+        }
+
+        // Faz o calculo para validar o CPF
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf_cliente[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf_cliente[$c] != $d) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
 }

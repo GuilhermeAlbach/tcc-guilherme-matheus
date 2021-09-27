@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Bancada Extends Controller
+class Bancada Extends ControllerSeguro
 {
     public function index()
     {

@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Exame Extends Controller
+class Exame Extends ControllerSeguro
 {
     public function index()
     {

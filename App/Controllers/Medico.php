@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Medico Extends Controller
+class Medico Extends ControllerSeguro
 {
     public function index()
     {

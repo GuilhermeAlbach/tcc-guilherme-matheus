@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class material Extends Controller
+class material Extends ControllerSeguro
 {
     public function index()
     {

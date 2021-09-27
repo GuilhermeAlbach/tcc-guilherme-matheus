@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class guia Extends Controller
+class guia Extends ControllerSeguro
 {
     public function index()
     {
@@ -560,6 +560,30 @@ public function formPDF($id_guia)
 
     $linha = $query->fetch();
 
+    $sql = "SELECT * FROM medicos ORDER BY nome_medico";
+    $query_medicos = $db->prepare($sql);
+    $resultado_medicos = $query_medicos->execute();
+
+    $medicos = $query_medicos->fetchAll();
+
+    $sql = "SELECT * FROM clientes ORDER BY nome_cliente";
+    $query_clientes = $db->prepare($sql);
+    $resultado_clientes = $query_clientes->execute();
+
+    $clientes = $query_clientes->fetchAll();
+
+    $sql = "SELECT * FROM convenios ORDER BY nome_convenio";
+    $query_convenios = $db->prepare($sql);
+    $resultado_convenios = $query_convenios->execute();
+
+    $convenios = $query_convenios->fetchAll();
+
+    $sql = "SELECT * FROM exames ORDER BY nome_exame";
+    $query_exames = $db->prepare($sql);
+    $resultado_exames = $query_exames->execute();
+
+    $exames = $query_exames->fetchAll();
+
     $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
     $query_usuarios = $db->prepare($sql);
     $resultado_usuarios = $query_usuarios->execute();
@@ -571,6 +595,20 @@ public function formPDF($id_guia)
 public function MontaPDF($id_guia)
 {
     require "../vendor/autoload.php";
+
+/*
+// reference the Dompdf namespace
+   use Dompdf\Dompdf;
+
+// instantiate and use the dompdf class
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml('/guia/formPDF/');
+// (Optional) Setup the paper size and orientation
+    $dompdf->setPaper('A4', 'landscape');
+// Render the HTML as PDF
+    $dompdf->render();
+// Output the generated PDF to Browser
+    $dompdf->stream();
 
     ob_start();
 
@@ -589,7 +627,7 @@ public function MontaPDF($id_guia)
     $pdf->Output('nome-do-arquivo.pdf','I');
 
     echo $html;
-
+*/
 }
 
 }

@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class Convenio Extends Controller
+class Convenio Extends ControllerSeguro
 {
     public function index()
     {

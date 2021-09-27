@@ -8,7 +8,7 @@ use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguro;
 
-class usuario Extends Controller
+class usuario Extends ControllerSeguro
 {
     public function index()
     {
@@ -57,6 +57,8 @@ class usuario Extends Controller
     {
         $db = Conexao::connect();
 
+        $criptografaSenha = $this->criptografa($_POST['senha_usuario']);
+
         $sql = "INSERT INTO usuarios(nome_usuario,cpf_usuario,telefone_usuario,endereco_usuario,
                             user_usuario,senha_usuario) 
                     VALUES (:nome_usuario,:cpf_usuario,:telefone_usuario,:endereco_usuario,
@@ -68,7 +70,7 @@ class usuario Extends Controller
         $query->bindParam(":telefone_usuario", $_POST['telefone_usuario']);
         $query->bindParam(":endereco_usuario", $_POST['endereco_usuario']);
         $query->bindParam(":user_usuario"    , $_POST['user_usuario']);
-        $query->bindParam(":senha_usuario"   , $_POST['senha_usuario']);
+        $query->bindParam(":senha_usuario"   , $criptografaSenha);
         $query->execute();
 
         if ($query->rowCount()==1) {

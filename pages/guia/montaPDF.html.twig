@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <img src="/../dist/img/logo_lab.png" alt="Logo do Laboratorio" style="width:250px;height:100px;" align="left"><br><br>
                     <p>Laboratório Santo Antonio, Rua 27 de Janeiro 307 sala:03 Paulo Frontin-PR,<br>
-                    CNPJ: 07.226.537/0001-13 Respnsável Técnica: Dra. Irene Wegrzyn CRF/PR 12.431</p>
+                    CNPJ: 07.226.537/0001-13 Responsável Técnica: Dra. Irene Wegrzyn CRF/PR 12.431</p>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -56,7 +56,7 @@
                     </div>
                         
                     <div class="form-group row">
-                        <label class="col-label">{{linha[nome_exame]}}</label>                        
+                        <label class="col-label">{{linha['nome_exame']}}</label>
                         <label class="col-label">Método:</label>
                         <div class="col-sm-2">
                             {{linha['metodo'] }}
@@ -68,15 +68,14 @@
                     </div>
                     
                     <div class="form-group row">
-                        <label for="senha_guia" class="col-sm-2 col-form-label">Senha da Guia</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
+                        <label class="col-label">{{linha['nome_exame']}}</label>
+                        <label class="col-label">Método:</label>
+                        <div class="col-sm-2">
+                            {{linha['metodo'] }}
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="prazo_guiaexame" class="col-sm-2 col-form-label">Prazo da Guia</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
+                        <label class="col-label">Material:</label>
+                        <div class="col-sm-2">
+                            {{linha['material'] }}
                         </div>
                     </div>
                 </div>
@@ -94,7 +93,7 @@
                         </thead>
                     </table>
                 </div>
-            <a href="exibirOrcamento.php?idAtendimento=<?php echo $_GET['idAtendimento'];?>" class="btn btn-success" style="float: right">Gerar PDF</a>
+            <a href="/guia/montaPDF/{{linha[id_guia]}}" class="btn btn-success" style="float: right">Gerar PDF</a>
 
         </div>
     </div>

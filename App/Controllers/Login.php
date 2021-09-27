@@ -6,46 +6,60 @@ use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
 
-class Login Extends Controller
+class login Extends Controller
 {
     public function index()
     {
+        session_start();
+        if(isset($_SESSION['logado']) && $_SESSION['logado']){
+            header("location: /pessoas");
+            exit;
+        }
+
         echo $this->template->twig->render('login/login.html.twig');
     }
 
-    public function verificaSenha()
+    public function verificar()
     {
         session_start();
 
-        $db = Conexao::connect();
+        try{
 
-        $user_usuario = $_POST['user_usuario'];
-        $senha_usuario = $_POST['senha_usuario'];
+            $db = Conexao::connect();
 
-        $sql = "SELECT * FROM usuarios WHERE user_usuario=:user_usuario AND senha_usuario=:senha_usuario";
+            $usuario = $_POST['user_usuario'];
+            $senha = $_POST['senha_usuario'];
 
-        $query = $db ->prepare($sql);
-        $query->bindParam(":user_usuario", $user_usuario);
-        $query->bindParam(":senha_usuario", $senha_usuario);
-        $query->execute();
+            $senhacriptografada = $this->criptografa($senha);
 
-        if($query->rowCount()==1){
-            $linha = $query->fetch();
+            $sql = "SELECT * FROM usuarios WHERE user_usuario=:user_usuario AND senha_usuario=:senha_usuario";
 
-            $_SESSION['liberado'] = true;
-//            $_SESSION['id_usuario'] = $linha->id_usuario; //Código da Pessoa que está logada
-            $this->retornaOK('Acesso autorizado.');
+            $resultados = $db ->prepare($sql);
 
-        }else{
-            $_SESSION['liberado'] = false;
-            $this->retornaErro('Usuário ou senha inválidos');
+            $resultados->bindParam(":user_usuario", $usuario);
+            $resultados->bindParam(":senha_usuario", $senhacriptografada);
+            $resultados->execute();
+
+            if($resultados->rowCount()==1){
+                $linha = $resultados->fetchObject();
+
+                $_SESSION['logado'] = true;
+                $_SESSION['id_usuario'] = $linha->id_usuario;
+                $this->retornaOK('Acesso autorizado.');
+            }else{
+                $_SESSION['logado'] = false;
+                $this->retornaErro('Usuário ou senha inválidos');
+            }
+        }catch (\Exception $error){
+            $this->retornaErro('Erro de BD. <br>' . $error->getMessage());
         }
+
     }
 
     public function sair()
     {
         session_start();
-        //unset($_SESSION['liberado']);
+        unset($_SESSION['logado']);
         session_destroy();
 
         header("Location: /login");
