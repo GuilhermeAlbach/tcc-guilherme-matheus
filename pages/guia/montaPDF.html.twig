@@ -1,0 +1,104 @@
+{% extends 'layouts/dashboard.html.twig' %}
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <img src="/../dist/img/logo_lab.png" alt="Logo do Laboratorio" style="width:250px;height:100px;" align="left"><br><br>
+                    <p>Laboratório Santo Antonio, Rua 27 de Janeiro 307 sala:03 Paulo Frontin-PR,<br>
+                    CNPJ: 07.226.537/0001-13 Respnsável Técnica: Dra. Irene Wegrzyn CRF/PR 12.431</p>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-label">Cliente:</label>
+                        <div class="col-sm-2">
+                            {{linha['nome_cliente'] }}
+                        </div>
+                        <label class="col-label">Sexo:</label>
+                        <div class="col-sm-2">
+                            {{linha['sexo_cliente'] }}
+                        </div>
+                        <label class="col-label">Cliente:</label>
+                        <div class="col-sm-2">
+                            {{idade}} Anos
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-label">Solicitação:</label>
+                        <div class="col-sm-2">
+                            {{linha['nome_medico'] }}
+                        </div>
+                        <label class="col-label"> </label>
+                        <div class="col-sm-2">
+                        </div>
+                        <label class="col-label">Guia:</label>
+                        <div class="col-sm-2">
+                            {{linha['id_guia'] }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-label">Data da Coleta:</label>
+                        <div class="col-sm-2">
+                            {{linha['data_guia'] }}
+                        </div>
+                        <label class="col-label"></label>
+                        <div class="col-sm-2">
+                        </div>
+                        <label class="col-label">Laudo Impresso em</label>
+                        <div class="col-sm-2">
+                            {{linha2['data_resultado'] }}
+                        </div>
+                    </div>
+                        
+                    <div class="form-group row">
+                        <label class="col-label">{{linha[nome_exame]}}</label>                        
+                        <label class="col-label">Método:</label>
+                        <div class="col-sm-2">
+                            {{linha['metodo'] }}
+                        </div>
+                        <label class="col-label">Material:</label>
+                        <div class="col-sm-2">
+                            {{linha['material'] }}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="senha_guia" class="col-sm-2 col-form-label">Senha da Guia</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="prazo_guiaexame" class="col-sm-2 col-form-label">Prazo da Guia</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <table id="grid-data" class="table table-head-fixed text-nowrap table-hover table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th data-column-id="id_guiaexame" >Código</th>
+                            <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
+                            <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
+                            <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
+                            <th data-column-id="resultado" data-sortable="true">Resultado</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            <a href="exibirOrcamento.php?idAtendimento=<?php echo $_GET['idAtendimento'];?>" class="btn btn-success" style="float: right">Gerar PDF</a>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

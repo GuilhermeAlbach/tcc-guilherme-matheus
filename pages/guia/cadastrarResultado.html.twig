@@ -132,7 +132,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden2" name="guia_resultado" id="guia_resultado">
+                                            <label for="laudo_resultado">Laudo</label>
+                                            <input type="text" class="form-control" id="laudo_resultado" name="laudo_resultado" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="observacao_resultado">Observação</label>
+                                            <textarea class="form-control" id="observacao_resultado" name="observacao_resultado" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" name="guia_resultado" id="guia_resultado">
                                             <button type="submit" class="btn btn-success" >Salvar</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         </div>

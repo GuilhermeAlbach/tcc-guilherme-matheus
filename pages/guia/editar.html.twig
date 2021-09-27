@@ -141,24 +141,24 @@
                                     <form role="form" action="/guia/salvareditarExame" method="post" class="jsonForm">
                                         <div class="form-group">
                                             <label for="exame_guiaexame">Exame</label>
-                                            <select class="form-control selectpicker" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
+                                            <select class="form-control selectpicker select2" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Exame -</option>
                                                 {% for exames in exames %}
                                                     {% set selected = '' %}
                                                     {% if exames.id_exame == linha['exame_guiaexame'] %}
                                                         {% set selected = 'selected' %}
                                                     {% endif %}
-                                                    <option value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
+                                                    <option data-preco-exame='{{exames.preco_exame}}' data-prazo-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="preco_guiaexame">Valor</label>
-                                            <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required>
+                                            <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required value="{{linha[preco_guiaexame]}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="prazo_guiaexame">Prazo</label>
-                                            <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required>
+                                            <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required value="{{linha[prazo_guiaexame]}}">
                                         </div>
 
                                         <div class="form-group">
@@ -196,6 +196,15 @@
     <script>
         var grid
         $(document).ready(function(){
+            $("#exame_guiaexame").on('change', function () {
+                preco_guiaexame = $(this).find(':selected').data('preco-exame');
+                $("#preco_guiaexame").val(preco_guiaexame);
+        });
+            $("#exame_guiaexame").on('change', function () {
+                prazo_guiaexame = $(this).find(':selected').data('prazo-exame');
+                $("#prazo_guiaexame").val(prazo_guiaexame);
+        });
+
             grid = $("#grid-data").bootgrid({
                 ajax: true,
                 post: function ()
@@ -214,7 +223,6 @@
             {
                 grid.find(".command-edit").on("click", function(e)
                 {
-                    // c  onsole.log($(this).data("row-id"));
                     $("#id_guiaexame").val( $(this).data("row-id") );
                     $("#adicionarguia").modal('show');
                 })

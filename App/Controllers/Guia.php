@@ -338,22 +338,7 @@ class guia Extends Controller
         echo $bootgrid->show();
     }
 
-    public function bootgridEditarExame()
-    {
-        $busca = addslashes($_POST['searchPhrase']);
-        $id_guia = addslashes($_POST['id_guia']);
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = {$id_guia} ";
 
-        if ($busca!=''){
-            $sql .= " and (
-                        data_guiaexame LIKE '%{$busca}%' OR
-                        nome_exame LIKE '%{$busca}%' OR
-                        ) ";
-        }
-
-        $bootgrid = new Bootgrid($sql);
-        echo $bootgrid->show();
-    }
     public function AtualizaValor()
     {
         $db =  Conexao::connect();
@@ -443,14 +428,28 @@ public function formCadastrarResultado($id_guia)
     echo $this->template->twig->render('guia/cadastrarResultado.html.twig', compact('linha', 'linha2','guiasexames', 'medicos', 'clientes', 'convenios','exames', 'data_resultado', 'usuarios'));
 }
 
-public function formEditarResultado($id_resultado)
+public function formEditarResultado($id_guia)
 {
     $db = Conexao::connect();
 
     $sql = "SELECT * FROM resultados WHERE id_resultado=:id_resultado LIMIT 0, 1";
 
+    $sql = "SELECT `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame`, `nome_usuario` FROM resultados INNER JOIN guiasexames ON guia_resultado = id_guiaexame INNER JOIN usuarios ON responsavel_resultado = id_usuario WHERE id_resultado=:id_resultado LIMIT 0, 1";
+    $query2 = $db->prepare($sql);
+    $query2->bindParam(":id_resultado", $id_resultado);
+    $resultado2 = $query2->execute();
+
+    $linha2 = $query2->fetch();
+
+    $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
+    $query_guiasexames = $db->prepare($sql);
+    $resultado_guiasexames = $query_guiasexames->execute();
+
+    $guiasexames = $query_guiasexames->fetch();
+
+    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE id_guia=:id_guia LIMIT 0, 1";
     $query = $db->prepare($sql);
-    $query->bindParam(":id_resultado", $id_resultado);
+    $query->bindParam(":id_guia", $id_guia);
     $resultado = $query->execute();
 
     $linha = $query->fetch();
@@ -461,13 +460,13 @@ public function formEditarResultado($id_resultado)
 
     $exames = $query_exames->fetchAll();
 
-    $sql = "SELECT * FROM guias ORDER BY data_guia";
-    $query_guias = $db->prepare($sql);
-    $resultado_guias = $query_guias->execute();
+    $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
+    $query_usuarios = $db->prepare($sql);
+    $resultado_usuarios = $query_usuarios->execute();
 
-    $guias = $query_guias->fetchAll();
+    $usuarios = $query_usuarios->fetchAll();
 
-    echo $this->template->twig->render('guia/editarResultado.html.twig', compact('linha', 'exames', 'guias'));
+    echo $this->template->twig->render('guia/editarResultado.html.twig', compact('linha2', 'linha', 'exames', 'guias', 'usuarios'));
 }
 
 
@@ -498,22 +497,99 @@ public function salvarEditarResultado()
 {
     $db = Conexao::connect();
 
-    $sql = "UPDATE guiasexames SET guia_guiaexame=:guia_guiaexame,prazo_guiaexame=:prazo_guiaexame,
-                    exame_guiaexame=:exame_guiaexame,preco_guiaexame=:preco_guiaexame 
-            WHERE id_guiaexame=:id_guiaexame";
+    $sql = "UPDATE resultados SET guia_resultado=:guia_resultado,responsavel_resultado=:responsavel_resultado, data_resultado=NOW(),
+                    resultado=:resultado,observacao_resultado=:observacao_resultado,laudo_resultado=:laudo_resultado
+            WHERE id_resultado=:id_resultado";
 
     $query = $db->prepare($sql);
-    $query->bindParam(":guia_guiaexame"    , $_POST['guia_guiaexame']);
-    $query->bindParam(":preco_guiaexame" , $_POST['preco_guiaexame']);
-    $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
-    $query->bindParam(":exame_guiaexame"  , $_POST['exame_guiaexame']);
-    $query->bindParam(":id_guiaexame"      , $_POST['id_guiaexame']);
+    $query->bindParam(":guia_resultado"       , $_POST['guia_resultado']);
+    $query->bindParam(":responsavel_resultado", $_POST['responsavel_resultado']);
+    $query->bindParam(":resultado"            , $_POST['resultado']);
+    $query->bindParam(":laudo_resultado"      , $_POST['laudo_resultado']);
+    $query->bindParam(":observacao_resultado" , $_POST['observacao_resultado']);
+    $query->bindParam(":id_resultado"         , $_POST['id_resultado']);
     $query->execute();
 
     if ($query->rowCount()==1) {
-        $this->retornaOK('guiaexame alterado com sucesso');
+        $this->retornaOK('Resultado alterado com sucesso');
     }else{
         $this->retornaOK('Nenhum dado alterado');
     }
 }
+
+public function bootgridEditarExame()
+{
+    $busca = addslashes($_POST['searchPhrase']);
+    $id_guia = addslashes($_POST['id_guia']);
+    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE guia_guiaexame = {$id_guia} ";
+
+    if ($busca!=''){
+        $sql .= " and (
+                    data_guiaexame LIKE '%{$busca}%' OR
+                    nome_exame LIKE '%{$busca}%' OR
+                    ) ";
+    }
+
+    $bootgrid = new Bootgrid($sql);
+    echo $bootgrid->show();
+}
+
+public function formPDF($id_guia)
+{
+    $db = Conexao::connect();
+
+    $sql = "SELECT * FROM resultados WHERE id_resultado=:id_resultado LIMIT 0, 1";
+
+    $sql = "SELECT `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame`, `nome_usuario` FROM resultados INNER JOIN guiasexames ON guia_resultado = id_guiaexame INNER JOIN usuarios ON responsavel_resultado = id_usuario WHERE id_resultado=:id_resultado LIMIT 0, 1";
+    $query2 = $db->prepare($sql);
+    $query2->bindParam(":id_resultado", $id_resultado);
+    $resultado2 = $query2->execute();
+
+    $linha2 = $query2->fetch();
+
+    $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
+    $query_guiasexames = $db->prepare($sql);
+    $resultado_guiasexames = $query_guiasexames->execute();
+
+    $guiasexames = $query_guiasexames->fetch();
+
+    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `sexo_cliente` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = :id_guia WHERE id_guia=:id_guia LIMIT 0, 1";
+    $query = $db->prepare($sql);
+    $query->bindParam(":id_guia", $id_guia);
+    $resultado = $query->execute();
+
+    $linha = $query->fetch();
+
+    $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
+    $query_usuarios = $db->prepare($sql);
+    $resultado_usuarios = $query_usuarios->execute();
+
+    $usuarios = $query_usuarios->fetchAll();
+
+    echo $this->template->twig->render('guia/montaPDF.html.twig', compact('linha2', 'linha', 'exames', 'guias', 'usuarios'));
+}
+public function MontaPDF($id_guia)
+{
+    require "../vendor/autoload.php";
+
+    ob_start();
+
+    include('montaPDF.html.twig');
+    include('cssVenda.html');
+    $html = ob_get_clean();
+    ob_end_clean();
+
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+    $pdf->SetFont('dejavusans', '', 10);
+    $pdf->AddPage();
+
+    $pdf->writeHTML($html, true, false, true, false, '');
+
+    $pdf->Output('nome-do-arquivo.pdf','I');
+
+    echo $html;
+
+}
+
 }
