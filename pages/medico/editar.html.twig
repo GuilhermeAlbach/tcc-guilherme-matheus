@@ -12,16 +12,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Médico
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Médico</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -40,34 +30,47 @@
                     <!-- form start -->
                     <form role="form" action="/medico/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_medico">Código</label>
-                                <input type="number" class="form-control" id="id_medico" name="id_medico" readonly value="{{ linha['id_medico'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Profissional</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/medico/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/medico/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome_medico">Nome do Profissional</label>
-                                <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Editar nome do Profissional" required value="{{ linha['nome_medico'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_medico">Código</label>
+                                    <input type="number" class="form-control" id="id_medico" name="id_medico" readonly value="{{ linha['id_medico'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome_medico">Nome do Profissional</label>
+                                    <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Editar nome do Profissional" required value="{{ linha['nome_medico'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="crm_medico">Conselho Regional</label>
-                                <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Editar conselho Regional do Profissional" required value="{{ linha['crm_medico'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="crm_medico">Conselho Regional</label>
+                                    <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Editar conselho Regional do Profissional" required value="{{ linha['crm_medico'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="telefone_medico">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Editar telefone do Profissional" required value="{{ linha['telefone_medico'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="telefone_medico">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Editar telefone do Profissional" required value="{{ linha['telefone_medico'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="especialidade_medico">Especialidade</label>
-                                <select class="form-control select2" id="especialidade_medico" name="especialidade_medico">
-                                <option value="">- Selecione -</option>
-                                    {% for especialidades in especialidades %}
-                                        {% set selected = '' %}
-                                        {% if especialidades.id_especialidade == linha['especialidade_medico'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ especialidades.id_especialidades }}" {{ selected }}>{{ especialidades.especialidade }}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="especialidade_medico">Especialidade</label>
+                                    <select class="form-control select2" id="especialidade_medico" name="especialidade_medico">
+                                        <option value="">- Selecione -</option>
+                                            {% for especialidades in especialidades %}
+                                                {% set selected = '' %}
+                                                {% if especialidades.id_especialidade == linha['especialidade_medico'] %}
+                                                    {% set selected = 'selected' %}
+                                                {% endif %}
+                                                <option value="{{ especialidades.id_especialidades }}" {{ selected }}>{{ especialidades.especialidade }}</option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

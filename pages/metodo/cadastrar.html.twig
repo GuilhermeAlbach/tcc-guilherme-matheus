@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| metodo | Cadastrar{% endblock %}
+{% block title %}| Método | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -10,16 +10,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Metodo
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Metodo</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,9 +28,17 @@
                     <!-- form start -->
                     <form role="form" action="/metodo/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="metodo">Metodo</label>
-                                <input type="text" class="form-control" id="metodo" name="metodo" placeholder="Metodo" required>
+                            <div class="form-group row">
+                                <h3>Cadastrar Método</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/metodo/" class="btn btn-info"><span class="fas fa-list"></span></a>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="metodo">Método</label>
+                                    <input type="text" class="form-control" id="metodo" name="metodo" placeholder="Método" required>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

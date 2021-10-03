@@ -67,19 +67,21 @@ CREATE TABLE IF NOT EXISTS `bancadas` (
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
   `nome_cliente` varchar(45) NOT NULL,
-  `cidade_cliente` varchar(45) NOT NULL,
+  `cidade_cliente` varchar(45) DEFAULT NULL,
   `endereco_cliente` varchar(45) DEFAULT NULL,
   `cpf_cliente` varchar(45) DEFAULT NULL,
+  `rg_cliente` varchar(45) DEFAULT NULL,
   `telefone_cliente` varchar(45) DEFAULT NULL,
   `celular_cliente` varchar(45) DEFAULT NULL,
   `sexo_cliente` enum('Masculino','Feminino') NOT NULL,
   `datanascimento_cliente` date NOT NULL,
   `observacao_cliente` text,
-  `usuario_cliente` varchar(45) DEFAULT NULL,
-  `senha_cliente` varchar(45) DEFAULT NULL,
+  `usuario_cliente` varchar(45) NOT NULL,
+  `senha_cliente` varchar(45) NOT NULL,
+  `cep_cliente` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE KEY `cpf_cliente_UNIQUE` (`cpf_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -93,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `convenios` (
   PRIMARY KEY (`id_convenio`),
   UNIQUE KEY `cnpj_convenio_UNIQUE` (`cnpj_convenio`),
   UNIQUE KEY `telefone_convenio_UNIQUE` (`telefone_convenio`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -148,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `guias` (
   CONSTRAINT `fk_guias_clientes` FOREIGN KEY (`cliente_guia`) REFERENCES `clientes` (`id_cliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_guias_convenios1` FOREIGN KEY (`convenio_guia`) REFERENCES `convenios` (`id_convenio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_guias_medicos1` FOREIGN KEY (`medico_guia`) REFERENCES `medicos` (`id_medico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -164,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `guiasexames` (
   KEY `fk_exames_has_guias_exames1_idx` (`exame_guiaexame`),
   CONSTRAINT `fk_exames_has_guias_exames1` FOREIGN KEY (`exame_guiaexame`) REFERENCES `exames` (`id_exame`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_exames_has_guias_guias1` FOREIGN KEY (`guia_guiaexame`) REFERENCES `guias` (`id_guia`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -216,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `resultados` (
   KEY `FK_resultados_usuarios` (`responsavel_resultado`),
   CONSTRAINT `FK_resultados_usuarios` FOREIGN KEY (`responsavel_resultado`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `fk_resultados_exames_guias1` FOREIGN KEY (`guia_resultado`) REFERENCES `guiasexames` (`id_guiaexame`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -235,14 +237,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nome_usuario` varchar(45) NOT NULL,
   `cpf_usuario` varchar(45) NOT NULL,
+  `rg_usuario` varchar(45) DEFAULT NULL,
   `telefone_usuario` varchar(45) DEFAULT NULL,
   `celular_usuario` varchar(45) DEFAULT NULL,
   `endereco_usuario` varchar(45) NOT NULL,
+  `cidade_usuario` varchar(45) NOT NULL,
+  `cep_usuario` varchar(45) NOT NULL,
   `user_usuario` varchar(45) NOT NULL,
   `senha_usuario` varchar(45) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `cpf_usuario_UNIQUE` (`cpf_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
@@ -252,8 +257,8 @@ CREATE TABLE IF NOT EXISTS `valoresreferencia` (
   `exame_valorreferencia` int(11) NOT NULL,
   `unidademedida_valorreferencia` int(11) NOT NULL,
   `valorreferencia` varchar(45) DEFAULT NULL,
-  `valorreferencia_min` decimal(8,5) DEFAULT NULL,
-  `valorreferencia_max` decimal(8,5) DEFAULT NULL,
+  `valorreferencia_min` decimal(8,3) DEFAULT NULL,
+  `valorreferencia_max` decimal(8,3) DEFAULT NULL,
   `idade_min` varchar(45) DEFAULT NULL,
   `idade_max` varchar(45) DEFAULT NULL,
   `sexo` varchar(45) DEFAULT NULL,
@@ -262,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `valoresreferencia` (
   KEY `FK_valoresreferencia_unidadesmedida` (`unidademedida_valorreferencia`),
   CONSTRAINT `FK_valoresreferencia_unidadesmedida` FOREIGN KEY (`unidademedida_valorreferencia`) REFERENCES `unidadesmedida` (`id_unidademedida`),
   CONSTRAINT `fk_ValoresReferencia_exames1` FOREIGN KEY (`exame_valorreferencia`) REFERENCES `exames` (`id_exame`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 

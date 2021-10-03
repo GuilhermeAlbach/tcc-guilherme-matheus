@@ -1,0 +1,82 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %} | Cliente | Listagem{% endblock %}
+{% block stylesheet %}
+    <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+    <link rel="stylesheet" href="/dist/css/card.css">
+    <link rel="stylesheet" href="/dist/css/customCss.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+            {% for convenios in convenios %}
+                {% if convenios.id_convenio is odd%}
+                    <div class="col">
+                        <div class="conteudo">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="firstinfo">
+                                        <img src="/dist/img/user2-160x160.jpg">
+                                        <div class="profileinfo">
+                                            <h1> {{convenios.nome_convenio}} </h1>
+                                            <h3> {{convenios.responsavel_convenio}} </h3>
+                                            <p class="bio">{{convenios.cnpj_convenio}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if convenios.id_convenio is even %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="conteudo">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="firstinfo">
+                                            <img src="/dist/img/user2-160x160.jpg">
+                                            <div class="profileinfo">
+                                                <h1> {{convenios.nome_convenio}} </h1>
+                                                <h3> {{convenios.responsavel_convenio}} </h3>
+                                                <p class="bio">{{convenios.cnpj_convenio}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {% endif %}
+            {% endfor %}
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+{% block javascriptPlugins %}
+
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

@@ -6,9 +6,9 @@ namespace App\Controllers;
 use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
-use App\ControllerSeguro;
+use App\ControllerSeguroUsuario;
 
-class Cliente Extends ControllerSeguro
+class Cliente Extends ControllerSeguroUsuario
 {
     public function index()
     {
@@ -48,10 +48,10 @@ class Cliente Extends ControllerSeguro
             $this->retornaErro('CPF Inválido.');
         }
 
-        $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,
-                            telefone_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
+        $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,cep_cliente,rg_cliente,
+                            telefone_cliente,celular_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
                             usuario_cliente,senha_cliente) 
-                VALUES (:nome_cliente,:cidade_cliente,:endereco_cliente,:cpf_cliente,:telefone_cliente,
+                VALUES (:nome_cliente,:cidade_cliente,:endereco_cliente,:cpf_cliente,:cep_cliente,:rg_cliente,:telefone_cliente,:celular_cliente,
                         :sexo_cliente,:datanascimento_cliente,:observacao_cliente,:usuario_cliente,
                         :senha_cliente)";
 
@@ -60,7 +60,10 @@ class Cliente Extends ControllerSeguro
         $query->bindParam(":cidade_cliente"        , $_POST['cidade_cliente']);
         $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
         $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
+        $query->bindParam(":cep_cliente"           , $_POST['cep_cliente']);
+        $query->bindParam(":rg_cliente"           , $_POST['rg_cliente']);
         $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
+        $query->bindParam(":celular_cliente"       , $_POST['celular_cliente']);
         $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
         $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
         $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);
@@ -79,9 +82,13 @@ class Cliente Extends ControllerSeguro
     {
         $db = Conexao::connect();
 
+        if($this->validaCPF($_POST['cpf_cliente'])==false) {
+            $this->retornaErro('CPF Inválido.');
+        }
+
         $sql = "UPDATE clientes SET nome_cliente=:nome_cliente, endereco_cliente=:endereco_cliente, 
-                        cpf_cliente=:cpf_cliente, telefone_cliente=:telefone_cliente, senha_cliente=:senha_cliente,
-                        sexo_cliente=:sexo_cliente, datanascimento_cliente=:datanascimento_cliente, 
+                        cpf_cliente=:cpf_cliente,rg_cliente=:rg_cliente,cep_cliente=:cep_cliente, telefone_cliente=:telefone_cliente, celular_cliente=:celular_cliente,
+                        senha_cliente=:senha_cliente, sexo_cliente=:sexo_cliente, datanascimento_cliente=:datanascimento_cliente, 
                         observacao_cliente=:observacao_cliente, usuario_cliente=:usuario_cliente 
                 WHERE id_cliente=:id_cliente";
 
@@ -89,7 +96,10 @@ class Cliente Extends ControllerSeguro
         $query->bindParam(":nome_cliente"          , $_POST['nome_cliente']);
         $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
         $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
+        $query->bindParam(":cep_cliente"           , $_POST['cep_cliente']);
+        $query->bindParam(":rg_cliente"            , $_POST['rg_cliente']);
         $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
+        $query->bindParam(":celular_cliente"       , $_POST['celular_cliente']);
         $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
         $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
         $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);

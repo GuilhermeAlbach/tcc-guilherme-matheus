@@ -4,23 +4,14 @@
 {% block title %}| Médico | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Médico
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Médico</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,26 +30,38 @@
                     <!-- form start -->
                     <form role="form" action="/medico/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nome">Nome do Profissional</label>
-                                <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Nome do Profissional" required>
+                            <div class="form-group row">
+                                <h3>Cadastrar Profissional</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/medico/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Conselho Regional do Profissional</label>
-                                <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Conselho Regional do Profissional">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Nome do Profissional</label>
+                                    <input type="text" class="form-control" id="nome_medico" name="nome_medico" placeholder="Nome do Profissional" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Telefone do Profissional</label>
-                                <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Telefone do Profissional" required>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Conselho Regional do Profissional</label>
+                                    <input type="text" class="form-control" id="crm_medico" name="crm_medico" placeholder="Conselho Regional do Profissional">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Telefone do Profissional</label>
+                                    <input type="text" class="form-control" id="telefone_medico" name="telefone_medico" placeholder="Telefone do Profissional" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="especialidade_medico">Especialidade</label>
-                                <select class="form-control select2" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
-                                    <option value="" selected disabled>-Selecione a Especialidade-</option>
-                                    {% for especialidades in especialidades %}
-                                        <option value="{{ especialidades.id_especialidade }}">{{ especialidades.especialidade }}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="especialidade_medico">Especialidade</label>
+                                    <select class="form-control select2" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
+                                        <option value="" selected disabled>-Selecione a Especialidade-</option>
+                                            {% for especialidades in especialidades %}
+                                                <option value="{{ especialidades.id_especialidade }}">{{ especialidades.especialidade }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

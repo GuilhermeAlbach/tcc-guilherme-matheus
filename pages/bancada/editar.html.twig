@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| bancada | Cadastrar{% endblock %}
+{% block title %}| Bancada | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -10,16 +10,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>bancada
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">bancada</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,13 +28,22 @@
                     <!-- form start -->
                     <form role="form" action="/bancada/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_bancada">Código</label>
-                                <input type="number" class="form-control" id="id_bancada" name="id_bancada" readonly value="{{ linha['id_bancada'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Bancada</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/bancada/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/bancada/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">bancada</label>
-                                <input type="text" class="form-control" id="bancada" name="bancada" placeholder="Nome do Tipo" required value="{{ linha['bancada'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_bancada">Código</label>
+                                    <input type="number" class="form-control" id="id_bancada" name="id_bancada" readonly value="{{ linha['id_bancada'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Bancada</label>
+                                    <input type="text" class="form-control" id="bancada" name="bancada" placeholder="Nome do Tipo" required value="{{ linha['bancada'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

@@ -11,16 +11,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Guia
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Guia</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,44 +29,56 @@
                     <!-- form start -->
                     <form role="form" action="/guia/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="data_guia">Data da Guia</label>
-                                <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{data_guia}}">
+                            <div class="form-group row">
+                                <h3>Cadastrar Guia</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cliente_guia">Cliente</label>
-                                <select id="cliente_guia" class="form-control select2" name="cliente_guia" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for clientes in clientes %}
-                                        <option value="{{ clientes.id_cliente }}">{{ clientes.nome_cliente }}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="data_guia">Data da Guia</label>
+                                    <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{data_guia}}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="medico_guia">Médico</label>
-                                <select id="medico_guia" class="form-control select2" name="medico_guia" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for medicos in medicos %}
-                                        <option value="{{ medicos.id_medico }}">{{ medicos.nome_medico }}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cliente_guia">Cliente</label>
+                                    <select id="cliente_guia" class="form-control select2" name="cliente_guia" required>
+                                        <option value="">- Selecione -</option>
+                                        {% for clientes in clientes %}
+                                            <option value="{{ clientes.id_cliente }}">{{ clientes.nome_cliente }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="medico_guia">Médico</label>
+                                    <select id="medico_guia" class="form-control select2" name="medico_guia" required>
+                                        <option value="">- Selecione -</option>
+                                        {% for medicos in medicos %}
+                                            <option value="{{ medicos.id_medico }}">{{ medicos.nome_medico }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="convenio_guia">Convênio</label>
+                                    <select id="convenio_guia" class="form-control select2" name="convenio_guia" required>
+                                        <option value="">- Selecione -</option>
+                                        {% for convenios in convenios %}
+                                            <option value="{{ convenios.id_convenio }}">{{ convenios.nome_convenio }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="convenio_guia">Convênio</label>
-                                <select id="convenio_guia" class="form-control select2" name="convenio_guia" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for convenios in convenios %}
-                                        <option value="{{ convenios.id_convenio }}">{{ convenios.nome_convenio }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="codigo_guia">Código</label>
-                                <input type="text" class="form-control" id="codigo_guia" name="codigo_guia" placeholder="Nome da guia" required value="{{codigo_guia}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="senha_guia">Senha</label>
-                                <input type="text" class="form-control" id="senha_guia" name="senha_guia" placeholder="Nome da guia" required value="{{senha_guia}}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="codigo_guia">Código</label>
+                                    <input type="text" class="form-control" id="codigo_guia" name="codigo_guia" placeholder="Nome da guia" required value="{{codigo_guia}}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="senha_guia">Senha</label>
+                                    <input type="text" class="form-control" id="senha_guia" name="senha_guia" placeholder="Nome da guia" required value="{{senha_guia}}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

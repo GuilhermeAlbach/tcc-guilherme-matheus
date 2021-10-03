@@ -35,65 +35,62 @@
         <div class="row">
             <div class="col-12">
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    Dados da Guia
-                </div>
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="nome_cliente" class="col-sm-2 col-form-label">Cliente</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="nome_cliente" id="nome_cliente" value="{{linha['nome_cliente'] }} ">
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <h3>Editar Guia</h3>
+                                    <div class="form-group col">
+                                        <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                    </div>
+                                </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="data_guia">Data</label>
+                                    <input type="text" readonly class="form-control" name="data_guia" id="data_guia" value="{{linha['data_guia'] }} ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome_cliente">Cliente</label>
+                                    <input type="text" readonly class="form-control" name="nome_cliente" id="nome_cliente" value="{{linha['nome_cliente'] }} ">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome_medico">Médico</label>
+                                    <input type="text" readonly class="form-control" name="nome_medico" id="nome_medico" value="{{linha['nome_medico'] }} ">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome_convenio">Convênio</label>
+                                    <input type="text" readonly class="form-control" name="nome_convenio" id="nome_convenio" value="{{linha['nome_convenio'] }} ">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="precototal_guia">Valor Total</label>
+                                    <input type="text" readonly class="form-control" name="precototal_guia" id="precototal_guia" value="R$ {{linha['precototal_guia'] }} ">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="prazo_guiaexame">Prazo da Guia</label>
+                                    <input type="text" readonly class="form-control" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="codigo_guia" class="col-form-label">Código da Guia</label>
+                                    <input type="text" readonly class="form-control" name="codigo_guia" id="codigo_guia" value="{{linha['codigo_guia'] }} ">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="senha_guia" class="col-form-label">Senha da Guia</label>
+                                    <input type="text" readonly class="form-control" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="nome_medico" class="col-sm-2 col-form-label">Médico</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="nome_medico" id="nome_medico" value="{{linha['nome_medico'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="nome_convenio" class="col-sm-2 col-form-label">Convênio</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="nome_convenio" id="nome_convenio" value="{{linha['nome_convenio'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="precototal_guia" class="col-sm-2 col-form-label">Valor Total</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="precototal_guia" id="precototal_guia" value="R$ {{linha['precototal_guia'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="data_guia" class="col-sm-2 col-form-label">Data</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="data_guia" id="data_guia" value="{{linha['data_guia'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="codigo_guia" class="col-sm-2 col-form-label">Código da Guia</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="codigo_guia" id="codigo_guia" value="{{linha['codigo_guia'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="senha_guia" class="col-sm-2 col-form-label">Senha da Guia</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="senha_guia" id="senha_guia" value="{{linha['senha_guia'] }} ">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="prazo_guiaexame" class="col-sm-2 col-form-label">Prazo da Guia</label>
-                        <div class="col-sm-10">
-                            <input type="text" readonly class="form-control-plaintext" name="prazo_guiaexame" id="prazo_guia" value="{{linha['prazofinal_guia'] }} horas">
-                        </div>
-                    </div>
-                </div>
-            </div>
-                    <table id="grid-data" class="table table-head-fixed text-nowrap table-hover table-striped">
-                        <thead class="thead-dark">
+                <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
+                    <thead class="thead-light">
                         <tr>
                             <th data-column-id="id_guiaexame" >Código</th>
                             <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
@@ -106,14 +103,12 @@
                         </thead>
                     </table>
 
-
                     <!-- Button trigger modal -->
-                    <br>
-                    <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
+                    <div class="modal fade" id="editarguia" tabindex="-1" role="dialog" aria-labelledby="editarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="adicionarguiaLabel">Adicionando Resultado</h5>
+                                    <h5 class="modal-title" id="editarguiaLabel">Adicionando Resultado</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -154,7 +149,6 @@
 
 
                     <!-- Button trigger modal -->
-                    <br>
                     <div class="modal fade" id="editarguia" tabindex="-1" role="dialog" aria-labelledby="editarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -197,10 +191,11 @@
                             </div>
                         </div>
                     </div>
-
-
+                    <form method="POST" action="/guia/FormPDF/{{linha['id_guia']}}">
+                       <input type="hidden" name="datanascimento_cliente" value="{{linha['datanascimento_cliente']}}">
+                       <input type="submit" value="Gerar PDF" class="btn btn-info">
+                    </form>
                 </div>
-            <a href="/guia/formPDF/{{linha[id_guia]}}" class="btn btn-success" style="float: right">Montar PDF</a>
 
         </div>
     </div>
@@ -237,8 +232,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-primary command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button> " +
-                            " <button type=\"button\" class=\"btn btn-warning command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>";
+                        return " <button type=\"button\" class=\"btn btn-warning command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>" +
+                         "<button type=\"button\" class=\"btn btn-success command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button> ";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

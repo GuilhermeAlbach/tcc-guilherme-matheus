@@ -10,16 +10,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>convenio
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">convenio</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,25 +28,38 @@
                     <!-- form start -->
                     <form role="form" action="/convenio/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_convenio">Código</label>
-                                <input type="number" class="form-control" id="id_convenio" name="id_convenio" readonly value="{{ linha['id_convenio'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Convênio</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/convenio/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/convenio/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome_convenio">Nome</label>
-                                <input type="text" class="form-control" id="nome_convenio" name="nome_convenio" placeholder="Nome do Convenio" required value="{{ linha['nome_convenio'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_convenio">Código</label>
+                                    <input type="number" class="form-control" id="id_convenio" name="id_convenio" readonly value="{{ linha['id_convenio'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome_convenio">Nome</label>
+                                    <input type="text" class="form-control" id="nome_convenio" name="nome_convenio" placeholder="Nome do Convênio" required value="{{ linha['nome_convenio'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cnpj_convenio">CNPJ</label>
-                                <input type="text" class="form-control" id="cnpj_convenio" name="cnpj_convenio" placeholder="CNPJ do Convenio" value="{{ linha['cnpj_convenio'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cnpj_convenio">CNPJ</label>
+                                    <input type="text" class="form-control" id="cnpj_convenio" name="cnpj_convenio" placeholder="CNPJ do Convênio" value="{{ linha['cnpj_convenio'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="telefone_convenio">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_convenio" name="telefone_convenio" placeholder="Telefone do Convênio" required value="{{ linha['telefone_convenio'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="responsavel_convenio">Responsável</label>
-                                <input type="text" class="form-control" id="responsavel_convenio" name="responsavel_convenio" placeholder="Responsável do Convenio" value="{{ linha['responsavel_convenio'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="telefone_convenio">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_convenio" name="telefone_convenio" placeholder="Telefone do Convenio" required value="{{ linha['telefone_convenio'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="responsavel_convenio">Responsável</label>
+                                    <input type="text" class="form-control" id="responsavel_convenio" name="responsavel_convenio" placeholder="Responsável do Convênio" value="{{ linha['responsavel_convenio'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -87,6 +90,7 @@
     <script>
         $(document).ready(function(){
             $('#cnpj_convenio').inputmask('99.999.999/9999-99');        
+            $('#telefone_convenio').inputmask('(99) 9999-9999');        
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| metodo | Cadastrar{% endblock %}
+{% block title %}| Método | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -10,16 +10,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Metodo
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Metodo</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,13 +28,22 @@
                     <!-- form start -->
                     <form role="form" action="/metodo/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_metodo">Código</label>
-                                <input type="number" class="form-control" id="id_metodo" name="id_metodo" readonly value="{{ linha['id_metodo'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Método</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/metodo/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/metodo/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Metodo</label>
-                                <input type="text" class="form-control" id="metodo" name="metodo" placeholder="Editar Metodo" required value="{{ linha['metodo'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_metodo">Código</label>
+                                    <input type="number" class="form-control" id="id_metodo" name="id_metodo" readonly value="{{ linha['id_metodo'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Método</label>
+                                    <input type="text" class="form-control" id="metodo" name="metodo" placeholder="Editar Método" required value="{{ linha['metodo'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

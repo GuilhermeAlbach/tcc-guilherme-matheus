@@ -1,0 +1,63 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %} | Exame | Listagem{% endblock %}
+{% block stylesheet %}
+    <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <section class="content" id="listagem">
+                <h3>Lista de Exames</h3>
+        <div class="row">
+            <div class="col-12">
+                <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th data-column-id="nome_exame" data-order="desc" data-sortable="true">Nome</th>
+                        <th data-column-id="sexo_exame" data-order="desc" data-sortable="true" data-width="7%">Sexo</th>
+                        <th data-column-id="metodo" data-order="desc" data-sortable="true">Metodo</th>
+                        <th data-column-id="descricao_exame" data-order="desc" data-sortable="true">Descrição</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.bootgrid.js"></script>
+    <script src="/dist/js/jquery.bootgrid.fa.js"></script>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        var grid;
+        $(document).ready(function(){
+            grid = $("#grid-data").bootgrid({
+                ajax: true,
+                url: "/exames/bootgrid"
+            })
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

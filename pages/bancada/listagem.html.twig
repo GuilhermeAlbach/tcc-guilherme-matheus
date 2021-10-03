@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | bancada | Listagem{% endblock %}
+{% block title %} | Bancada | Listagem{% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -11,16 +11,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>bancada
-                        <small>Listagem</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">bancada</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -28,15 +18,16 @@
 
 
 {% block content %}
-    <section class="content">
-
+    <section class="content" id="listagem">
+                <h3>Listagem de Bancadas</h3>
         <div class="row">
             <div class="col-12">
-                <table id="grid-data" class="table table-condensed table-hover table-striped">
-                    <thead>
+                <a role="button" id="btn-listagem" href="/bancada/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
+                    <thead class="thead-light">
                     <tr>
                         <th data-column-id="id_bancada" >Código</th>
-                        <th data-column-id="bancada" data-order="desc" data-sortable="true">bancada</th>
+                        <th data-column-id="bancada" data-order="desc" data-sortable="true">Bancada</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
                     </tr>
                     </thead>
@@ -67,8 +58,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_bancada   + "\"><span class=\"fas fa-edit\"></span></button> " +
-                            "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_bancada + "\"><span class=\"fa fa-trash\"></span></button>";
+                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_bancada + "\"><span class=\"fa fa-trash\"></span></button>" +
+                         "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_bancada   + "\"><span class=\"fas fa-edit\"></span></button> ";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

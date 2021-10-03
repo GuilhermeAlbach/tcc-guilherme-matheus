@@ -4,23 +4,14 @@
 {% block title %}| Valores de Referência | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Valores de Referência
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Valores de Referência</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,54 +30,64 @@
                     <!-- form start -->
                     <form role="form" action="/valorreferencia/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="exame_valorreferencia">Exame</label>
-                                <select class="form-control select2" id="exame_valorreferencia" name="exame_valorreferencia" required data-live-search="true">
-                                    <option value="" selected disabled>-Selecione-</option>
-                                    {% for exames in exames %}
-                                        <option value="{{ exames.id_exame }}">{{ exames.nome_exame }}</option>
-                                    {% endfor %}
-
-                                </select>
+                            <div class="form-group row">
+                                <h3>Cadastrar Valor de Referência</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/valorreferencia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="unidademedida_valorreferencia">Unidade de Medida</label>
-                                <select class="form-control select2" id="unidademedida_valorreferencia" name="unidademedida_valorreferencia" required data-live-search="true">
-                                    <option value="" selected disabled>-Selecione-</option>
-                                    {% for unidadesmedida in unidadesmedida %}
-                                        <option value="{{ unidadesmedida.id_unidademedida }}">{{ unidadesmedida.unidademedida }}</option>
-                                    {% endfor %}
-
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="exame_valorreferencia">Exame</label>
+                                    <select class="form-control select2" id="exame_valorreferencia" name="exame_valorreferencia" required data-live-search="true">
+                                        <option value="" selected disabled>-Selecione-</option>
+                                        {% for exames in exames %}
+                                            <option value="{{ exames.id_exame }}">{{ exames.nome_exame }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="unidademedida_valorreferencia">Unidade de Medida</label>
+                                    <select class="form-control select2" id="unidademedida_valorreferencia" name="unidademedida_valorreferencia" required data-live-search="true">
+                                        <option value="" selected disabled>-Selecione-</option>
+                                        {% for unidadesmedida in unidadesmedida %}
+                                            <option value="{{ unidadesmedida.id_unidademedida }}">{{ unidadesmedida.unidademedida }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="valorreferencia">Valor de Referência</label>
-                                <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="Valor de Referência - Fixo">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="sexo">Sexo</label>
+                                    <select class="form-control select2" id="sexo" name="sexo">
+                                        <option value="" selected disabled>-Selecione-</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                        <option value="Ambos">Ambos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="idade_min">Idade Mínima</label>
+                                    <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Idade Min" step="1">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="idade_max">Idade Máxima</label>
+                                    <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Idade Max" step="1">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="valorreferencia_min">Valor Mínimo</label>
-                                <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Valor de Referência Mínimo" step="0.01" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="valorreferencia_max">Valor Máximo</label>
-                                <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Valor de Referência Máximo" step="0.01" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="idade_min">Idade Min</label>
-                                <input type="number" class="form-control" id="idade_min" name="idade_min" placeholder="Idade Min" step="1" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="idade_max">Idade Max</label>
-                                <input type="number" class="form-control" id="idade_max" name="idade_max" placeholder="Idade Max" step="1" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="sexo">Sexo</label>
-                                <select class="form-control select2" id="sexo" name="sexo">
-                                    <option value="" selected disabled>-Selecione-</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Ambos">Ambos</option>
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="valorreferencia_min">Valor de Referência Mínimo</label>
+                                    <input type="number" class="form-control" id="valorreferencia_min" name="valorreferencia_min" placeholder="Valor de Referência Mínimo" step="0.001">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="valorreferencia">Valor de Referência Fixo</label>
+                                    <input type="number" class="form-control" id="valorreferencia" name="valorreferencia" placeholder="Valor de Referência - Fixo">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="valorreferencia_max">Valor de Referência Máximo</label>
+                                    <input type="number" class="form-control" id="valorreferencia_max" name="valorreferencia_max" placeholder="Valor de Referência Máximo" step="0.001">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

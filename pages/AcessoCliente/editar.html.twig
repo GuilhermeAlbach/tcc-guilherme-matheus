@@ -1,0 +1,164 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Cliente | Editar {% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/iziToast.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <h3>Editar Dados Pessoais</h3>
+                                <div class="form-group col">
+                                    <form method="POST" action="/AcessoCliente/ListaDeExames/{{linha['id_cliente']}}">
+                                        <input type="hidden" name="datanascimento_cliente" value="{{linha['datanascimento_cliente']}}">
+                                        <input type="hidden" name="sexo_cliente" value="{{linha['sexo_cliente']}}">
+                                        <input type="submit" value="Visualizar Exames" class="btn btn-info">
+                                    </form>
+                                </div>
+                    <form role="form" action="/AcessoCliente/salvareditar" method="post" class="jsonForm">
+                            </div>
+                            <input type="hidden" readonly class="form-control" id="id_cliente" name="id_cliente" value="{{ linha['id_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" readonly class="form-control" id="nome_cliente" name="nome_cliente" value="{{ linha['nome_cliente'] }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label>Sexo</label>
+                                    <input type="text" readonly class="form-control" id="sexo_cliente" name="sexo_cliente" value="{{ linha['sexo_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="datanascimento_cliente">Data de Nascimento</label>
+                                    <input type="date" readonly class="form-control" id="datanascimento_cliente" name="datanascimento_cliente" value="{{ linha['datanascimento_cliente'] }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cpf_cliente">CPF</label>
+                                    <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" value="{{ linha['cpf_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cpf_cliente">RG</label>
+                                    <input type="text" class="form-control" id="rg_cliente" name="rg_cliente" placeholder="Editar RG do Cliente" value="{{ linha['rg_cliente'] }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="endereco_cliente">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Editar endereço do Cliente" value="{{ linha['endereco_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cidade_cliente">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Editar cidade do Cliente"  value="{{ linha['cidade_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cep_cliente">CEP</label>
+                                    <input type="text" class="form-control" id="cep_cliente" name="cep_cliente" placeholder="Editar CEP do Cliente"  value="{{ linha['cep_cliente'] }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="telefone_cliente">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Editar telefone do Cliente" value="{{ linha['telefone_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="celular_cliente">Celular</label>
+                                    <input type="text" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Editar celular do Cliente" value="{{ linha['celular_cliente'] }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="observacao_cliente">Observação</label>
+                                <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Editar Observação sobre o Cliente">{{ linha['observacao_cliente'] }}</textarea>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Usuario</label>
+                                    <input type="text" readonly class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Editar nome de usuario do Cliente" value="{{ linha['usuario_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Senha</label>
+                                    <input type="text" readonly class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Editar senha do Cliente" value="{{ linha['senha_cliente'] }}">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+    <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.min.js"></script>
+    <script src="/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        $(document).ready(function(){
+            
+            $('#cpf_cliente').inputmask('999.999.999-99');        
+            $('#cep_cliente').inputmask('99999-999');        
+            $('#rg_cliente').inputmask('99.999.999-9');        
+            $('#telefone_cliente').inputmask('(99) 9999-9999');
+            $('#celular_cliente').inputmask('(99) 99999-9999');
+
+            $('.jsonForm').ajaxForm({
+                dataType:  'json',
+
+                success:   function(d){
+                    if (d.status==0){
+                        iziToast.error({
+                            message: d.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: d.mensagem
+                        });
+
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

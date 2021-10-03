@@ -4,23 +4,14 @@
 {% block title %}| Exame | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Exame
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Exame</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,65 +30,77 @@
                     <!-- form start -->
                     <form role="form" action="/exame/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nome_exame">Nome</label>
-                                <input type="text" class="form-control" id="nome_exame" name="nome_exame" placeholder="Nome do exame" required>
+                            <div class="form-group row">
+                                <h3>Cadastrar Exame</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/exame/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sexo_exame">Sexo</label>
-                                <select class="form-control" name="sexo_exame" id="sexo_exame">
-                                    <option value="" selected disabled >Selecione o Sexo</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Ambos">Ambos</option>       
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome_exame">Nome</label>
+                                    <input type="text" class="form-control" id="nome_exame" name="nome_exame" placeholder="Nome do exame" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="requisicao_exame">Requisição</label>
-                                <select class="form-control" name="requisicao_exame" id="requisicao_exame">
-                                    <option value="" selected disabled >- Selecione -</option>
-                                    <option value="sim">Sim</option>
-                                    <option value="nao">Não</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tempo_exame">Tempo</label>
-                                <input type="number" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Tempo do exame" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="material_exame">Material</label>
-                                <select id="material_exame" class="form-control select2" name="material_exame" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for materiais in materiais %}
-                                        <option value="{{ materiais.id_material }}">{{ materiais.material }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="metodo_exame">Metodo</label>
-                                <select id="metodo_exame" class="form-control select2" name="metodo_exame" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for metodos in metodos %}
-                                        <option value="{{ metodos.id_metodo }}">{{ metodos.metodo }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="bancada_exame">Bancada</label>
-                                <select id="bancada_exame" class="form-control select2" name="bancada_exame" required>
-                                    <option value="">- Selecione -</option>
-                                    {% for bancadas in bancadas %}
-                                        <option value="{{ bancadas.id_bancada }}">{{ bancadas.bancada }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="sexo_exame">Sexo</label>
+                                    <select class="form-control select2" name="sexo_exame" id="sexo_exame">
+                                        <option value="" selected disabled >Selecione o Sexo</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                        <option value="Ambos">Ambos</option>       
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="requisicao_exame">Necessita de Requisição</label>
+                                    <select class="form-control select2" name="requisicao_exame" id="requisicao_exame">
+                                        <option value="" selected disabled >- Selecione -</option>
+                                        <option value="sim">Sim</option>
+                                        <option value="nao">Não</option>
+                                    </select>
+                                </div>
+                            <div class="form-group col">
                                 <label for="preco_exame">Preço</label>
                                 <input type="number" class="form-control" id="preco_exame" name="preco_exame" placeholder="Preço do exame" required>
                             </div>
+                                <div class="form-group col">
+                                    <label for="tempo_exame">Tempo</label>
+                                    <input type="number" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Tempo do exame" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="material_exame">Material</label>
+                                    <select id="material_exame" class="form-control select2" name="material_exame" required>
+                                        <option value="">Selecione o Material</option>
+                                        {% for materiais in materiais %}
+                                            <option value="{{ materiais.id_material }}">{{ materiais.material }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="metodo_exame">Método</label>
+                                    <select id="metodo_exame" class="form-control select2" name="metodo_exame" required>
+                                        <option value="">Selecione o Método</option>
+                                        {% for metodos in metodos %}
+                                            <option value="{{ metodos.id_metodo }}">{{ metodos.metodo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="bancada_exame">Bancada</label>
+                                    <select id="bancada_exame" class="form-control select2" name="bancada_exame" required>
+                                        <option value="">Selecione a Bancada</option>
+                                        {% for bancadas in bancadas %}
+                                            <option value="{{ bancadas.id_bancada }}">{{ bancadas.bancada }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="descricao_exame">Descrição</label>
-                                <input type="text" class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Descrição do exame" required>
+                                <textarea class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Descrição do exame" required></textarea>
                             </div>
                         </div>
                         <!-- /.box-body -->

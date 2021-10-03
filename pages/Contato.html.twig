@@ -1,0 +1,82 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+
+{% block title %}| Resultado | Cadastrar{% endblock %}
+{% block stylesheet %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-primary">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="" class="jsonForm">
+                        <div class="card-body" id="contato">
+                            <div class="form-group row">
+                                <h3>Informações Para Contato</h3>
+                                </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-6">
+                                    <label for="data_guia">Número de Telefone (Whatsapp)</label>
+                                    <input type="text" readonly class="form-control" id="data_guia" value="(42) 99956-4307">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-6">
+                                    <label for="data_guia">E-mail</label>
+                                    <input type="text" readonly class="form-control" id="data_guia" value="StoAntonioLaboratorio@gmail.com">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                    <label for="nome_cliente">Endereço</label>
+                                    <input type="text" readonly class="form-control" id="nome_cliente" value="Rua 27 de Janeiro, 307 - Sala 03">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="nome_medico">⠀</label>
+                                    <input type="text" readonly class="form-control" id="nome_medico" value="Paulo Frontin - Paraná">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                    <label for="precototal_guia">Responsável</label>
+                                    <input type="text" readonly class="form-control" id="precototal_guia" value="Irene Wegrzyn ">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="prazo_guiaexame">⠀</label>
+                                    <input type="text" readonly class="form-control" id="prazo_guia" value="CRF/PR 12.431">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock %}
+
+
+
+{% block javascriptPlugins %}
+{% endblock %}
+
+{% block jquery %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

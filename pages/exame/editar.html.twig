@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Exame | Cadastrar{% endblock %}
+{% block title %}| Exame | Editar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
@@ -12,16 +12,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Exame
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Exame</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -40,81 +30,92 @@
                     <!-- form start -->
                     <form role="form" action="/exame/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_exame">Código</label>
-                                <input type="number" class="form-control" id="id_exame" name="id_exame" readonly value="{{ linha['id_exame'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Exame</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/exame/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/exame/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome_exame" placeholder="Editar nome do exame" required value="{{ linha['nome_exame'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_exame">Código</label>
+                                    <input type="number" class="form-control" id="id_exame" name="id_exame" readonly value="{{ linha['id_exame'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" class="form-control" id="nome" name="nome_exame" placeholder="Editar nome do exame" required value="{{ linha['nome_exame'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sexo_exame">Sexo</label>
-                                <select class="form-control" name="sexo_exame" id="sexo_exame" value="{{ linha['sexo_exame'] }}">
-                                    <option value="" disabled >Selecione o Sexo</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Ambos">Ambos</option>       
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="sexo_exame">Sexo</label>
+                                    <select class="form-control" name="sexo_exame" id="sexo_exame">{% set selected = 'selected' %}
+                                        <option value="" disabled >Selecione o Sexo</option>
+                                        <option value="Masculino" {% if linha['sexo_exame'] == 'Masculino' %}{{selected}}{% endif %}>Masculino</option>
+                                        <option value="Feminino" {% if linha['sexo_exame'] == 'Feminino' %}{{ selected }}{% endif %}>Feminino</option>
+                                        <option value="Ambos" {% if linha['sexo_exame'] == 'Ambos' %}{{ selected }}{% endif %}>Ambos</option>       
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="requisicao_exame">Requisição</label>
+                                    <select class="form-control" name="requisicao_exame" id="requisicao_exame">{% set select = 'selected' %}
+                                        <option value="" disabled>Selecione</option>
+                                        <option value="sim" {% if linha['requisicao_exame'] == 'sim' %}{{select}}{% endif %}>Sim</option>
+                                        <option value="nao" {% if linha['requisicao_exame'] == 'nao' %}{{select}}{% endif %}>Não</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="preco_exame">Preço</label>
+                                    <input type="text" class="form-control" id="preco_exame" name="preco_exame" placeholder="Editar preço" required value="{{ linha['preco_exame'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="tempo_exame">Tempo</label>
+                                    <input type="text" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Editar tempo do exame" required value="{{ linha['tempo_exame'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="requisicao_exame">Requisição</label>
-                                <select class="form-control" name="requisicao_exame" id="requisicao_exame">
-                                    <option value="" disabled>Selecione</option>
-                                    <option value="Sim">Sim</option>
-                                    <option value="Nao">Não</option>
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="material_exame">Material</label>
+                                    <select id="material_exame" class="form-control select2" name="material_exame" required  value="{{ linha['nome_exame'] }}" >
+                                        <option value="">- Selecione -</option>
+                                        {% for materiais in materiais %}
+                                            <option value="{{ materiais.id_material }}" {{ selected }}>{{ materiais.material }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="metodo_exame">Metodo</label>
+                                    <select id="metodo_exame" class="form-control select2" name="metodo_exame" required   >
+                                        <option value="">- Selecione -</option>
+                                        {% for metodos in metodos %}
+                                            {% set selected = '' %}
+                                            {% if metodos.id_metodo == linha['metodo_exame'] %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ metodos.id_metodo }}" {{ selected }}>{{ metodos.metodo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="bancada_exame">Bancada</label>
+                                    <select id="bancada_exame" class="form-control select2" name="bancada_exame" required   >
+                                        <option value="">- Selecione -</option>
+                                        {% for bancadas in bancadas %}
+                                            {% set selected = '' %}
+                                            {% if bancadas.id_bancada == linha['bancada_exame'] %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ bancadas.id_bancada }}" {{ selected }}>{{ bancadas.bancada }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="tempo_exame">Tempo</label>
-                                <input type="text" class="form-control" id="tempo_exame" name="tempo_exame" placeholder="Editar tempo do exame" required value="{{ linha['tempo_exame'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="material_exame">Material</label>
-                                <select id="material_exame" class="form-control select2" name="material_exame" required  value="{{ linha['nome_exame'] }}" >
-                                    <option value="">- Selecione -</option>
-                                    {% for materiais in materiais %}
-                                        {% set selected = '' %}
-                                        {% if materiais.id_material == linha['material_exame'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ materiais.id_material }}" {{ selected }}>{{ materiais.material }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="metodo_exame">Metodo</label>
-                                <select id="metodo_exame" class="form-control select2" name="metodo_exame" required   >
-                                    <option value="">- Selecione -</option>
-                                    {% for metodos in metodos %}
-                                        {% set selected = '' %}
-                                        {% if metodos.id_metodo == linha['metodo_exame'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ metodos.id_metodo }}" {{ selected }}>{{ metodos.metodo }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="bancada_exame">Bancada</label>
-                                <select id="bancada_exame" class="form-control select2" name="bancada_exame" required   >
-                                    <option value="">- Selecione -</option>
-                                    {% for bancadas in bancadas %}
-                                        {% set selected = '' %}
-                                        {% if bancadas.id_bancada == linha['bancada_exame'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ bancadas.id_bancada }}" {{ selected }}>{{ bancadas.bancada }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="preco_exame">Descrição</label>
-                                <input type="text" class="form-control" id="preco_exame" name="preco_exame" placeholder="Editar descrição" required value="{{ linha['preco_exame'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="descricao_exame">Descrição</label>
-                                <input type="text" class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Editar descrição" required value="{{ linha['descricao_exame'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="descricao_exame">Descrição</label>
+                                    <textarea class="form-control" id="descricao_exame" name="descricao_exame" placeholder="Editar descrição" required>{{ linha['descricao_exame'] }}</textarea>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

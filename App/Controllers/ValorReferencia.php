@@ -6,9 +6,9 @@ namespace App\Controllers;
 use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
-use App\ControllerSeguro;
+use App\ControllerSeguroUsuario;
 
-class ValorReferencia Extends ControllerSeguro
+class ValorReferencia Extends ControllerSeguroUsuario
 {
     public function index()
     {
@@ -68,6 +68,12 @@ class ValorReferencia Extends ControllerSeguro
     {
         $db = Conexao::connect();
 
+        if($_POST['valorreferencia'] == ""){ $_POST['valorreferencia'] = NULL; }
+        if($_POST['valorreferencia_min'] == ""){ $_POST['valorreferencia_min'] = NULL; }
+        if($_POST['valorreferencia_max'] == ""){ $_POST['valorreferencia_max'] = NULL; }
+        if($_POST['idade_min'] == ""){ $_POST['idade_min'] = NULL; }
+        if($_POST['idade_max'] == ""){ $_POST['idade_max'] = NULL; }
+        
         $sql = "INSERT INTO valoresreferencia(exame_valorreferencia,valorreferencia,
                             valorreferencia_min,valorreferencia_max,idade_min,idade_max,sexo,unidademedida_valorreferencia) 
                     VALUES (:exame_valorreferencia,:valorreferencia,:valorreferencia_min,
@@ -95,6 +101,12 @@ class ValorReferencia Extends ControllerSeguro
     public function salvarEditar()
     {
         $db = Conexao::connect();
+
+        if($_POST['valorreferencia'] == ""){ $_POST['valorreferencia'] = NULL; }
+        if($_POST['valorreferencia_min'] == ""){ $_POST['valorreferencia_min'] = NULL; }
+        if($_POST['valorreferencia_max'] == ""){ $_POST['valorreferencia_max'] = NULL; }
+        if($_POST['idade_min'] == ""){ $_POST['idade_min'] = NULL; }
+        if($_POST['idade_max'] == ""){ $_POST['idade_max'] = NULL; }
 
         $sql = "UPDATE valoresreferencia SET exame_valorreferencia=:exame_valorreferencia, 
                         unidademedida_valorreferencia=:unidademedida_valorreferencia,
@@ -141,7 +153,7 @@ class ValorReferencia Extends ControllerSeguro
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_valorreferencia`, `exame_valorreferencia`, `unidademedida_valorreferencia`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo` FROM valoresreferencia INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida INNER JOIN exames ON exame_valorreferencia = id_exame WHERE 1 ";
+        $sql = "SELECT `id_valorreferencia`, `exame_valorreferencia`, `unidademedida_valorreferencia`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida`,`nome_exame` FROM valoresreferencia INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida INNER JOIN exames ON exame_valorreferencia = id_exame WHERE 1 ";
         if ($busca!=''){
             $sql .= " and (
                         exame_valorreferencia LIKE '%{$busca}%'

@@ -11,16 +11,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Especialidade
-                        <small>Listagem</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Especialidade</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -28,12 +18,13 @@
 
 
 {% block content %}
-    <section class="content">
-
+                <h3>Listagem de Especialidades</h3>
+    <section class="content" id="listagem">
         <div class="row">
             <div class="col-12">
-                <table id="grid-data" class="table table-condensed table-hover table-striped">
-                    <thead>
+                <a role="button" id="btn-listagem" href="/especialidade/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
+                    <thead class="thead-light">
                     <tr>
                         <th data-column-id="id_especialidade" >Código</th>
                         <th data-column-id="especialidade" data-order="desc" data-sortable="true">Especialidade</th>
@@ -67,8 +58,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_especialidade   + "\"><span class=\"fas fa-edit\"></span></button> " +
-                            "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_especialidade + "\"><span class=\"fa fa-trash\"></span></button>";
+                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_especialidade + "\"><span class=\"fa fa-trash\"></span></button>" +
+                         "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_especialidade   + "\"><span class=\"fas fa-edit\"></span></button> ";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

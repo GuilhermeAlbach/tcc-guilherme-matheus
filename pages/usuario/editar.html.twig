@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Usuário | Cadastrar{% endblock %}
+{% block title %}| Usuário | Editar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -10,16 +10,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Usuário
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Usuário</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,37 +28,66 @@
                     <!-- form start -->
                     <form role="form" action="/usuario/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_usuario">Código</label>
-                                <input type="number" class="form-control" id="id_usuario" name="id_usuario" readonly value="{{ linha['id_usuario'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Usuário</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/usuario/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/usuario/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome_usuario">Nome</label>
-                                <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" placeholder="Editar nome do usuário" required value="{{ linha['nome_usuario'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_usuario">Código</label>
+                                    <input type="number" class="form-control" id="id_usuario" name="id_usuario" readonly value="{{ linha['id_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome_usuario">Nome</label>
+                                    <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" placeholder="Editar nome do usuário" required value="{{ linha['nome_usuario'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cpf_usuario">CPF</label>
-                                <input type="text" class="form-control" id="cpf_usuario" name="cpf_usuario" placeholder="Editar nome do usuário" required value="{{ linha['cpf_usuario'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cpf_usuario">CPF</label>
+                                    <input type="text" class="form-control" id="cpf_usuario" name="cpf_usuario" placeholder="Editar nome do usuário" required value="{{ linha['cpf_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cpf_usuario">RG</label>
+                                    <input type="text" class="form-control" id="rg_usuario" name="rg_usuario" placeholder="Editar nome do usuário" required value="{{ linha['rg_usuario'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="telefone_usuario">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_usuario" name="telefone_usuario" placeholder="Editar nome do usuário" required value="{{ linha['telefone_usuario'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="telefone_usuario">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_usuario" name="telefone_usuario" placeholder="Editar nome do usuário" required value="{{ linha['telefone_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="celular_usuario">Celular</label>
+                                    <input type="text" class="form-control" id="celular_usuario" name="celular_usuario" placeholder="Editar nome do usuário" required value="{{ linha['celular_usuario'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="celular_usuario">Telefone</label>
-                                <input type="text" class="form-control" id="celular_usuario" name="celular_usuario" placeholder="Editar nome do usuário" required value="{{ linha['celular_usuario'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="endereco_usuario">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco_usuario" name="endereco_usuario" placeholder="Editar nome do usuário" required value="{{ linha['endereco_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cidade_usuario">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade_usuario" name="cidade_usuario" placeholder="Editar nome do usuário" required value="{{ linha['cidade_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cep_usuario">CEP</label>
+                                    <input type="text" class="form-control" id="cep_usuario" name="cep_usuario" placeholder="Editar nome do usuário" required value="{{ linha['cep_usuario'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="endereco_usuario">Endereço</label>
-                                <input type="text" class="form-control" id="endereco_usuario" name="endereco_usuario" placeholder="Editar nome do usuário" required value="{{ linha['endereco_usuario'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="user_usuario">Usuário</label>
-                                <input type="text" class="form-control" id="user_usuario" name="user_usuario" placeholder="Editar nome do usuário" required value="{{ linha['user_usuario'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="senha_usuario">Senha</label>
-                                <input type="text" class="form-control" id="senha_usuario" name="senha_usuario" placeholder="Editar nome do usuário" required value="{{ linha['senha_usuario'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="user_usuario">Usuário</label>
+                                    <input type="text" class="form-control" id="user_usuario" name="user_usuario" placeholder="Editar nome do usuário" required value="{{ linha['user_usuario'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="senha_usuario">Senha</label>
+                                    <input type="text" class="form-control" id="senha_usuario" name="senha_usuario" placeholder="Editar nome do usuário" required value="{{ linha['senha_usuario'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -99,6 +118,8 @@
     <script>
         $(document).ready(function(){
             $('#cpf_usuario').inputmask('999.999.999-99');        
+            $('#cep_usuario').inputmask('99999-999');        
+            $('#rg_usuario').inputmask('99.999.999-9');        
             $('#telefone_usuario').inputmask('(99) 9999-9999');
             $('#celular_usuario').inputmask('(99) 99999-9999');
 

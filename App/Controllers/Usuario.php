@@ -59,16 +59,20 @@ class usuario Extends ControllerSeguro
 
         $criptografaSenha = $this->criptografa($_POST['senha_usuario']);
 
-        $sql = "INSERT INTO usuarios(nome_usuario,cpf_usuario,telefone_usuario,endereco_usuario,
-                            user_usuario,senha_usuario) 
-                    VALUES (:nome_usuario,:cpf_usuario,:telefone_usuario,:endereco_usuario,
-                            :user_usuario,:senha_usuario)";
+        $sql = "INSERT INTO usuarios(nome_usuario,cpf_usuario,telefone_usuario,endereco_usuario,rg_usuario,
+                            user_usuario,senha_usuario,celular_usuario,cidade_usuario,cep_usuario) 
+                    VALUES (:nome_usuario,:cpf_usuario,:telefone_usuario,:endereco_usuario,:rg_usuario,
+                            :user_usuario,:senha_usuario,:celular_usuario,:cidade_usuario,:cep_usuario)";
 
         $query = $db->prepare($sql);
         $query->bindParam(":nome_usuario"    , $_POST['nome_usuario']);
         $query->bindParam(":cpf_usuario"     , $_POST['cpf_usuario']);
+        $query->bindParam(":rg_usuario"      , $_POST['rg_usuario']);
         $query->bindParam(":telefone_usuario", $_POST['telefone_usuario']);
+        $query->bindParam(":celular_usuario" , $_POST['celular_usuario']);
         $query->bindParam(":endereco_usuario", $_POST['endereco_usuario']);
+        $query->bindParam(":cidade_usuario"  , $_POST['cidade_usuario']);
+        $query->bindParam(":cep_usuario"     , $_POST['cep_usuario']);
         $query->bindParam(":user_usuario"    , $_POST['user_usuario']);
         $query->bindParam(":senha_usuario"   , $criptografaSenha);
         $query->execute();
@@ -84,16 +88,20 @@ class usuario Extends ControllerSeguro
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE usuarios SET nome_usuario=:nome_usuario,telefone_usuario=:telefone_usuario,cpf_usuario=:cpf_usuario,
-                                    endereco_usuario=:endereco_usuario, user_usuario=:user_usuario,
+        $sql = "UPDATE usuarios SET nome_usuario=:nome_usuario,telefone_usuario=:telefone_usuario,celular_usuario=:celular_usuario,cpf_usuario=:cpf_usuario,
+                                    endereco_usuario=:endereco_usuario, user_usuario=:user_usuario,rg_usuario=:rg_usuario,cidade_usuario=:cidade_usuario,cep_usuario=:cep_usuario,
                                     senha_usuario=:senha_usuario 
                 WHERE id_usuario=:id_usuario";
 
         $query = $db->prepare($sql);
         $query->bindParam(":nome_usuario"    , $_POST['nome_usuario']);
         $query->bindParam(":telefone_usuario", $_POST['telefone_usuario']);
+        $query->bindParam(":celular_usuario" , $_POST['celular_usuario']);
         $query->bindParam(":cpf_usuario"     , $_POST['cpf_usuario']);
+        $query->bindParam(":rg_usuario"      , $_POST['rg_usuario']);
         $query->bindParam(":endereco_usuario", $_POST['endereco_usuario']);
+        $query->bindParam(":cidade_usuario"  , $_POST['cidade_usuario']);
+        $query->bindParam(":cep_usuario"     , $_POST['cep_usuario']);
         $query->bindParam(":user_usuario"    , $_POST['user_usuario']);
         $query->bindParam(":senha_usuario"   , $_POST['senha_usuario']);
         $query->bindParam(":id_usuario"      , $_POST['id_usuario']);

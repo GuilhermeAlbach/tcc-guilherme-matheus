@@ -9,17 +9,7 @@
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Convênio
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Convênio</li>
-                    </ol>
-                </div>
+            <div class="row mb-1">
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,21 +28,33 @@
                     <!-- form start -->
                     <form role="form" action="/convenio/salvarcadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nome_convenio">Nome</label>
-                                <input type="text" class="form-control" id="nome_convenio" name="nome_convenio" placeholder="Nome do Convenio" required>
+                            <div class="form-group row">
+                                <h3>Cadastrar Convênio</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/convenio/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cnpj_convenio">CNPJ</label>
-                                <input type="text" class="form-control" id="cnpj_convenio" name="cnpj_convenio" placeholder="CNPJ do Convenio">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome_convenio">Nome</label>
+                                    <input type="text" class="form-control" id="nome_convenio" name="nome_convenio" placeholder="Nome do Convênio" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="responsavel_convenio">Responsável</label>
-                                <input type="text" class="form-control" id="responsavel_convenio" name="responsavel_convenio" placeholder="Responsável do Convenio">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cnpj_convenio">CNPJ</label>
+                                    <input type="text" class="form-control" id="cnpj_convenio" name="cnpj_convenio" placeholder="CNPJ do Convênio">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="telefone_convenio">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_convenio" name="telefone_convenio" placeholder="Telefone do Convênio">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="telefone_convenio">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_convenio" name="telefone_convenio" placeholder="Telefone do Convenio">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="responsavel_convenio">Responsável</label>
+                                    <input type="text" class="form-control" id="responsavel_convenio" name="responsavel_convenio" placeholder="Responsável do Convênio">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

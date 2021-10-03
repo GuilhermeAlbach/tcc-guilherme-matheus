@@ -1,26 +1,17 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| cliente | Cadastrar{% endblock %}
+{% block title %}| Cliente | Cadastrar{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Cliente
-                        <small>Cadastrar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Cliente</li>
-                    </ol>
-                </div>
+            <div class="row mb-1">
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -39,52 +30,81 @@
                     <!-- form start -->
                     <form role="form" action="/cliente/salvarCadastrar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Nome do Cliente" required>
+                            <div class="form-group row">
+                                <h3>Cadastrar Cliente</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/cliente/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Cidade</label>
-                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Cidade do Cliente" required>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Nome do Cliente" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="endereco_cliente">Endereço</label>
-                                <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Endereço do Cliente" >
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label>Sexo</label>
+                                    <select class="form-control select2" name="sexo_exame" id="sexo_exame">
+                                        <option value="" selected disabled>Selecione o Sexo</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="datanascimento_cliente">Data de Nascimento</label>
+                                    <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Data de nascimento do Cliente" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cpf_cliente">CPF</label>
-                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="CPF do Cliente" maxlength="14">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cpf_cliente">CPF</label>
+                                    <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="CPF do Cliente" maxlength="14">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="rg_cliente">RG</label>
+                                    <input type="text" class="form-control" id="rg_cliente" name="rg_cliente" placeholder="RG do Cliente" maxlength="12">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="telefone_cliente">Telefone</label>
-                                <input type="tel" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Telefone do Cliente" maxlength="14" >
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="endereco_cliente">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Endereço do Cliente" >
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cidade_cliente">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Cidade do Cliente" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cep_cliente">CEP</label>
+                                    <input type="text" class="form-control" id="cep_cliente" name="cep_cliente" placeholder="CEP do Cliente" maxlength="9">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="celular_cliente">Celular</label>
-                                <input type="tel" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Celular do Cliente" maxlength="15" >
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="telefone_cliente">Telefone</label>
+                                    <input type="tel" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Telefone do Cliente" maxlength="14" >
+                                </div>
+                                <div class="form-group col">
+                                    <label for="celular_cliente">Celular</label>
+                                    <input type="tel" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Celular do Cliente" maxlength="15" >
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Sexo</label><br>
-                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required>
-                                Masculino<br>
-                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required>
-                                Feminino
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="observacao_cliente">Observação</label>
+                                    <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Observação sobre o Cliente" ></textarea>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="datanascimento_cliente">Data de Nascimento</label>
-                                <input type="date" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Data de nascimento do Cliente" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="observacao_cliente">Observação</label>
-                                <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Observação sobre o Cliente" ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="usuario_cliente">Usuario</label>
-                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome de usuario do Cliente" value="{{usuario_cliente}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="senha_cliente">Senha</label>
-                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Senha do Cliente" value="{{senha_cliente}}" >
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="usuario_cliente">Usuario</label>
+                                    <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Nome de usuario do Cliente" value="{{usuario_cliente}}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="senha_cliente">Senha</label>
+                                    <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Senha do Cliente" value="{{senha_cliente}}" >
+                                </div>
                             </div>
                         </div>
 
@@ -117,13 +137,14 @@
     <script>   
         $(document).ready(function(){
             $('#cpf_cliente').inputmask('999.999.999-99');
+            $('#rg_cliente').inputmask('99.999.999-9');
+            $('#cep_cliente').inputmask('99999-999');
             $('#telefone_cliente').inputmask('(99) 9999-9999');
             $('#celular_cliente').inputmask('(99) 99999-9999');
         
-            $('.select2').select2()
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
+            $('select').select2({
+                theme: 'bootstrap4',
+            });
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 

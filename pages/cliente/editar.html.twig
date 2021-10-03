@@ -9,17 +9,7 @@
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Cliente
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Cliente</li>
-                    </ol>
-                </div>
+            <div class="row mb-1">
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,64 +28,84 @@
                     <!-- form start -->
                     <form role="form" action="/cliente/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_cliente">Código</label>
-                                <input type="number" class="form-control" id="id_cliente" name="id_cliente" readonly value="{{ linha['id_cliente'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Cliente</h3>
+                                <div class="form-group col">
+                                    <a role="button" href="/cliente/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/cliente/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Editar nome do Cliente" required value="{{ linha['nome_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_cliente">Código</label>
+                                    <input type="number" class="form-control" id="id_cliente" name="id_cliente" readonly value="{{ linha['id_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" class="form-control" id="nome_cliente" name="nome_cliente" placeholder="Editar nome do Cliente" required value="{{ linha['nome_cliente'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Cidade</label>
-                                <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Editar cidade do Cliente" required value="{{ linha['cidade_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label>Sexo</label>
+                                    <select class="form-control select2" name="sexo_exame" id="sexo_exame">{% set selected = 'selected' %}
+                                        <option value="" selected disabled>Selecione o Sexo</option>
+                                        <option value="Masculino" {% if linha['sexo_cliente'] == 'Masculino' %}{{selected}}{% endif %}>Masculino</option>
+                                        <option value="Feminino" {% if linha['sexo_cliente'] == 'Feminino' %}{{selected}}{% endif %}>Feminino</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="datanascimento_cliente">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Editar data de nascimento do Cliente" required value="{{ linha['datanascimento_cliente'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Endereço</label>
-                                <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Editar endereço do Cliente" value="{{ linha['endereco_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cpf_cliente">CPF</label>
+                                    <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" maxlength="14" value="{{ linha['cpf_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cpf_cliente">RG</label>
+                                    <input type="text" class="form-control" id="rg_cliente" name="rg_cliente" placeholder="Editar RG do Cliente" maxlength="12" value="{{ linha['rg_cliente'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cpf_cliente">CPF</label>
-                                <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" maxlength="14" value="{{ linha['cpf_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="endereco_cliente">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco_cliente" name="endereco_cliente" placeholder="Editar endereço do Cliente" value="{{ linha['endereco_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cidade_cliente">Cidade</label>
+                                    <input type="text" class="form-control" id="cidade_cliente" name="cidade_cliente" placeholder="Editar cidade do Cliente" required value="{{ linha['cidade_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="cep_cliente">CEP</label>
+                                    <input type="text" class="form-control" id="cep_cliente" name="cep_cliente" placeholder="Editar CEP do Cliente" required value="{{ linha['cep_cliente'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="telefone_cliente">Telefone</label>
-                                <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Editar telefone do Cliente" maxlength="14" value="{{ linha['telefone_cliente'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="celular_cliente">Celular</label>
-                                <input type="text" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Editar celular do Cliente" maxlength="15" value="{{ linha['celular_cliente'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label>Sexo</label><br>
-                                {% if (clientes.sexo_cliente == 'Masculino') %}
-                                    {% set checked_M = "checked" %}
-                                    {% set checked_F = "" %}
-                                {% elseif (linha[sexo_cliente] == 'Feminino') %}
-                                    {% set checked_M = "" %}
-                                    {% set checked_F = "checked" %}
-                                {% endif %}
-
-                                <input type="radio"  id="Masculino" name="sexo_cliente" value="Masculino" required {{checked_M}}>
-                                <label for="Masculino">Masculino</label><br>
-                                <input type="radio"  id="Feminino" name="sexo_cliente" value="Feminino" required {{checked_F}}>
-                                <label for="Feminino">Feminino</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="datanascimento_cliente">Data de Nascimento</label>
-                                <input type="date" class="form-control" id="datanascimento_cliente" name="datanascimento_cliente" placeholder="Editar data de nascimento do Cliente" required value="{{ linha['datanascimento_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="telefone_cliente">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone_cliente" name="telefone_cliente" placeholder="Editar telefone do Cliente" maxlength="14" value="{{ linha['telefone_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="celular_cliente">Celular</label>
+                                    <input type="text" class="form-control" id="celular_cliente" name="celular_cliente" placeholder="Editar celular do Cliente" maxlength="15" value="{{ linha['celular_cliente'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="observacao_cliente">Observação</label>
                                 <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Editar Observação sobre o Cliente">{{ linha['observacao_cliente'] }}</textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="nome">Usuario</label>
-                                <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Editar nome de usuario do Cliente" value="{{ linha['usuario_cliente'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="nome">Senha</label>
-                                <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Editar senha do Cliente" value="{{ linha['senha_cliente'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="nome">Usuario</label>
+                                    <input type="text" class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Editar nome de usuario do Cliente" value="{{ linha['usuario_cliente'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nome">Senha</label>
+                                    <input type="text" class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Editar senha do Cliente" value="{{ linha['senha_cliente'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -128,6 +138,8 @@
         $(document).ready(function(){
             
             $('#cpf_cliente').inputmask('999.999.999-99');        
+            $('#cep_cliente').inputmask('99999-999');        
+            $('#rg_cliente').inputmask('99.999.999-9');        
             $('#telefone_cliente').inputmask('(99) 9999-9999');
             $('#celular_cliente').inputmask('(99) 99999-9999');
 

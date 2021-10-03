@@ -6,9 +6,9 @@ namespace App\Controllers;
 use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
-use App\ControllerSeguro;
+use App\ControllerSeguroUsuario;
 
-class Exame Extends ControllerSeguro
+class Exame Extends ControllerSeguroUsuario
 {
     public function index()
     {
@@ -159,8 +159,6 @@ class Exame Extends ControllerSeguro
     {
         $busca = addslashes($_POST['searchPhrase']);
         $sql = "SELECT `id_exame`, `nome_exame`, `sexo_exame`, `requisicao_exame`, `tempo_exame`, `descricao_exame`, `preco_exame`, `material`, `bancada`, `metodo` FROM exames INNER JOIN materiais ON material_exame = id_material INNER JOIN bancadas ON bancada_exame = id_bancada INNER JOIN metodos ON metodo_exame = id_metodo WHERE 1";
-       // $sql = "SELECT `id_exame`, `nome_exame`, `bancada` FROM exames INNER JOIN bancadas ON bancada_exame = id_bancada WHERE 1";
-       // $sql = "SELECT `id_exame`, `nome_exame`, `metodo` FROM exames INNER JOIN metodos ON metodo_exame = id_metodo WHERE 1";
 
         if ($busca!=''){
             $sql .= " and (

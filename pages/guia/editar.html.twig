@@ -14,16 +14,6 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Guia
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Guia</li>
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -42,97 +32,165 @@
                     <!-- form start -->
                     <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="id_guia">Código</label>
-                                <input type="number" class="form-control" id="id_guia" name="id_guia" readonly value="{{ linha['id_guia'] }}">
+                            <div class="form-group row">
+                                <h3>Editar Guia</h3>
+                                    <div class="form-group col">
+                                        <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                    </div>
+                                </div>
+                            <div class="form-group row">
+                                <div class="form-group col-md-1">
+                                    <label for="id_guia">Código</label>
+                                    <input type="number" class="form-control" id="id_guia" name="id_guia" readonly value="{{ linha['id_guia'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="data_guia">Data da Guia</label>
+                                    <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{ linha['data_guia'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="data_guia">Data da Guia</label>
-                                <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{ linha['data_guia'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="cliente_guia">Cliente</label>
+                                    <select id="cliente_guia" class="form-control select2" name="cliente_guia" required   >
+                                        <option value="">- Selecione -</option>
+                                        {% for clientes in clientes %}
+                                            {% set selected = '' %}
+                                            {% if clientes.id_cliente == linha['cliente_guia'] %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ clientes.id_cliente }}" {{ selected }}>{{ clientes.nome_cliente }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="medico_guia">Médico</label>
+                                    <select id="medico_guia" class="form-control select2" name="medico_guia" required   >
+                                        <option value="">- Selecione -</option>
+                                        {% for medicos in medicos %}
+                                            {% set selected = '' %}
+                                            {% if medicos.id_medico == linha['medico_guia'] %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ medicos.id_medico }}" {{ selected }}>{{ medicos.nome_medico }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="convenio_guia">Convênio</label>
+                                    <select id="convenio_guia" class="form-control select2" name="convenio_guia" required   >
+                                        <option value="">- Selecione -</option>
+                                        {% for convenios in convenios %}
+                                            {% set selected = '' %}
+                                            {% if convenios.id_convenio == linha['convenio_guia'] %}
+                                                {% set selected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ convenios.id_convenio }}" {{ selected }}>{{ convenios.nome_convenio }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cliente_guia">Cliente</label>
-                                <select id="cliente_guia" class="form-control select2" name="cliente_guia" required   >
-                                    <option value="">- Selecione -</option>
-                                    {% for clientes in clientes %}
-                                        {% set selected = '' %}
-                                        {% if clientes.id_cliente == linha['cliente_guia'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ clientes.id_cliente }}" {{ selected }}>{{ clientes.nome_cliente }}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="precototal_guia">Preço da Guia</label>
+                                    <input type="text" class="form-control" id="precototal_guia" name="precototal_guia" placeholder="Preço da guia" required value="{{ linha['precototal_guia'] }}">
+                                </div>
+                                
+                                <div class="form-group col">
+                                    <label for="prazofinal_guia">Prazo da Guia</label>
+                                    <input type="text" class="form-control" id="prazofinal_guia" name="prazofinal_guia" placeholder="Prazo da guia" required value="{{ linha['prazofinal_guia'] }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="medico_guia">Médico</label>
-                                <select id="medico_guia" class="form-control select2" name="medico_guia" required   >
-                                    <option value="">- Selecione -</option>
-                                    {% for medicos in medicos %}
-                                        {% set selected = '' %}
-                                        {% if medicos.id_medico == linha['medico_guia'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ medicos.id_medico }}" {{ selected }}>{{ medicos.nome_medico }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="convenio_guia">Convênio</label>
-                                <select id="convenio_guia" class="form-control select2" name="convenio_guia" required   >
-                                    <option value="">- Selecione -</option>
-                                    {% for convenios in convenios %}
-                                        {% set selected = '' %}
-                                        {% if convenios.id_convenio == linha['convenio_guia'] %}
-                                            {% set selected = 'selected' %}
-                                        {% endif %}
-                                        <option value="{{ convenios.id_convenio }}" {{ selected }}>{{ convenios.nome_convenio }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="precototal_guia">Preço da Guia</label>
-                                <input type="text" class="form-control" id="precototal_guia" name="precototal_guia" placeholder="Preço da guia" required value="{{ linha['precototal_guia'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="prazofinal_guia">Prazo da Guia</label>
-                                <input type="text" class="form-control" id="prazofinal_guia" name="prazofinal_guia" placeholder="Prazo da guia" required value="{{ linha['prazofinal_guia'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="codigo_guia">Código</label>
-                                <input type="text" class="form-control" id="codigo_guia" name="codigo_guia" placeholder="Código da guia" required value="{{ linha['codigo_guia'] }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="senha_guia">Senha</label>
-                                <input type="text" class="form-control" id="senha_guia" name="senha_guia" placeholder="Senha da guia" required value="{{ linha['senha_guia'] }}">
+                            <div class="form-group row">
+                                <div class="form-group col">
+                                    <label for="codigo_guia">Código</label>
+                                    <input type="text" class="form-control" id="codigo_guia" name="codigo_guia" placeholder="Código da guia" required value="{{ linha['codigo_guia'] }}">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="senha_guia">Senha</label>
+                                    <input type="text" class="form-control" id="senha_guia" name="senha_guia" placeholder="Senha da guia" required value="{{ linha['senha_guia'] }}">
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
-
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-warning">Salvar</button>
                         </div>
                     </form>
-                    <table id="grid-data" class="table table-head-fixed text-nowrap table-hover table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th data-column-id="id_guiaexame" >Código</th>
-                            <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
-                            <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
-                            <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
-                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
-                        </tr>
-                        </thead>
-                    </table>
-                                <div class="tab-content" id="myTabContent">
+
+            <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="guia" role="tabpanel" aria-labelledby="guia-tab">
 
                     <!-- Button trigger modal -->
-                    <br>
                     <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="adicionarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="adicionarguiaLabel">Adicionando Exame</h5>
+                                    <h5 class="modal-title" id="adicionarguiaLabel">Adicionar Exame</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form role="form" action="/guia/salvarcadastrarExame" method="post" class="jsonForm">
+                                        <div class="form-group">
+                                            <label for="exame_guiaexame">Exame</label>
+                                            <select class="form-control selectpicker select2" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
+                                                <option value="" selected disabled>- Selecione o Exame -</option>
+                                            {% for exames in exames %}
+                                                <option data-preco-exame='{{exames.preco_exame}}' data-prazo-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}">{{ exames.nome_exame }} </option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="preco_guiaexame">Valor</label>
+                                            <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prazo_guiaexame">Prazo</label>
+                                            <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="hidden" name="guia_guiaexame" value="{{linha['id_guia'] }}">
+                                            <button type="submit" class="btn btn-success" >Salvar</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+    <section class="content" id="listagem">
+        <div class="row">
+            <div class="col-12">
+                <a role="button" id="btn-listagem" class="btn btn-primary" data-toggle="modal" data-target="#adicionarguia"><span>Adicionar Exame</span></a> 
+                <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
+                    <thead class="thead-light">
+                    <tr>
+                        <th data-column-id="id_guiaexame" >Código</th>
+                        <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
+                        <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
+                        <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+                <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="guia" role="tabpanel" aria-labelledby="guia-tab">
+
+                    <!-- Button trigger modal -->
+                    <br>
+                    <div class="modal fade" id="editarguia" tabindex="-1" role="dialog" aria-labelledby="editarguiaLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editarguiaLabel">Editando Exame</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -140,25 +198,25 @@
                                 <div class="modal-body">
                                     <form role="form" action="/guia/salvareditarExame" method="post" class="jsonForm">
                                         <div class="form-group">
-                                            <label for="exame_guiaexame">Exame</label>
-                                            <select class="form-control selectpicker select2" id="exame_guiaexame" name="exame_guiaexame" required data-live-search="true">
+                                            <label for="exame_guiaexam">Exame</label>
+                                            <select class="form-control selectpicker select2" id="exame_guiaexam" name="exame_guiaexame" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Exame -</option>
                                                 {% for exames in exames %}
                                                     {% set selected = '' %}
                                                     {% if exames.id_exame == linha['exame_guiaexame'] %}
                                                         {% set selected = 'selected' %}
                                                     {% endif %}
-                                                    <option data-preco-exame='{{exames.preco_exame}}' data-prazo-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
+                                                    <option data-prec-exame='{{exames.preco_exame}}' data-praz-exame='{{exames.tempo_exame}}' value="{{ exames.id_exame }}" {{ selected }}>{{ exames.nome_exame }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="preco_guiaexame">Valor</label>
-                                            <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required value="{{linha[preco_guiaexame]}}">
+                                            <input type="number" min="1" step="0.01" class="form-control" id="prec_guiaexame" name="preco_guiaexame" required value="{{linha[preco_guiaexame]}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="prazo_guiaexame">Prazo</label>
-                                            <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required value="{{linha[prazo_guiaexame]}}">
+                                            <input type="number" min="1" step="1" class="form-control" id="praz_guiaexame" name="prazo_guiaexame" required value="{{linha[prazo_guiaexame]}}">
                                         </div>
 
                                         <div class="form-group">
@@ -187,6 +245,8 @@
     <script src="/dist/js/jquery.bootgrid.js"></script>
     <script src="/dist/js/jquery.bootgrid.fa.js"></script>
     <script src="/dist/js/jquery.form.js"></script>
+    <script src="/dist/js/iziToast.js"></script>
+    <script src="/dist/js/iziToastExcluir.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
     <script src="/plugins/select2/js/select2.full.min.js"></script>
 
@@ -205,6 +265,14 @@
                 $("#prazo_guiaexame").val(prazo_guiaexame);
         });
 
+            $("#exame_guiaexam").on('change', function () {
+                preco_guiaexame = $(this).find(':selected').data('prec-exame');
+                $("#prec_guiaexame").val(preco_guiaexame);
+        });
+            $("#exame_guiaexam").on('change', function () {
+                prazo_guiaexame = $(this).find(':selected').data('praz-exame');
+                $("#praz_guiaexame").val(prazo_guiaexame);
+        });
             grid = $("#grid-data").bootgrid({
                 ajax: true,
                 post: function ()
@@ -216,7 +284,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>";
+                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-trash\"></span></button> " +
+                         "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button> ";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()
@@ -224,14 +293,16 @@
                 grid.find(".command-edit").on("click", function(e)
                 {
                     $("#id_guiaexame").val( $(this).data("row-id") );
-                    $("#adicionarguia").modal('show');
-                })
+                    $("#editarguia").modal('show');
+                }).end().find(".command-delete").on("click", function(e)
+                {
+                    iziToastExcluir($(this).data("row-id"));
+                });
             });
 
             $('.select2').select2({
                 theme: 'bootstrap4'
             });
-
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 
@@ -242,17 +313,63 @@
                         });
                     }else{
                         iziToast.success({
-                            message: d.mensagem,
-                            onClosed: function(){
-                                document.location = "/guia";
-                            }
+                            message: d.mensagem
                         });
-
+                    $('.jsonForm').trigger('reset');
+                    grid.bootgrid("reload");
+                    atualizaValorTotal();
+                    atualizaPrazoFinal();
                     }
+                $("#adicionarguia").modal('hide');
                 }
-
             });
         });
+
+        function atualizaValorTotal() {
+            $.getJSON(
+                "/guia/AtualizaValor",
+                { id_guia :{{linha['id_guia'] }}},
+                function(data){
+                    $("#precototal_guia").val(data.precototal_guia);
+                },
+            );
+        }
+        atualizaValorTotal();
+
+        function atualizaPrazoFinal() {
+            $.getJSON(
+                "/guia/AtualizaPrazo",
+                { id_guia :{{linha['id_guia'] }}},
+                function(data){
+                    $("#prazofinal_guia").val(data.prazofinal_guia);
+                },
+            );
+        }
+        atualizaPrazoFinal();
+
+
+        function excluir(id_guiaexame){
+            $.post(
+                "/guia/excluirExame",
+                { id_guiaexame: id_guiaexame },
+                function( data ) {
+                    if (data.status==0){
+                        iziToast.error({
+                            message: data.mensagem
+                        });
+                    }else{
+                        iziToast.success({
+                            message: data.mensagem
+                        });
+                        grid.bootgrid("reload");
+                        atualizaValorTotal();
+                        atualizaPrazoFinal();
+
+                    }
+                },
+                "json"
+            );
+        }
     </script>
 {% endblock %}
 

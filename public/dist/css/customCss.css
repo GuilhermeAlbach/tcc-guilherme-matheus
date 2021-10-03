@@ -1,0 +1,138 @@
+.main-sidebar {
+    background-color: #95bf75 !important;
+    width: 205px !important;
+    position: absolute;
+}
+
+.main-sidebar a {
+    color: #000 !important;
+}
+
+.brand-link {
+    background-color: #4b7c26 !important;
+    background-image: url(/dist/img/LogoLab-Vermelho.png);
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position: center;
+}
+
+.brand-text {
+    color: #4b7c26 !important;
+    font-size: 17px;
+}
+
+.main-header {
+    background-color: #4b7c26 !important;
+    margin-left: 0px !important;
+    padding-left: 200px;
+    background-image: url(/dist/img/LogoLab-Vermelho.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 2% 0%;
+}
+
+.main-header a {
+    color: #FFF !important;
+}
+
+.main-footer {
+    margin-left: 0px !important;
+}
+
+.content-wrapper {
+    background-image: url(/dist/img/fundo.jpg) !important;
+    background-position: bottom right;
+    background-size: cover;
+    margin-left: 0px !important;
+}
+
+.content {
+    margin: auto !important;
+    margin-left: 110px !important;
+    width: 90% !important;
+}
+
+#listagem {
+    width: 90% !important;
+    margin-left: 120px !important;
+}
+
+#btn-listagem {
+    float: left !important;
+    margin-top: 0px !important;
+}
+
+#contato {
+    background-image: url(/dist/img/logo_lab.png);
+    background-position: bottom right;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: right center;
+}
+
+#lista {
+    margin: 10px auto;
+    width: 1000px;
+}
+
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 0cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.subpage {
+    padding: 1cm;
+    border: 5px #ad3939 solid;
+    height: 237mm;
+    outline: 2cm #FFEAEA solid;
+}
+
+#pdf-body {
+    padding: 0.5rem 1.25rem;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media print {
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+    }
+}
+
+.form-group {
+    margin-bottom: 0.5rem !important;
+}
+
+button {
+    float: right !important;
+}
+
+.btn {
+    color: #FFF !important;
+    float: right !important;
+}
+
+.btn-default {
+    color: #000 !important;
+}
+
+.content-header {
+    padding: 10px .5rem;
+}
