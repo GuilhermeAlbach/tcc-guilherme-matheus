@@ -6,9 +6,9 @@ namespace App\Controllers;
 use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
-use App\ControllerSeguro;
+use App\ControllerSeguroUsuario;
 
-class Bancada Extends ControllerSeguro
+class Bancada Extends ControllerSeguroUsuario
 {
     public function index()
     {

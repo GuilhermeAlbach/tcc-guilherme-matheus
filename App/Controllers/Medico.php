@@ -6,9 +6,9 @@ namespace App\Controllers;
 use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
-use App\ControllerSeguro;
+use App\ControllerSeguroUsuario;
 
-class Medico Extends ControllerSeguro
+class Medico Extends ControllerSeguroUsuario
 {
     public function index()
     {
