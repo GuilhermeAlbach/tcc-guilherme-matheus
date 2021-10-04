@@ -43,6 +43,7 @@
     background-image: url(/dist/img/fundo.jpg) !important;
     background-position: bottom right;
     background-size: cover;
+    background-attachment: fixed;
     margin-left: 0px !important;
 }
 
@@ -121,12 +122,12 @@
 }
 
 button {
-    float: right !important;
+    /*float: right !important;*/
 }
 
 .btn {
     color: #FFF !important;
-    float: right !important;
+    /*float: right !important;*/
 }
 
 .btn-default {

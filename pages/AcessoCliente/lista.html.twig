@@ -19,15 +19,18 @@
 
 {% block content %}
     <section class="content">
-            {% for guias in guias %}
+            {% for guias in guiaDados %}
+                <pre>
+                {{ dump(valorreferencia) }}
+                    </pre>
                     <div class="row">
                         <div class="col">
                             <div class="conteudo">
                                 <div class="card" id="lista">
                                     <div class="card-header">
                                         <h4>{{guias.data_guia}}
-                                            <form method="POST" action="/AcessoCliente/FormPDF/{{guias['id_guia']}}">
-                                                <input type="hidden" name="datanascimento_cliente" value="{{guias['datanascimento_cliente']}}">
+                                            <form method="POST" action="/AcessoCliente/FormPDF/{{guias.id_guia}}">
+                                                <input type="hidden" name="datanascimento_cliente" value="{{guias.datanascimento_cliente}}">
                                                 <input type="submit" value="Gerar PDF" class="btn btn-info">
                                             </form>
                                         </h4>
@@ -35,7 +38,7 @@
                                     <div class="card-body">
                                         <div class="firstinfo">
                                             <div class="profileinfo">
-                                                <h3> {{guias['nome_cliente']}} - {{guias['nome_medico']}} </h3>
+                                                <h3> {{guias.nome_cliente}} - {{guias.nome_medico}} </h3>
                                                 <table class="table">
                                                 <thead>
                                                 <tr>
@@ -44,11 +47,11 @@
                                                     <th>Valor de Referência</th>
                                                 </tr>
                                                 </thead>
-                                                {% for guiasexames in guiasexames %}
+                                                {% for exame in guias.exames %}
                                                     <tr>
-                                                        <td>{{guiasexames['nome_exame']}}</td>
-                                                        <td>{{guiasexames['resultado']}}</td>
-                                                        <td>Entre {{valorreferencia['idade_min']}} e {{valorreferencia['idade_max']}}: {{valorreferencia['valorreferencia']}}</td>
+                                                        <td>{{exame.nome_exame}}</td>
+                                                        <td>{{exame.resultado}}</td>
+                                                        <td>Entre {{exame.idade_min}} e {{valorreferencia['idade_max']}}: {{valorreferencia.valorreferencia}}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </table>

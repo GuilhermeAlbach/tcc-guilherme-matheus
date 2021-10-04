@@ -47,7 +47,14 @@ class login Extends Controller
 
                 $_SESSION['UsuarioLogado'] = true;
                 $_SESSION['id_usuario'] = $linha->id_usuario;
-                $this->retornaOK('Acesso autorizado.');
+
+                $retorno['status'] = 1;
+                $retorno['mensagem'] = 'Acesso autorizado';
+                $retorno['url'] = "/guia";
+
+                echo $this->jsonResponse($retorno);
+                exit;
+
             }else{
                 $_SESSION['Usuariologado'] = false;
 
@@ -68,7 +75,12 @@ class login Extends Controller
                     $_SESSION['ClienteLogado'] = true;
                     $_SESSION['UsuarioLogado'] = false;
                     $_SESSION['id_cliente'] = $linha->id_cliente;
-                    header("Location: /AcessoCliente/Editar/" . $_SESSION['id_cliente']);
+
+                    $retorno['status'] = 1;
+                    $retorno['mensagem'] = 'Acesso autorizado';
+                    $retorno['url'] = "/AcessoCliente/Editar/" . $_SESSION['id_cliente'];
+
+                    echo $this->jsonResponse($retorno);
                     exit;
                 }else{
                     $_SESSION['ClienteLogado'] = false;
@@ -94,7 +106,12 @@ class login Extends Controller
                         $_SESSION['UsuarioLogado'] = false;    
                         $_SESSION['id_guia'] = $linha2->id_guia;
                         $_SESSION['datanascimento_cliente'] = $linha2->datanascimento_cliente;
-                        header("Location: /AcessoCliente/FormPDF/" . $_SESSION['id_guia']);
+
+                        $retorno['status'] = 1;
+                        $retorno['mensagem'] = 'Acesso autorizado';
+                        $retorno['url'] = "/AcessoCliente/FormPDF/" . $_SESSION['id_guia'];
+
+                        echo $this->jsonResponse($retorno);
                         exit;
                     }else{
                         $_SESSION['ClienteLogado'] = false;

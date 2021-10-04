@@ -25,36 +25,49 @@ class AcessoCliente Extends ControllerSeguroCliente
         $queryGuia->bindParam(":id_cliente", $id_cliente);
         $resultadoGuia = $queryGuia->execute();
 
-        $guias = $queryGuia->fetchAll();
-
-
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE cliente_guia=:id_cliente AND id_guia=:id_guia ORDER BY data_guia DESC";
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_cliente", $id_cliente);
-        $query->bindParam(":id_guia", $id);
-        $resultado = $query->execute();
-
-        $guiasexames = $query->fetchAll();
-
         $agora = new DateTime("now");
         $nasc = new DateTime($_POST['datanascimento_cliente']);
         $idade_cliente = date_diff($nasc, $agora);
         $idade = $idade_cliente->format('%Y');
 
+        while ($guia = $queryGuia->fetchObject()){
+            $guiasDado = $guia;
+
+            $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE cliente_guia=:id_cliente AND id_guia=:id_guia ORDER BY data_guia DESC";
+            $queryExame = $db->prepare($sql);
+            $queryExame->bindParam(":id_cliente", $id_cliente);
+            $queryExame->bindParam(":id_guia", $guia->id_guia);
+            $queryExame->execute();
+
+            while($exame = $queryExame->fetchObject()){
+
+                $sql = "SELECT `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM valoresreferencia INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida INNER JOIN exames ON exame_valorreferencia = id_exame INNER JOIN guiasexames ON exame_guiaexame = id_exame WHERE idade_max > :idade_cliente OR idade_min < :idade_cliente AND (sexo = :sexo_cliente OR sexo= 'Ambos') AND id_exame = :id_exame ";
+                $query = $db->prepare($sql);
+                $query->bindParam(":id_cliente", $id_cliente);
+                $query->bindParam(":idade_cliente", $idade);
+                $query->bindParam(":sexo_cliente", $_POST['sexo_cliente']);
+                $query->bindParam(":id_exame", $exame->exame_guiaexame);
+                $query->execute();
+
+                $exame->valorReferencia = $query->fetchAll(\PDO::FETCH_OBJ);
+
+                $guiasDado->exames[] = $exame;
+
+            }
+
+            $guiaDados[] = $guiasDado;
+        }
+
+        $guiaDados = json_decode(json_encode($guiaDados, false));
+        //$guiaDados = (object) $guiaDados;
 
 
-        $sql = "SELECT `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM valoresreferencia INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida INNER JOIN exames ON exame_valorreferencia = id_exame INNER JOIN guiasexames ON exame_guiaexame = id_exame WHERE idade_max > :idade_cliente OR idade_min < :idade_cliente AND sexo = :sexo_cliente";
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_cliente", $id_cliente);
-        $query->bindParam(":idade_cliente", $idade);
-        $query->bindParam(":sexo_cliente", $_POST['sexo_cliente']);
-        $resultado = $query->execute();
-
-        $valorReferencia = $query->fetchAll();
+        print_r($valorreferencia);
 
 
 
-        echo $this->template->twig->render('AcessoCliente/lista.html.twig', compact('guiasexames','guias','valorReferencia'));
+
+        echo $this->template->twig->render('AcessoCliente/lista.html.twig', compact('guiaDados'));
     }
 
     public function Editar($id_cliente)
@@ -173,10 +186,11 @@ class AcessoCliente Extends ControllerSeguroCliente
 
     $linha = $query->fetch();
 
-    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max > :idade_cliente OR idade_min < :idade_cliente) ORDER BY data_guia DESC";
+    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max > :idade_cliente OR idade_min < :idade_cliente) AND (sexo=:sexo_cliente OR sexo= 'Ambos') ORDER BY data_guia DESC";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
-    $query->bindParam(":idade_cliente", $idade);
+    $query->bindParam(":idade_cliente", $_POST['idade_cliente']);
+    $query->bindParam(":sexo_cliente", $_POST['sexo_cliente']);
     $resultado = $query->execute();
 
     $guiasexames = $query->fetchAll();

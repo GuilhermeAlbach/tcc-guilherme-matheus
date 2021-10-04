@@ -34,7 +34,18 @@ to get the desired effect
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     {% include 'includes/navbar.html.twig' %}
-    {% include 'includes/sidebar.html.twig' %}
+    {% if (session.UsuarioLogado==true) %}
+        {% include 'includes/sidebar.html.twig' %}
+        asdf1
+    {% elseif (session.ClienteLogado==true) %}
+        asdf2
+        {% include 'includes/sidebar.html.twig' %}
+    {% else %}
+        asdf3
+        {{  session.id_usuario }}
+    {% endif %}
+
+
 
     <div class="content-wrapper">
         {% block breadcrumb %}{% endblock %}
