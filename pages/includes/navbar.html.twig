@@ -15,7 +15,11 @@
             <a href="/convenios" class="nav-link">Convênios</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/login" class="nav-link">Resultados</a>
+            <form method="POST" action="/AcessoCliente/ListaDeExames/{{session['id_cliente']}}">
+                <input type="hidden" name="datanascimento_cliente" value="{{session['datanascimento_cliente']}}">
+                <input type="hidden" name="sexo_cliente" value="{{session['sexo_cliente']}}">
+                <input type="submit" value="Resultados" class="nav-link btn btn-link" style="padding-top: 7px;">
+            </form>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="/contato" class="nav-link">Contato</a>

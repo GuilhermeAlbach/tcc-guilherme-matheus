@@ -61,7 +61,7 @@ class login Extends Controller
 
                 $db = Conexao::connect();
 
-                $sql = "SELECT * FROM clientes WHERE usuario_cliente=:user_usuario AND senha_cliente=:senha_usuario";
+                $sql = "SELECT `datanascimento_cliente`, `id_cliente`, `sexo_cliente`, `usuario_cliente`, `senha_cliente` FROM clientes WHERE usuario_cliente=:user_usuario AND senha_cliente=:senha_usuario";
     
                 $resultados = $db ->prepare($sql);
     
@@ -75,6 +75,8 @@ class login Extends Controller
                     $_SESSION['ClienteLogado'] = true;
                     $_SESSION['UsuarioLogado'] = false;
                     $_SESSION['id_cliente'] = $linha->id_cliente;
+                    $_SESSION['datanascimento_cliente'] = $linha->datanascimento_cliente;
+                    $_SESSION['sexo_cliente'] = $linha->sexo_cliente;
 
                     $retorno['status'] = 1;
                     $retorno['mensagem'] = 'Acesso autorizado';

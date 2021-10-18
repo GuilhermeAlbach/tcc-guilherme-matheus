@@ -61,7 +61,13 @@ CREATE TABLE IF NOT EXISTS `bancadas` (
   UNIQUE KEY `ValorDeReferencia_UNIQUE` (`bancada`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.bancadas: ~2 rows (approximately)
+/*!40000 ALTER TABLE `bancadas` DISABLE KEYS */;
+INSERT INTO `bancadas` (`id_bancada`, `bancada`) VALUES
+	(1, 'banca'),
+	(2, 'Bancada'),
+	(3, 'Endocrino');
+/*!40000 ALTER TABLE `bancadas` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.clientes
 CREATE TABLE IF NOT EXISTS `clientes` (
@@ -83,7 +89,19 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   UNIQUE KEY `cpf_cliente_UNIQUE` (`cpf_cliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.clientes: ~9 rows (approximately)
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` (`id_cliente`, `nome_cliente`, `cidade_cliente`, `endereco_cliente`, `cpf_cliente`, `rg_cliente`, `telefone_cliente`, `celular_cliente`, `sexo_cliente`, `datanascimento_cliente`, `observacao_cliente`, `usuario_cliente`, `senha_cliente`, `cep_cliente`) VALUES
+	(1, 'Nome', 'Cidade', 'dsasdasda', '999.999.999-99', NULL, '(11) 11111-111', NULL, 'Feminino', '2004-08-17', 'Observação', 'Usuario', 'Senha', NULL),
+	(2, 'a', 'aa', NULL, '111.111.111-11', NULL, '(14) 7522-2222', NULL, 'Masculino', '2001-07-06', 'aaa', '1', '2', NULL),
+	(3, 'a', 'aa', '', '996.435.470-35', '', '(14) 7522-2222', '', 'Masculino', '2021-07-09', 'aaa', '556218532', '60fb9464ba629', ''),
+	(6, 'a', 'aa', NULL, '879.654.562-31', NULL, '(14) 7522-2222', NULL, 'Masculino', '2021-07-06', 'aaa', '483109802', '60fb96fde5067', NULL),
+	(8, 'a', 'aa', NULL, '879.654.562-32', NULL, '(14) 7522-2222', NULL, 'Masculino', '2021-07-06', 'aaa', '474990134', '60fb982d39840', NULL),
+	(10, 'a', 'aa', NULL, '879.654.562-33', NULL, '(14) 7522-2222', NULL, 'Masculino', '2021-07-06', 'aaa', '2071085910', '60fb9859c3508', NULL),
+	(15, 'teste', 'teste', 'teste', '123.456.789-10', NULL, '(42) 3254-1011', NULL, 'Feminino', '2021-07-15', '', '1291208606', '60fce186052af', NULL),
+	(16, 'teste', 'teste', 'teste', '123.456.789-11', NULL, '(42) 3254-1011', NULL, 'Feminino', '2021-07-15', '', '1291208606', '60fce186052af', NULL),
+	(17, 'Guilherme Wegrzyn Albach', 'Paulo Frontin', 'Rua João Retcheski, 9', '111.718.899-09', '42.344.366-5', '', '(42) 99909-4762', 'Masculino', '2004-10-23', 'Editar Observação sobre o cliente.', 'TESTE', 'TESTE', '84635-000');
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.convenios
 CREATE TABLE IF NOT EXISTS `convenios` (
@@ -97,7 +115,13 @@ CREATE TABLE IF NOT EXISTS `convenios` (
   UNIQUE KEY `telefone_convenio_UNIQUE` (`telefone_convenio`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.convenios: ~3 rows (approximately)
+/*!40000 ALTER TABLE `convenios` DISABLE KEYS */;
+INSERT INTO `convenios` (`id_convenio`, `nome_convenio`, `cnpj_convenio`, `responsavel_convenio`, `telefone_convenio`) VALUES
+	(2, 'Nome', '11.111.111/1111-11', 'responsavel', '(22) 2222-2222'),
+	(3, 'Teste', '8979779', 'teste', '78978879'),
+	(4, 'clueless', '1475222633', 'oh no no', '897789897798');
+/*!40000 ALTER TABLE `convenios` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.especialidades
 CREATE TABLE IF NOT EXISTS `especialidades` (
@@ -107,7 +131,11 @@ CREATE TABLE IF NOT EXISTS `especialidades` (
   UNIQUE KEY `ValorDeReferencia_UNIQUE` (`especialidade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.especialidades: ~2 rows (approximately)
+/*!40000 ALTER TABLE `especialidades` DISABLE KEYS */;
+INSERT INTO `especialidades` (`id_especialidade`, `especialidade`) VALUES
+	(1, 'Cardiologia');
+/*!40000 ALTER TABLE `especialidades` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.exames
 CREATE TABLE IF NOT EXISTS `exames` (
@@ -130,7 +158,13 @@ CREATE TABLE IF NOT EXISTS `exames` (
   CONSTRAINT `fk_exames_Metodos1` FOREIGN KEY (`metodo_exame`) REFERENCES `metodos` (`id_metodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.exames: ~0 rows (approximately)
+/*!40000 ALTER TABLE `exames` DISABLE KEYS */;
+INSERT INTO `exames` (`id_exame`, `nome_exame`, `sexo_exame`, `requisicao_exame`, `tempo_exame`, `material_exame`, `metodo_exame`, `bancada_exame`, `descricao_exame`, `preco_exame`) VALUES
+	(1, 'Colesterol Total', 'Masculino', 'sim', 5, 1, 1, 2, 'Descrição', 10.00),
+	(2, 'Glicose', 'Ambos', 'nao', 24, 2, 2, 3, 'Medida de Glicose', 15.00),
+	(3, 'ghfk', 'Feminino', 'sim', 32, 2, 1, 3, 'Desc', 27.00);
+/*!40000 ALTER TABLE `exames` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.guias
 CREATE TABLE IF NOT EXISTS `guias` (
@@ -152,7 +186,16 @@ CREATE TABLE IF NOT EXISTS `guias` (
   CONSTRAINT `fk_guias_medicos1` FOREIGN KEY (`medico_guia`) REFERENCES `medicos` (`id_medico`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.guias: ~6 rows (approximately)
+/*!40000 ALTER TABLE `guias` DISABLE KEYS */;
+INSERT INTO `guias` (`id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`, `precototal_guia`, `prazofinal_guia`) VALUES
+	(1, '2021-07-20 17:04:05', 1, 1, 2, 'as', 'zx', 52.00, 32),
+	(2, '2021-07-21 00:54:00', 8, 1, 2, '1262069650', '60fb8ef69a092', 10.00, 5),
+	(3, '2021-06-28 00:58:00', 1, 1, 2, '537026644', '60fb8fd88a07b', 27.00, 32),
+	(5, '2021-09-21 16:32:27', 15, 1, 2, '1541533904', '614a334bd398d', 42.00, 32),
+	(6, '2021-09-21 19:50:51', 1, 1, 2, '609172662', '614a61cbcccb3', 62.00, 32),
+	(7, '2021-09-21 20:03:38', 2, 1, 2, '786220226', '614a64ca58ed6', 25.00, 24);
+/*!40000 ALTER TABLE `guias` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.guiasexames
 CREATE TABLE IF NOT EXISTS `guiasexames` (
@@ -168,7 +211,22 @@ CREATE TABLE IF NOT EXISTS `guiasexames` (
   CONSTRAINT `fk_exames_has_guias_guias1` FOREIGN KEY (`guia_guiaexame`) REFERENCES `guias` (`id_guia`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.guiasexames: ~13 rows (approximately)
+/*!40000 ALTER TABLE `guiasexames` DISABLE KEYS */;
+INSERT INTO `guiasexames` (`id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`) VALUES
+	(4, 2, 1, 15.00, 24),
+	(6, 1, 1, 10.00, 5),
+	(8, 3, 1, 27.00, 32),
+	(11, 3, 3, 27.00, 32),
+	(12, 2, 5, 15.00, 24),
+	(14, 2, 6, 15.00, 24),
+	(15, 1, 6, 10.00, 5),
+	(16, 3, 6, 27.00, 32),
+	(17, 2, 7, 15.00, 24),
+	(18, 1, 7, 10.00, 5),
+	(19, 1, 6, 10.00, 5),
+	(21, 3, 5, 27.00, 32);
+/*!40000 ALTER TABLE `guiasexames` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.materiais
 CREATE TABLE IF NOT EXISTS `materiais` (
@@ -178,7 +236,12 @@ CREATE TABLE IF NOT EXISTS `materiais` (
   UNIQUE KEY `ValorDeReferencia_UNIQUE` (`material`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.materiais: ~2 rows (approximately)
+/*!40000 ALTER TABLE `materiais` DISABLE KEYS */;
+INSERT INTO `materiais` (`id_material`, `material`) VALUES
+	(1, 'material'),
+	(2, 'Plasma');
+/*!40000 ALTER TABLE `materiais` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.medicos
 CREATE TABLE IF NOT EXISTS `medicos` (
@@ -193,7 +256,11 @@ CREATE TABLE IF NOT EXISTS `medicos` (
   CONSTRAINT `fk_medicos_Especialidades1` FOREIGN KEY (`especialidade_medico`) REFERENCES `especialidades` (`id_especialidade`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.medicos: ~1 rows (approximately)
+/*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
+INSERT INTO `medicos` (`id_medico`, `nome_medico`, `crm_medico`, `telefone_medico`, `especialidade_medico`) VALUES
+	(1, 'Nome', '40028922', '22982004', 1);
+/*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.metodos
 CREATE TABLE IF NOT EXISTS `metodos` (
@@ -202,7 +269,12 @@ CREATE TABLE IF NOT EXISTS `metodos` (
   PRIMARY KEY (`id_metodo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.metodos: ~1 rows (approximately)
+/*!40000 ALTER TABLE `metodos` DISABLE KEYS */;
+INSERT INTO `metodos` (`id_metodo`, `metodo`) VALUES
+	(1, 'Metodo'),
+	(2, 'Colorimétrico');
+/*!40000 ALTER TABLE `metodos` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.resultados
 CREATE TABLE IF NOT EXISTS `resultados` (
@@ -220,7 +292,14 @@ CREATE TABLE IF NOT EXISTS `resultados` (
   CONSTRAINT `fk_resultados_exames_guias1` FOREIGN KEY (`guia_resultado`) REFERENCES `guiasexames` (`id_guiaexame`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.resultados: ~4 rows (approximately)
+/*!40000 ALTER TABLE `resultados` DISABLE KEYS */;
+INSERT INTO `resultados` (`id_resultado`, `data_resultado`, `guia_resultado`, `responsavel_resultado`, `resultado`, `laudo_resultado`, `observacao_resultado`) VALUES
+	(4, '2021-09-17', 6, 1, '15', NULL, NULL),
+	(5, '2021-09-21', 12, 1, 'A', 'A', 'A'),
+	(6, '2021-09-25', 18, 2, '120', 'qweqweqeqw', 'dasdasdasd'),
+	(7, '2021-09-25', 17, 2, '110', 'Teste', 'teste');
+/*!40000 ALTER TABLE `resultados` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.unidadesmedida
 CREATE TABLE IF NOT EXISTS `unidadesmedida` (
@@ -230,7 +309,11 @@ CREATE TABLE IF NOT EXISTS `unidadesmedida` (
   UNIQUE KEY `ValorDeReferencia_UNIQUE` (`unidademedida`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.unidadesmedida: ~1 rows (approximately)
+/*!40000 ALTER TABLE `unidadesmedida` DISABLE KEYS */;
+INSERT INTO `unidadesmedida` (`id_unidademedida`, `unidademedida`) VALUES
+	(1, '%');
+/*!40000 ALTER TABLE `unidadesmedida` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -247,9 +330,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `senha_usuario` varchar(45) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `cpf_usuario_UNIQUE` (`cpf_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.usuarios: ~4 rows (approximately)
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` (`id_usuario`, `nome_usuario`, `cpf_usuario`, `rg_usuario`, `telefone_usuario`, `celular_usuario`, `endereco_usuario`, `cidade_usuario`, `cep_usuario`, `user_usuario`, `senha_usuario`) VALUES
+	(1, 'a', '147.258.236-96', NULL, '(87) 9541-6546', NULL, 'a', '', '', 'a', 'b'),
+	(2, 'Irene Wegrzyn', '111.111.111-11', NULL, '(11) 1111-1111', NULL, '1', '', '', 'user', 'senha'),
+	(6, 'Teste', '222.222.222-22', NULL, '(11) 1111-1111', NULL, 'Endereço', '', '', 'teste', '2e6f9b0d5885b6010f9167787445617f553a735f'),
+	(7, 'a', '111.111.111-78', '45.345.343-34', '(23) 1213-231_', '(12) 31321-3132', 'weqewqwe', 'qweq', '64684-321', 'u', 'a0f1490a20d0211c997b44bc357e1972deab8ae3');
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 -- Dumping structure for table bd_tcc.valoresreferencia
 CREATE TABLE IF NOT EXISTS `valoresreferencia` (
@@ -261,15 +351,22 @@ CREATE TABLE IF NOT EXISTS `valoresreferencia` (
   `valorreferencia_max` decimal(8,3) DEFAULT NULL,
   `idade_min` varchar(45) DEFAULT NULL,
   `idade_max` varchar(45) DEFAULT NULL,
-  `sexo` varchar(45) DEFAULT NULL,
+  `sexo` varchar(45) NOT NULL,
   PRIMARY KEY (`id_valorreferencia`),
   KEY `fk_ValoresReferencia_exames1_idx` (`exame_valorreferencia`),
   KEY `FK_valoresreferencia_unidadesmedida` (`unidademedida_valorreferencia`),
   CONSTRAINT `FK_valoresreferencia_unidadesmedida` FOREIGN KEY (`unidademedida_valorreferencia`) REFERENCES `unidadesmedida` (`id_unidademedida`),
   CONSTRAINT `fk_ValoresReferencia_exames1` FOREIGN KEY (`exame_valorreferencia`) REFERENCES `exames` (`id_exame`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Data exporting was unselected.
+-- Dumping data for table bd_tcc.valoresreferencia: ~5 rows (approximately)
+/*!40000 ALTER TABLE `valoresreferencia` DISABLE KEYS */;
+INSERT INTO `valoresreferencia` (`id_valorreferencia`, `exame_valorreferencia`, `unidademedida_valorreferencia`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`) VALUES
+	(1, 1, 1, '150', NULL, NULL, NULL, NULL, 'Ambos'),
+	(2, 1, 1, '15.45', NULL, NULL, '20', '30', 'Masculino'),
+	(3, 2, 1, NULL, 150.000, 175.000, '15', NULL, 'Masculino'),
+	(5, 3, 1, '120', NULL, NULL, '18', NULL, 'Masculino');
+/*!40000 ALTER TABLE `valoresreferencia` ENABLE KEYS */;
 
 -- Dumping structure for trigger bd_tcc.guiasexames_after_delete
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';

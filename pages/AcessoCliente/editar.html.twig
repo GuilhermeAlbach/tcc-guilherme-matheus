@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Cliente | Editar {% endblock %}
+{% block title %}| Área do Cliente  {% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -33,7 +33,7 @@
                                     <form method="POST" action="/AcessoCliente/ListaDeExames/{{linha['id_cliente']}}">
                                         <input type="hidden" name="datanascimento_cliente" value="{{linha['datanascimento_cliente']}}">
                                         <input type="hidden" name="sexo_cliente" value="{{linha['sexo_cliente']}}">
-                                        <input type="submit" value="Visualizar Exames" class="btn btn-info">
+                                        <input type="submit" value="Visualizar Exames" class="btn btn-info float-right">
                                     </form>
                                 </div>
                     <form role="form" action="/AcessoCliente/salvareditar" method="post" class="jsonForm">
@@ -93,21 +93,11 @@
                                 <label for="observacao_cliente">Observação</label>
                                 <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Editar Observação sobre o Cliente">{{ linha['observacao_cliente'] }}</textarea>
                             </div>
-                            <div class="form-group row">
-                                <div class="form-group col">
-                                    <label for="nome">Usuario</label>
-                                    <input type="text" readonly class="form-control" id="usuario_cliente" name="usuario_cliente" placeholder="Editar nome de usuario do Cliente" value="{{ linha['usuario_cliente'] }}">
-                                </div>
-                                <div class="form-group col">
-                                    <label for="nome">Senha</label>
-                                    <input type="text" readonly class="form-control" id="senha_cliente" name="senha_cliente" placeholder="Editar senha do Cliente" value="{{ linha['senha_cliente'] }}">
-                                </div>
-                            </div>
                         </div>
                         <!-- /.box-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-right">Salvar</button>
                         </div>
                     </form>
                 </div>

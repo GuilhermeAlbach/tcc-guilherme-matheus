@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | Guia | Listagem{% endblock %}
+{% block title %} | Área do Cliente{% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -20,9 +20,6 @@
 {% block content %}
     <section class="content">
             {% for guias in guiaDados %}
-                <pre>
-                {{ dump(valorreferencia) }}
-                    </pre>
                     <div class="row">
                         <div class="col">
                             <div class="conteudo">
@@ -31,7 +28,8 @@
                                         <h4>{{guias.data_guia}}
                                             <form method="POST" action="/AcessoCliente/FormPDF/{{guias.id_guia}}">
                                                 <input type="hidden" name="datanascimento_cliente" value="{{guias.datanascimento_cliente}}">
-                                                <input type="submit" value="Gerar PDF" class="btn btn-info">
+                                                <input type="hidden" name="sexo_cliente" value="{{guias.sexo_cliente}}">
+                                                <input type="submit" value="Gerar PDF" class="btn btn-info float-right">
                                             </form>
                                         </h4>
                                     </div>
@@ -50,8 +48,60 @@
                                                 {% for exame in guias.exames %}
                                                     <tr>
                                                         <td>{{exame.nome_exame}}</td>
-                                                        <td>{{exame.resultado}}</td>
-                                                        <td>Entre {{exame.idade_min}} e {{valorreferencia['idade_max']}}: {{valorreferencia.valorreferencia}}</td>
+                                                        <td>{{exame.resultado}}{{exame.unidademedida}}</td>
+                                                        <td>                           
+                                        {% if exame.valorreferencia is null and exame.valorreferencia_max is not null and exame.valorreferencia_min is not null and exame.idade_min is not null and exame.idade_max is not null %}
+                                Entre {{exame.idade_min}} e {{exame.idade_max}} anos: {{exame.valorreferencia_min}} a {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_max is null and exame.valorreferencia_min is not null and exame.idade_min is not null and exame.idade_max is not null %}
+                                Entre {{exame.idade_min}} e {{exame.idade_max}} anos: maior que {{exame.valorreferencia_min}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is not null and exame.idade_min is not null and exame.idade_max is not null %}
+                                Entre {{exame.idade_min}} e {{exame.idade_max}} anos: menor que {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is null and exame.valorreferencia is not null and exame.idade_min is not null and exame.idade_max is not null %}
+                                 Entre {{exame.idade_min}} e {{exame.idade_max}} anos: {{exame.valorreferencia}}{{exame.unidademedida}}
+                            {% endif %}
+
+                            {% if exame.valorreferencia is null and exame.valorreferencia_max is not null and exame.valorreferencia_min is not null and exame.idade_min is null and exame.idade_max is not null %}
+                                Menor de {{exame.idade_max}} anos: {{exame.valorreferencia_min}} a {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_max is null and exame.valorreferencia_min is not null and exame.idade_min is null and exame.idade_max is not null %}
+                                Menor de {{exame.idade_max}} anos: maior que {{exame.valorreferencia_min}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is not null and exame.idade_min is null and exame.idade_max is not null %}
+                                Menor de {{exame.idade_max}} anos: menor que {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is null and exame.valorreferencia is not null and exame.idade_min is null and exame.idade_max is not null %}
+                                 Menor de {{exame.idade_max}} anos: {{exame.valorreferencia}}{{exame.unidademedida}}
+                            {% endif %}
+
+                            {% if exame.valorreferencia is null and exame.valorreferencia_max is not null and exame.valorreferencia_min is not null and exame.idade_min is not null and exame.idade_max is null %}
+                                 Maior de {{exame.idade_min}} anos: {{exame.valorreferencia_min}} a {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_max is null and exame.valorreferencia_min is not null and exame.idade_min is not null and exame.idade_max is null %}
+                                Maior de {{exame.idade_min}} anos: maior que {{exame.valorreferencia_min}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is not null and exame.idade_min is not null and exame.idade_max is null %}
+                                Maior de {{exame.idade_min}} anos: menor que {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is null and exame.valorreferencia is not null and exame.idade_min is not null and exame.idade_max is null %}
+                                 Maior de {{exame.idade_min}} anos: {{exame.valorreferencia}}{{exame.unidademedida}}
+                            {% endif %}
+
+                            {% if exame.valorreferencia is null and exame.valorreferencia_max is not null and exame.valorreferencia_min is not null and exame.idade_min is null and exame.idade_max is null %}
+                                {{exame.valorreferencia_min}} a {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_max is null and exame.valorreferencia_min is not null and exame.idade_min is null and exame.idade_max is null %}
+                                maior que {{exame.valorreferencia_min}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is not null and exame.idade_min is null and exame.idade_max is null %}
+                                menor que {{exame.valorreferencia_max}}{{exame.unidademedida}}
+                            {% endif %}
+                            {% if exame.valorreferencia_min is null and exame.valorreferencia_max is null and exame.valorreferencia is not null and exame.idade_min is null and exame.idade_max is null %}
+                                 {{exame.valorreferencia}}{{exame.unidademedida}}
+                            {% endif %}
+                            </td>
                                                     </tr>
                                                 {% endfor %}
                                                 </table>

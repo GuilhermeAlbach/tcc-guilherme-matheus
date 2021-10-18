@@ -57,6 +57,10 @@ class usuario Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+        if($this->validaCPF($_POST['cpf_usuario'])==false) {
+            $this->retornaErro('CPF Inválido.');
+        }
+
         $criptografaSenha = $this->criptografa($_POST['senha_usuario']);
 
         $sql = "INSERT INTO usuarios(nome_usuario,cpf_usuario,telefone_usuario,endereco_usuario,rg_usuario,
@@ -87,6 +91,11 @@ class usuario Extends ControllerSeguroUsuario
     public function salvarEditar()
     {
         $db = Conexao::connect();
+
+        if($this->validaCPF($_POST['cpf_usuario'])==false) {
+            $this->retornaErro('CPF Inválido.');
+        }
+
 
         $sql = "UPDATE usuarios SET nome_usuario=:nome_usuario,telefone_usuario=:telefone_usuario,celular_usuario=:celular_usuario,cpf_usuario=:cpf_usuario,
                                     endereco_usuario=:endereco_usuario, user_usuario=:user_usuario,rg_usuario=:rg_usuario,cidade_usuario=:cidade_usuario,cep_usuario=:cep_usuario,
@@ -144,5 +153,35 @@ class usuario Extends ControllerSeguroUsuario
         $bootgrid = new Bootgrid($sql);
         echo $bootgrid->show();
     }
+
+    function validaCPF($cpf_usuario) {
+
+        // Extrai somente os números
+        $cpf_usuario = preg_replace( '/[^0-9]/is', '', $cpf_usuario );
+
+        // Verifica se foi informado todos os digitos corretamente
+        if (strlen($cpf_usuario) != 11) {
+            return false;
+        }
+
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        if (preg_match('/(\d)\1{10}/', $cpf_usuario)) {
+            return false;
+        }
+
+        // Faz o calculo para validar o CPF
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf_usuario[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf_usuario[$c] != $d) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
 
 }

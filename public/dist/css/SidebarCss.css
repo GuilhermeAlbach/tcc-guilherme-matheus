@@ -1,0 +1,22 @@
+#listagem {
+    margin-left: 120px !important;
+}
+
+.content {
+    margin: auto !important;
+    margin-left: 110px !important;
+}
+
+.main-header {
+    margin-left: 0px !important;
+    padding-left: 205px !important;
+    background-position: -20% 0%;
+}
+
+.content-wrapper {
+    margin-left: 0px !important;
+}
+
+.main-footer {
+    margin-left: 205px !important;
+}

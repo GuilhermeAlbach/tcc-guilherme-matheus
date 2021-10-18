@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Guia | Editar{% endblock %}
+{% block title %}| Guia {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -30,15 +30,16 @@
                 <div class="card card-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
                             <div class="form-group row">
                                 <h3>Editar Guia</h3>
                                     <div class="form-group col">
-                                        <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
-                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                        <a role="button" href="/guia/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
+                                        <a role="button" href="/guia/formEditarResultado/{{linha['id_guia']}}" class="btn btn-success float-right"><span class="fas fa-tasks"></span></a>
+                                        <a role="button" href="/guia/formCadastrar" class="btn btn-primary float-right"><span class="fas fa-user-plus"></span></a>
                                     </div>
                                 </div>
+                            <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
                             <div class="form-group row">
                                 <div class="form-group col-md-1">
                                     <label for="id_guia">Código</label>
@@ -114,7 +115,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-warning">Salvar</button>
+                            <button type="submit" class="btn btn-warning float-right">Salvar</button>
                         </div>
                     </form>
 
@@ -164,7 +165,7 @@
                     </div>
                     </div>
                     </div>
-    <section class="content" id="listagem">
+    <section>
         <div class="row">
             <div class="col-12">
                 <a role="button" id="btn-listagem" class="btn btn-primary" data-toggle="modal" data-target="#adicionarguia"><span>Adicionar Exame</span></a> 
@@ -212,11 +213,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="preco_guiaexame">Valor</label>
-                                            <input type="number" min="1" step="0.01" class="form-control" id="prec_guiaexame" name="preco_guiaexame" required value="{{linha[preco_guiaexame]}}">
+                                            <input type="number" min="1" step="0.01" class="form-control" id="prec_guiaexame" name="preco_guiaexame" required value="{{linha['preco_guiaexame']}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="prazo_guiaexame">Prazo</label>
-                                            <input type="number" min="1" step="1" class="form-control" id="praz_guiaexame" name="prazo_guiaexame" required value="{{linha[prazo_guiaexame]}}">
+                                            <input type="number" min="1" step="1" class="form-control" id="praz_guiaexame" name="prazo_guiaexame" required value="{{linha['prazo_guiaexame']}}">
                                         </div>
 
                                         <div class="form-group">
@@ -284,8 +285,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-trash\"></span></button> " +
-                         "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button> ";
+                        return "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button> " +
+                         "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-trash\"></span></button> ";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

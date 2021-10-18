@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | Valores de Referência | Listagem{% endblock %}
+{% block title %} | Valores de Referência {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -18,8 +18,8 @@
 
 
 {% block content %}
-                <h3>Listagem de Valores de Referência</h3>
     <section class="content" id="listagem">
+                <h3>Listagem de Valores de Referência</h3>
         <div class="row">
             <div class="col-12">
                 <a role="button" id="btn-listagem" href="/valorreferencia/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
@@ -30,10 +30,10 @@
                         <th data-column-id="nome_exame" data-order="desc" data-sortable="true">Exame</th>
                         <th data-column-id="unidademedida" data-order="desc" data-sortable="true">Unidade de Medida</th>
                         <th data-column-id="valorreferencia" data-sortable="true">Valor Fixo</th>
-                        <th data-column-id="valorreferencia_min" data-sortable="true">Valor Min</th>
-                        <th data-column-id="valorreferencia_max" data-sortable="true">Valor Max</th>
-                        <th data-column-id="idade_min" data-sortable="false">Idade Min</th>
-                        <th data-column-id="idade_max" data-sortable="false">Idade Max</th>
+                        <th data-column-id="valorreferencia_min" data-sortable="true">Valor Mín</th>
+                        <th data-column-id="valorreferencia_max" data-sortable="true">Valor Máx</th>
+                        <th data-column-id="idade_min" data-sortable="false">Idade Mín</th>
+                        <th data-column-id="idade_max" data-sortable="false">Idade Máx</th>
                         <th data-column-id="sexo" data-sortable="false">Sexo</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
                     </tr>
@@ -65,8 +65,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_valorreferencia + "\"><span class=\"fa fa-trash\"></span></button>" +
-                         "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_valorreferencia   + "\"><span class=\"fas fa-edit\"></span></button> ";
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_valorreferencia   + "\"><span class=\"fas fa-edit\"></span></button> " +
+                         "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_valorreferencia + "\"><span class=\"fa fa-trash\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

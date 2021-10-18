@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | Bancada | Listagem{% endblock %}
+{% block title %} | Bancada {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -58,8 +58,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_bancada + "\"><span class=\"fa fa-trash\"></span></button>" +
-                         "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_bancada   + "\"><span class=\"fas fa-edit\"></span></button> ";
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_bancada   + "\"><span class=\"fas fa-edit\"></span></button> " +
+                         "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_bancada + "\"><span class=\"fa fa-trash\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

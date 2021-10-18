@@ -7,7 +7,7 @@
 
     {% block meta %}{% endblock %}
 
-    <title>Projeto Teste {% block title %}{% endblock %}</title>
+    <title>Laboratório Santo Antonio {% block title %}{% endblock %}</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="/dist/css/customCss.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -35,14 +34,13 @@ to get the desired effect
 <div class="wrapper">
     {% include 'includes/navbar.html.twig' %}
     {% if (session.UsuarioLogado==true) %}
+    <link rel="stylesheet" href="/dist/css/customCss.css">
+    <link rel="stylesheet" href="/dist/css/SidebarCss.css">
         {% include 'includes/sidebar.html.twig' %}
-        asdf1
     {% elseif (session.ClienteLogado==true) %}
-        asdf2
-        {% include 'includes/sidebar.html.twig' %}
+    <link rel="stylesheet" href="/dist/css/customCss.css">
     {% else %}
-        asdf3
-        {{  session.id_usuario }}
+    <link rel="stylesheet" href="/dist/css/customCss.css">
     {% endif %}
 
 

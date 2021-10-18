@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Usuário | Cadastrar{% endblock %}
+{% block title %}| Usuário {% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
 {% endblock %}
@@ -31,7 +31,7 @@
                             <div class="form-group row">
                                 <h3>Cadastrar Usuário</h3>
                                 <div class="form-group col">
-                                    <a role="button" href="/usuario/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/usuario/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -88,7 +88,7 @@
                         <!-- /.box-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-right">Salvar</button>
                         </div>
                     </form>
                 </div>

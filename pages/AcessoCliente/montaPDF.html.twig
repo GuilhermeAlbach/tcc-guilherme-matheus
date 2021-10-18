@@ -1,4 +1,6 @@
 {% extends 'layouts/dashboard.html.twig' %}
+{% block title %} | Área do Cliente{% endblock %}
+
 {% block content %}
     <section class="content">
 
@@ -77,7 +79,7 @@
                             Resultado:
                         </div>
                         <div class="form-group col-md-3">
-                            {{guiasexames['resultado'] }}
+                            {{guiasexames['resultado'] }}{{guiasexames['unidademedida']}}
                         </div>    
                         <div class="form-group col-md-5">  
                                 Valor de Referência:<br>
@@ -134,9 +136,15 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class=" form-group row">
+                        <div class=" form-group col">
+                            Observações: {{guiasexames['laudo_resultado']}}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
-                </div>
+            </div>
+        </div>
             <div class="card-footer" style="height: 1.25cm; background-color: white">
                     <div style="height: 0.2cm; width: 20.35cm; background-color:#ca1f27; margin-left:-10px;"></div>
             </div>

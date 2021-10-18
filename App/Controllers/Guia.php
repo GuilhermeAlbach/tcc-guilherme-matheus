@@ -51,13 +51,7 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
-        $query2 = $db->prepare($sql);
-        $resultado2 = $query2->execute();
-
-        $linha2 = $query2->fetch();
-
-        $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE id_guia=:id_guia LIMIT 0, 1";
+        $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
         $query = $db->prepare($sql);
         $query->bindParam(":id_guia", $id_guia);
         $resultado = $query->execute();
@@ -89,7 +83,7 @@ class guia Extends ControllerSeguroUsuario
         $exames = $query_exames->fetchAll();
 
 
-        echo $this->template->twig->render('guia/editar.html.twig', compact('linha','linha2', 'medicos', 'clientes', 'convenios', 'exames'));
+        echo $this->template->twig->render('guia/editar.html.twig', compact('linha', 'medicos', 'clientes', 'convenios', 'exames'));
     }
 
 
@@ -187,79 +181,6 @@ class guia Extends ControllerSeguroUsuario
         echo $bootgrid->show();
     }
 
-
-    public function formCadastrarExame($id_guia)
-    {
-        $db = Conexao::connect();
-
-        $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
-        $query2 = $db->prepare($sql);
-        $resultado2 = $query2->execute();
-
-        $linha2 = $query2->fetch();
-
-        $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE id_guia=:id_guia LIMIT 0, 1";
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_guia", $id_guia);
-        $resultado = $query->execute();
-
-        $linha = $query->fetch();
-
-        $sql = "SELECT * FROM medicos ORDER BY nome_medico";
-        $query_medicos = $db->prepare($sql);
-        $resultado_medicos = $query_medicos->execute();
-
-        $medicos = $query_medicos->fetchAll();
-
-        $sql = "SELECT * FROM clientes ORDER BY nome_cliente";
-        $query_clientes = $db->prepare($sql);
-        $resultado_clientes = $query_clientes->execute();
-
-        $clientes = $query_clientes->fetchAll();
-
-        $sql = "SELECT * FROM convenios ORDER BY nome_convenio";
-        $query_convenios = $db->prepare($sql);
-        $resultado_convenios = $query_convenios->execute();
-
-        $convenios = $query_convenios->fetchAll();
-
-        $sql = "SELECT * FROM exames ORDER BY nome_exame";
-        $query_exames = $db->prepare($sql);
-        $resultado_exames = $query_exames->execute();
-
-        $exames = $query_exames->fetchAll();
-
-        echo $this->template->twig->render('guia/cadastrarExame.html.twig', compact('linha', 'linha2', 'medicos', 'clientes', 'convenios','exames'));
-    }
-
-    public function formEditarExame($id_guiaexame)
-    {
-        $db = Conexao::connect();
-
-        $sql = "SELECT * FROM guias ORDER BY data_guia";
-        $query2 = $db->prepare($sql);
-        $resultado2 = $query2->execute();
-
-        $linha2 = $query2->fetch();
-
-        $sql = "SELECT `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE id_guiaexame=:id_guiaexame LIMIT 0, 1";
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_guiaexame", $id_guiaexame);
-        $resultado = $query->execute();
-
-        $linha = $query->fetch();
-
-        $sql = "SELECT * FROM exames ORDER BY nome_exame";
-        $query_exames = $db->prepare($sql);
-        $resultado_exames = $query_exames->execute();
-
-        $exames = $query_exames->fetchAll();
-
-        echo $this->template->twig->render('guia/editar.html.twig', compact('linha','linha2','exames'));
-    }
-
-
-
     public function salvarCadastrarExame()
     {
         $db = Conexao::connect();
@@ -314,31 +235,29 @@ class guia Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('guiaexame excluído com sucesso');
+            $this->retornaOK('exame excluído com sucesso');
         }else{
-            $this->retornaErro('Erro ao excluir guiaexame');
+            $this->retornaErro('Erro ao excluir o exame');
         }
     
     }
 
-
-    public function bootgridCadastrarExame()
+    public function bootgridEditarExame()
     {
         $busca = addslashes($_POST['searchPhrase']);
         $id_guia = addslashes($_POST['id_guia']);
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia WHERE guia_guiaexame = {$id_guia} ";
-
+        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE guia_guiaexame = {$id_guia} ";
+    
         if ($busca!=''){
             $sql .= " and (
                         data_guiaexame LIKE '%{$busca}%' OR
                         nome_exame LIKE '%{$busca}%' OR
                         ) ";
         }
-
+    
         $bootgrid = new Bootgrid($sql);
         echo $bootgrid->show();
     }
-
 
     public function AtualizaValor()
     {
@@ -369,97 +288,17 @@ class guia Extends ControllerSeguroUsuario
         echo json_encode($ret);
     }
     
-public function formCadastrarResultado($id_guia)
-{
-    $db = Conexao::connect();
-
-    date_default_timezone_set('America/Sao_Paulo');
-    $data_resultado = date("Y-m-d H:i:s");
-
-    $sql = "SELECT `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame`, `nome_usuario` FROM resultados INNER JOIN guiasexames ON guia_resultado = id_guiaexame INNER JOIN usuarios ON responsavel_resultado = id_usuario WHERE id_resultado=:id_resultado LIMIT 0, 1";
-    $query2 = $db->prepare($sql);
-    $query2->bindParam(":id_resultado", $id_resultado);
-    $resultado2 = $query2->execute();
-
-    $linha2 = $query2->fetch();
-
-    $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
-    $query_guiasexames = $db->prepare($sql);
-    $resultado_guiasexames = $query_guiasexames->execute();
-
-    $guiasexames = $query_guiasexames->fetch();
-
-    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE id_guia=:id_guia LIMIT 0, 1";
-    $query = $db->prepare($sql);
-    $query->bindParam(":id_guia", $id_guia);
-    $resultado = $query->execute();
-
-    $linha = $query->fetch();
-
-    $sql = "SELECT * FROM medicos ORDER BY nome_medico";
-    $query_medicos = $db->prepare($sql);
-    $resultado_medicos = $query_medicos->execute();
-
-    $medicos = $query_medicos->fetchAll();
-
-    $sql = "SELECT * FROM clientes ORDER BY nome_cliente";
-    $query_clientes = $db->prepare($sql);
-    $resultado_clientes = $query_clientes->execute();
-
-    $clientes = $query_clientes->fetchAll();
-
-    $sql = "SELECT * FROM convenios ORDER BY nome_convenio";
-    $query_convenios = $db->prepare($sql);
-    $resultado_convenios = $query_convenios->execute();
-
-    $convenios = $query_convenios->fetchAll();
-
-    $sql = "SELECT * FROM exames ORDER BY nome_exame";
-    $query_exames = $db->prepare($sql);
-    $resultado_exames = $query_exames->execute();
-
-    $exames = $query_exames->fetchAll();
-
-    $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
-    $query_usuarios = $db->prepare($sql);
-    $resultado_usuarios = $query_usuarios->execute();
-
-    $usuarios = $query_usuarios->fetchAll();
-
-    echo $this->template->twig->render('guia/cadastrarResultado.html.twig', compact('linha', 'linha2','guiasexames', 'medicos', 'clientes', 'convenios','exames', 'data_resultado', 'usuarios'));
-}
 
 public function formEditarResultado($id_guia)
 {
     $db = Conexao::connect();
 
-    $sql = "SELECT * FROM resultados WHERE id_resultado=:id_resultado LIMIT 0, 1";
-
-    $sql = "SELECT `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame`, `nome_usuario` FROM resultados INNER JOIN guiasexames ON guia_resultado = id_guiaexame INNER JOIN usuarios ON responsavel_resultado = id_usuario WHERE id_resultado=:id_resultado LIMIT 0, 1";
-    $query2 = $db->prepare($sql);
-    $query2->bindParam(":id_resultado", $id_resultado);
-    $resultado2 = $query2->execute();
-
-    $linha2 = $query2->fetch();
-
-    $sql = "SELECT * FROM guiasexames ORDER BY guia_guiaexame";
-    $query_guiasexames = $db->prepare($sql);
-    $resultado_guiasexames = $query_guiasexames->execute();
-
-    $guiasexames = $query_guiasexames->fetch();
-
-    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `sexo` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
+    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame LEFT JOIN resultados ON guia_resultado = id_guiaexame WHERE id_guia=:id_guia LIMIT 0, 1";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $resultado = $query->execute();
 
     $linha = $query->fetch();
-
-    $sql = "SELECT * FROM exames ORDER BY nome_exame";
-    $query_exames = $db->prepare($sql);
-    $resultado_exames = $query_exames->execute();
-
-    $exames = $query_exames->fetchAll();
 
     $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
     $query_usuarios = $db->prepare($sql);
@@ -467,10 +306,8 @@ public function formEditarResultado($id_guia)
 
     $usuarios = $query_usuarios->fetchAll();
 
-    echo $this->template->twig->render('guia/editarResultado.html.twig', compact('linha2', 'linha', 'exames', 'guias', 'usuarios'));
+    echo $this->template->twig->render('guia/editarResultado.html.twig', compact('linha','usuarios'));
 }
-
-
 
 public function salvarCadastrarResultado()
 {
@@ -518,22 +355,6 @@ public function salvarEditarResultado()
     }
 }
 
-public function bootgridEditarExame()
-{
-    $busca = addslashes($_POST['searchPhrase']);
-    $id_guia = addslashes($_POST['id_guia']);
-    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE guia_guiaexame = {$id_guia} ";
-
-    if ($busca!=''){
-        $sql .= " and (
-                    data_guiaexame LIKE '%{$busca}%' OR
-                    nome_exame LIKE '%{$busca}%' OR
-                    ) ";
-    }
-
-    $bootgrid = new Bootgrid($sql);
-    echo $bootgrid->show();
-}
 
 public function formPDF($id_guia)
 {
@@ -577,8 +398,6 @@ public function formPDF($id_guia)
     $resultado = $query->execute();
 
     $guiasexames = $query->fetchAll();
-
-
 
     $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
     $query_usuarios = $db->prepare($sql);

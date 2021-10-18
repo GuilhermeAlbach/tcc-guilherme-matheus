@@ -23,12 +23,12 @@
 
 .main-header {
     background-color: #4b7c26 !important;
-    margin-left: 0px !important;
-    padding-left: 200px;
     background-image: url(/dist/img/LogoLab-Vermelho.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: 2% 0%;
+    margin-left: 0px !important;
+    padding-left: 205px !important;
 }
 
 .main-header a {
@@ -40,7 +40,7 @@
 }
 
 .content-wrapper {
-    background-image: url(/dist/img/fundo.jpg) !important;
+    background-color: #F5F6FA !important;
     background-position: bottom right;
     background-size: cover;
     background-attachment: fixed;
@@ -49,13 +49,11 @@
 
 .content {
     margin: auto !important;
-    margin-left: 110px !important;
     width: 90% !important;
 }
 
 #listagem {
     width: 90% !important;
-    margin-left: 120px !important;
 }
 
 #btn-listagem {
@@ -121,13 +119,8 @@
     margin-bottom: 0.5rem !important;
 }
 
-button {
-    /*float: right !important;*/
-}
-
 .btn {
     color: #FFF !important;
-    /*float: right !important;*/
 }
 
 .btn-default {

@@ -1,10 +1,11 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Guia | Cadastrar{% endblock %}
+{% block title %}| Guia {% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -32,7 +33,7 @@
                             <div class="form-group row">
                                 <h3>Cadastrar Guia</h3>
                                 <div class="form-group col">
-                                    <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/guia/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -84,7 +85,7 @@
                         <!-- /.box-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-right">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -107,6 +108,10 @@
 {% block jquery %}
     <script>
         $(document).ready(function(){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+
             $('.jsonForm').ajaxForm({
                 dataType:  'json',
 
@@ -119,7 +124,7 @@
                         iziToast.success({
                             message: d.mensagem,
                             onClosed: function(){
-                                document.location = "/guia/formcadastrarExame/" + d.id_guia;
+                                document.location = "/guia/formeditar/" + d.id_guia;
                             }
                         });
 

@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Médico | Cadastrar{% endblock %}
+{% block title %}| Médico {% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
     <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
@@ -33,8 +33,8 @@
                             <div class="form-group row">
                                 <h3>Editar Profissional</h3>
                                 <div class="form-group col">
-                                    <a role="button" href="/medico/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
-                                    <a role="button" href="/medico/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                    <a role="button" href="/medico/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
+                                    <a role="button" href="/medico/formCadastrar" class="btn btn-success float-right"><span class="fas fa-user-plus"></span></a> 
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -76,7 +76,7 @@
                         <!-- /.box-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-right">Salvar</button>
                         </div>
                     </form>
                 </div>

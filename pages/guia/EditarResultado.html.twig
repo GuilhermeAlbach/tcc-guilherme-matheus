@@ -1,28 +1,18 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %}| Resultado | Cadastrar{% endblock %}
+{% block title %}| Resultado {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
-    <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 {% endblock %}
 
 {% block breadcrumb %}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Resultado
-                        <small>Editar</small></h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="breadcrumb-item active">Resultado</li>
-                    </ol>
-                </div>
-            </div>
         </div><!-- /.container-fluid -->
     </section>
 
@@ -38,13 +28,12 @@
                 <div class="card card-primary">
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
                         <div class="card-body">
                             <div class="form-group row">
-                                <h3>Editar Guia</h3>
+                                <h3>Cadastrar Resultado</h3>
                                     <div class="form-group col">
-                                        <a role="button" href="/guia/" class="btn btn-info"   ><span class="fas fa-list"></span></a>
-                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success"><span class="fas fa-user-plus"></span></a> 
+                                        <a role="button" href="/guia/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
+                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success float-right"><span class="fas fa-user-plus"></span></a> 
                                     </div>
                                 </div>
                             <div class="form-group row">
@@ -104,11 +93,11 @@
                     </table>
 
                     <!-- Button trigger modal -->
-                    <div class="modal fade" id="editarguia" tabindex="-1" role="dialog" aria-labelledby="editarguiaLabel" aria-hidden="true">
+                    <div class="modal fade" id="adicionarguia" tabindex="-1" role="dialog" aria-labelledby="cadastrarguiaLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editarguiaLabel">Adicionando Resultado</h5>
+                                    <h5 class="modal-title" id="cadastrarguiaLabel">Adicionando Resultado</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -121,11 +110,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="responsavel_resultado">Responsável</label>
-                                            <select class="form-control selectpicker" id="responsavel_resultado" name="responsavel_resultado" required data-live-search="true">
+                                            <select class="form-control selectpicker select2" id="responsavel_resultado2" name="responsavel_resultado" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Responsável -</option>
-                                            {% for usuarios in usuarios %}
-                                                <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
-                                            {% endfor %}
+                                                {% for usuarios in usuarios %}
+                                                    <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -134,7 +123,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="observacao_resultado">Observação</label>
-                                            <textarea class="form-control" id="observacao_resultado" name="observacao_resultado" required></textarea>
+                                            <textarea class="form-control" id="observacao_resultado" name="observacao_resultado"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" name="guia_resultado" id="guia_resultado">
@@ -162,27 +151,32 @@
                                     <form role="form" action="/guia/salvareditarResultado" method="post" class="jsonForm">
                                         <div class="form-group">
                                             <label for="resultado">Resultado</label>
-                                            <input type="text" class="form-control" id="resultado" name="resultado" required value="{{linha2[resultado]}}">
+                                            <input type="text" class="form-control" id="resultado" name="resultado" required value="{{linha['resultado']}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="responsavel_resultado">Responsável</label>
-                                            <select class="form-control selectpicker" id="responsavel_resultado" name="responsavel_resultado" required data-live-search="true">
+                                            <select class="form-control selectpicker select2" id="responsavel_resultado" name="responsavel_resultado" required data-live-search="true">
                                                 <option value="" selected disabled>- Selecione o Responsável -</option>
-                                            {% for usuarios in usuarios %}
-                                                <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
-                                            {% endfor %}
+                                                {% for usuarios in usuarios %}
+                                                    {% set selected = '' %}
+                                                    {% if usuarios.id_usuario == linha['responsavel_resultado'] %}
+                                                        {% set selected = 'selected' %}
+                                                    {% endif %}
+                                                    <option value="{{ usuarios.id_usuario }}" {{ selected }}>{{ usuarios.nome_usuario }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="laudo_resultado">Laudo</label>
-                                            <input type="text" class="form-control" id="laudo_resultado" name="laudo_resultado" required value="{{linha2[laudo_resultado]}}">
+                                            <input type="text" class="form-control" id="laudo_resultado" name="laudo_resultado" required value="{{linha['laudo_resultado']}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="observacao_resultado">Observação</label>
-                                            <textarea class="form-control" id="observacao_resultado" name="observacao_resultado" required value="{{linha2[observacao_resultado]}}"></textarea>
+                                            <textarea class="form-control" id="observacao_resultado" name="observacao_resultado" value="{{linha['observacao_resultado']}}"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" name="guia_resultado" id="guia_resultado2">
+                                            <input type="hidden" name="id_resultado" value="{{linha['id_resultado']}}">
                                             <button type="submit" class="btn btn-success" >Salvar</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                         </div>
@@ -193,7 +187,7 @@
                     </div>
                     <form method="POST" action="/guia/FormPDF/{{linha['id_guia']}}">
                        <input type="hidden" name="datanascimento_cliente" value="{{linha['datanascimento_cliente']}}">
-                       <input type="submit" value="Gerar PDF" class="btn btn-info">
+                       <input type="submit" value="Gerar PDF" class="btn btn-info float-right">
                     </form>
                 </div>
 
@@ -226,14 +220,14 @@
                 post: function ()
                 {
                     return {
-                        id_guia: {{ linha['id_guia'] }}
+                        id_guia: 11
                     };
                 },                url: "/guia/bootgrideditarexame",
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return " <button type=\"button\" class=\"btn btn-warning command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>" +
-                         "<button type=\"button\" class=\"btn btn-success command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button> ";
+                        return "<button type=\"button\" class=\"btn btn-success command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button> " +
+                         " <button type=\"button\" class=\"btn btn-warning command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

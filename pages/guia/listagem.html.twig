@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | Guia | Listagem{% endblock %}
+{% block title %} | Guia {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -30,8 +30,8 @@
                         <th data-column-id="id_guia" >Código</th>
                         <th data-column-id="data_guia" data-order="desc" data-sortable="true">Data</th>
                         <th data-column-id="nome_cliente" data-order="desc" data-sortable="true">Cliente</th>
-                        <th data-column-id="nome_medico" data-order="desc" data-sortable="true">Medico</th>
-                        <th data-column-id="nome_convenio" data-order="desc" data-sortable="true">Convenio</th>
+                        <th data-column-id="nome_medico" data-order="desc" data-sortable="true">Médico</th>
+                        <th data-column-id="nome_convenio" data-order="desc" data-sortable="true">Convênio</th>
                         <th data-column-id="codigo_guia" data-order="desc" data-sortable="true">Código</th>
                         <th data-column-id="senha_guia" data-order="desc" data-sortable="true">Senha</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
@@ -64,9 +64,9 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guia + "\"><span class=\"fa fa-trash\"></span></button>" +
+                        return "<button type=\"button\" class=\"btn btn-success command-resultado\" data-row-id=\"" + row.id_guia + "\"><span class=\"fas fa-tasks\"></span></button> " +
                          "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guia + "\"><span class=\"fas fa-edit\"></span></button> " +
-                            "<button type=\"button\" class=\"btn btn-success command-resultado\" data-row-id=\"" + row.id_guia + "\"><span class=\"fas fa-tasks\"></span></button> ";
+                         "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guia + "\"><span class=\"fa fa-trash\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

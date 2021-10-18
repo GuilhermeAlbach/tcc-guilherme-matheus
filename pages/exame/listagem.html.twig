@@ -1,7 +1,7 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
 
-{% block title %} | Exame | Listagem{% endblock %}
+{% block title %} | Exame {% endblock %}
 {% block stylesheet %}
     <link href="/dist/js/jquery.bootgrid.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dist/css/iziToast.min.css">
@@ -32,7 +32,7 @@
                         <th data-column-id="requisicao_exame" data-order="desc" data-sortable="true" data-width="8%">Requisição</th>
                         <th data-column-id="tempo_exame" data-order="desc" data-sortable="true" data-width="6%">Tempo</th>
                         <th data-column-id="material" data-order="desc" data-sortable="true">Material</th>
-                        <th data-column-id="metodo" data-order="desc" data-sortable="true">Metodo</th>
+                        <th data-column-id="metodo" data-order="desc" data-sortable="true">Método</th>
                         <th data-column-id="bancada" data-order="desc" data-sortable="true">Bancada</th>
                         <th data-column-id="preco_exame" data-order="desc" data-sortable="true">Preço</th>
                         <th data-column-id="descricao_exame" data-order="desc" data-sortable="true">Descrição</th>
@@ -66,8 +66,8 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_exame + "\"><span class=\"fa fa-trash\"></span></button>" +
-                         "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_exame   + "\"><span class=\"fas fa-edit\"></span></button> ";
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_exame   + "\"><span class=\"fas fa-edit\"></span></button> " +
+                         "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_exame + "\"><span class=\"fa fa-trash\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()
