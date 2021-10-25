@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-group col">
                                     <label for="data_guia">Data da Guia</label>
-                                    <input type="datetime-local" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" required value="{{ linha['data_guia'] }}">
+                                    <input type="text" class="form-control" id="data_guia" name="data_guia" placeholder="Data da guia" readonly required value="{{ linha['data_guia'] }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -250,7 +250,6 @@
     <script src="/dist/js/iziToastExcluir.js"></script>
     <script src="/dist/js/iziToast.min.js"></script>
     <script src="/plugins/select2/js/select2.full.min.js"></script>
-
 {% endblock %}
 
 {% block jquery %}
@@ -371,6 +370,11 @@
                 "json"
             );
         }
+
+        var data = $('#data_guia').val();
+        var dataFormatada = moment(data).format('D de MMMM de YYYY, hh:mm:ss ');
+        console.log(dataFormatada)
+
     </script>
 {% endblock %}
 

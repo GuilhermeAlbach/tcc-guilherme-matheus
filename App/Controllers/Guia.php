@@ -7,6 +7,7 @@ use App\Controller;
 use App\Conexao;
 use App\Bootgrid;
 use App\ControllerSeguroUsuario;
+use App\PDF;
 use DateTime;
 
 class guia Extends ControllerSeguroUsuario
@@ -22,7 +23,7 @@ class guia Extends ControllerSeguroUsuario
 
         $codigo_guia = rand();
         $senha_guia  = uniqid("");
-        $data_guia   = date("Y-m-d H:i:s");
+        $data_guia   = date("d-m-Y H:i:s");
 
         $db = Conexao::connect();
 
@@ -51,7 +52,7 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
+        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio LEFT JOIN guiasexames ON guia_guiaexame = id_guia LEFT JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
         $query = $db->prepare($sql);
         $query->bindParam(":id_guia", $id_guia);
         $resultado = $query->execute();
@@ -94,11 +95,10 @@ class guia Extends ControllerSeguroUsuario
 
         $sql = "INSERT INTO guias (data_guia, cliente_guia, convenio_guia, medico_guia,
                             codigo_guia,senha_guia) 
-                VALUES (:data_guia, :cliente_guia, :convenio_guia, :medico_guia, 
+                VALUES (NOW(), :cliente_guia, :convenio_guia, :medico_guia, 
                         :codigo_guia, :senha_guia)";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":data_guia"    , $_POST['data_guia']);
         $query->bindParam(":cliente_guia" , $_POST['cliente_guia']);
         $query->bindParam(":convenio_guia", $_POST['convenio_guia']);
         $query->bindParam(":medico_guia"  , $_POST['medico_guia']);
@@ -121,13 +121,13 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE guias SET data_guia=:data_guia,medico_guia=:medico_guia,
+        $sql = "UPDATE guias SET medico_guia=:medico_guia,
                     cliente_guia=:cliente_guia, convenio_guia=:convenio_guia,codigo_guia=:codigo_guia,  
                     senha_guia=:senha_guia, prazofinal_guia=:prazofinal_guia, precototal_guia=:precototal_guia
                 WHERE id_guia=:id_guia";
 
         $query = $db->prepare($sql);
-        $query->bindParam(":data_guia"      , $_POST['data_guia']);
+   //     $query->bindParam(":data_guia"      , $_POST['data_guia']);
         $query->bindParam(":cliente_guia"   , $_POST['cliente_guia']);
         $query->bindParam(":convenio_guia"  , $_POST['convenio_guia']);
         $query->bindParam(":medico_guia"    , $_POST['medico_guia']);
@@ -405,7 +405,12 @@ public function formPDF($id_guia)
 
     $usuarios = $query_usuarios->fetchAll();
 
-    echo $this->template->twig->render('guia/montaPDF.html.twig', compact('guiasexames', 'linha', 'usuarios', 'idade'));
+    $conteudoPDF =  $this->template->twig->render('guia/montaPDF.html.twig', compact('guiasexames', 'linha', 'usuarios', 'idade'));
+
+//    echo $conteudoPDF;
+    $pdf = new PDF();
+    $pdf->exibir($conteudoPDF, uniqid());
+
 }
 public function MontaPDF($id_guia)
 {

@@ -58,7 +58,7 @@
                             <div class="form-group row">
                                 <div class="form-group col">
                                     <label for="cpf_cliente">CPF</label>
-                                    <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" value="{{ linha['cpf_cliente'] }}">
+                                    <input type="text" class="form-control" id="cpf_cliente" name="cpf_cliente" placeholder="Editar CPF do Cliente" {% if linha['cpf_cliente'] != "" %} readonly {% endif %} value="{{ linha['cpf_cliente'] }}">
                                 </div>
                                 <div class="form-group col">
                                     <label for="cpf_cliente">RG</label>
