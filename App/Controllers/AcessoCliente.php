@@ -56,9 +56,13 @@ class AcessoCliente Extends ControllerSeguroCliente
         echo $this->template->twig->render('AcessoCliente/lista.html.twig', compact('guiaDados', 'idade'));
     }
 
-    public function Editar($id_cliente)
+    public function Editar()
     {
         $db = Conexao::connect();
+
+//        if ($_SESSION['ClienteLogado']) {
+//        }
+        $id_cliente = $_SESSION['id_cliente'];
 
         $sql = "SELECT * FROM clientes WHERE id_cliente=:id_cliente";
         $query = $db->prepare($sql);

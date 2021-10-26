@@ -52,7 +52,7 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio LEFT JOIN guiasexames ON guia_guiaexame = id_guia LEFT JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
+        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio LEFT JOIN guiasexames ON guia_guiaexame = id_guia LEFT JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
         $query = $db->prepare($sql);
         $query->bindParam(":id_guia", $id_guia);
         $resultado = $query->execute();
@@ -166,7 +166,7 @@ class guia Extends ControllerSeguroUsuario
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE 1 ";
+        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (
@@ -293,7 +293,7 @@ public function formEditarResultado($id_guia)
 {
     $db = Conexao::connect();
 
-    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame LEFT JOIN resultados ON guia_resultado = id_guiaexame WHERE id_guia=:id_guia LIMIT 0, 1";
+    $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame LEFT JOIN resultados ON guia_resultado = id_guiaexame WHERE id_guia=:id_guia LIMIT 0, 1";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $resultado = $query->execute();
@@ -365,12 +365,12 @@ public function formPDF($id_guia)
     $idade_cliente = date_diff($nasc, $agora);
     $idade = $idade_cliente->format('%Y anos %m meses e %d dias');
 
-    $sql = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`,
+    $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`,
                              `nome_medico`, 
                                 `nome_cliente`, `sexo_cliente`,
                                     `nome_convenio`, 
                                         `nome_exame`
-                                        `resultado`, `data_resultado`,
+                                        `resultado`, DATE_FORMAT(`data_resultado`, '%d/%m/%Y' ) as `data_resultado`,
                                         `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_max`, `idade_min`,
                                         `unidademedida`,
                                         `metodo`, `material` FROM guias 
@@ -408,6 +408,8 @@ public function formPDF($id_guia)
     $conteudoPDF =  $this->template->twig->render('guia/montaPDF.html.twig', compact('guiasexames', 'linha', 'usuarios', 'idade'));
 
 //    echo $conteudoPDF;
+//    exit;
+
     $pdf = new PDF();
     $pdf->exibir($conteudoPDF, uniqid());
 

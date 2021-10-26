@@ -148,7 +148,7 @@
                                             <input type="number" min="1" step="0.01" class="form-control" id="preco_guiaexame" name="preco_guiaexame" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="prazo_guiaexame">Prazo</label>
+                                            <label for="prazo_guiaexame">Prazo (em horas)</label>
                                             <input type="number" min="1" step="1" class="form-control" id="prazo_guiaexame" name="prazo_guiaexame" required>
                                         </div>
 
@@ -175,7 +175,7 @@
                         <th data-column-id="id_guiaexame" >Código</th>
                         <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
                         <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
-                        <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
+                        <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo (em horas)</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
                     </tr>
                     </thead>
@@ -216,7 +216,7 @@
                                             <input type="number" min="1" step="0.01" class="form-control" id="prec_guiaexame" name="preco_guiaexame" required value="{{linha['preco_guiaexame']}}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="prazo_guiaexame">Prazo</label>
+                                            <label for="prazo_guiaexame">Prazo (em horas)</label>
                                             <input type="number" min="1" step="1" class="form-control" id="praz_guiaexame" name="prazo_guiaexame" required value="{{linha['prazo_guiaexame']}}">
                                         </div>
 
