@@ -429,8 +429,8 @@ public function formPDF($id_guia)
 
     $conteudoPDF =  $this->template->twig->render('guia/montaPDF.html.twig', compact('guiasexames', 'linha', 'usuarios', 'idade'));
 
-//    echo $conteudoPDF;
-//    exit;
+//   echo $conteudoPDF;
+//   exit;
 
     $pdf = new PDF();
     $pdf->exibir($conteudoPDF, uniqid());

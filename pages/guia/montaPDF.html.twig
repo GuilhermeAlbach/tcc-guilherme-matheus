@@ -1,10 +1,11 @@
-{#{% extends 'layouts/dashboard.html.twig' %}#}
-{% block title %}| Resultado {% endblock %}
+{# {% extends 'layouts/dashboard.html.twig' %} #}
+{% block title %}.{% endblock %}
 {% block content %}
 
     <style>
         body {
-            font-family: "Helvetica";
+            font-family: "Arial";
+            font-size: 12pt;
         }
         .body-content{
             padding-bottom: 5px;
@@ -41,6 +42,21 @@
             position: fixed;
             width: 100%;        
         }
+        header {
+            position: fixed;
+            top: -20px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+        }
+        h3 {
+            margin: 0;
+            font-size: 1.75rem;
+        }
+        #desc {
+
+        }
+
     </style>
     <section class="content body-content">
 
@@ -49,18 +65,18 @@
     <div class="row">
         <div class="col-12">
             <div class="card page">
-                <div class="card-header">
-                    <img src="../../public/dist/img/logo_lab.png" alt="Logo do Laboratorio" style="height:1.7cm; width: 4cm" align="left"><br><br>
+                <header class="card-header">
+                    <img src="../../../public/dist/img/logo_lab.jpg" alt="Logo do Laboratorio" style="height:1.7cm; width: 4cm" align="left"><br><br>
                     <div style="height: 0.3cm; width: 15.6cm; background-color:#ca1f27; float:right; margin-top:2px"></div>
-                </div>
+                </header>
                 <div class="card-body" id="pdf-body">
                     <div id="desc" style="margin-top: 0px; line-height:1!important;">
-                        <div style="border: black 1px; border-style: solid none; padding:10px 0px 0px 5px">
+                        <div style="border: black 1px; border-style: solid none none none; padding:-5px 0px -5px 5px;">
                             <p>Laboratório Santo Antonio, Rua 27 de Janeiro 307 sala:03 Paulo Frontin-PR - Telefone (42) 99956-4307<br>
                             CNPJ: 07.226.537/0001-13 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; Responsável Técnica: Dra. Irene Wegrzyn - CRF/PR 12.431</p>
                         </div>
-                        <div style="border: black 1px; border-style: solid none; padding:10px 0px 10px 5px">
-                            <div class="form-group row">
+                        <div style="border: black 1px; border-style: solid none none none; padding:10px 0px 10px 5px; margin-top: 10px">
+                            <div class="form-group row ">
                                 <div class="form-group col-md-5">
                                     Cliente:
                                         {{linha['nome_cliente'] }}
@@ -88,11 +104,11 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-5">
                                     Data da Coleta:
                                         {{linha['data_guia'] }}
                                 </div>    
-                                <div class="form-group col-md-4">    
+                                <div class="form-group col-md-3">
                                 </div>
                                 <div class="form-group col-md-4">    
                                     Laudo Impresso em:
@@ -101,6 +117,7 @@
                             </div>
                         </div>
                     </div>
+                    <div style="margin: 15px;"></div>
             {% for guiasexames in guiasexames %}
                 <div id="exames" class="group-border">
                     <div class="form-group row font-weight-bold">
