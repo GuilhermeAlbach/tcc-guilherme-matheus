@@ -102,12 +102,12 @@ class login Extends Controller
                     $resultados2->execute();
         
                     if($resultados2->rowCount()==1){
-                        $linha2 = $resultados2->fetchObject();
+                        $linha = $resultados2->fetchObject();
         
                         $_SESSION['ClienteLogado'] = true;
                         $_SESSION['UsuarioLogado'] = false;    
-                        $_SESSION['id_guia'] = $linha2->id_guia;
-                        $_SESSION['datanascimento_cliente'] = $linha2->datanascimento_cliente;
+                        $_SESSION['id_guia'] = $linha->id_guia;
+                        $_SESSION['datanascimento_cliente'] = $linha->datanascimento_cliente;
 
                         $retorno['status'] = 1;
                         $retorno['mensagem'] = 'Acesso autorizado';

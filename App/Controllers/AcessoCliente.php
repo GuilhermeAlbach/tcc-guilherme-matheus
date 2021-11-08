@@ -16,9 +16,11 @@ class AcessoCliente Extends ControllerSeguroCliente
         echo $this->template->twig->render('AcessoCliente/listagem.html.twig');
     }
 
-    public function ListaDeExames($id_cliente)
+    public function ListaDeExames()
     {
         $db = Conexao::connect();
+
+        $id_cliente = $_SESSION['id_cliente'];
 
         $sqlGuia = "SELECT `id_guia`, `data_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `id_cliente`, `datanascimento_cliente`, `sexo_cliente` FROM guias INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN medicos ON medico_guia = id_medico WHERE cliente_guia=:id_cliente ORDER BY data_guia DESC";
         $queryGuia = $db->prepare($sqlGuia);
@@ -26,7 +28,7 @@ class AcessoCliente Extends ControllerSeguroCliente
         $resultadoGuia = $queryGuia->execute();
 
         $agora = new DateTime("now");
-        $nasc = new DateTime($_POST['datanascimento_cliente']);
+        $nasc = new DateTime($_SESSION['datanascimento_cliente']);
         $idade_cliente = date_diff($nasc, $agora);
         $idade = $idade_cliente->format('%Y');
 
@@ -36,7 +38,7 @@ class AcessoCliente Extends ControllerSeguroCliente
             $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max > :idade_cliente OR idade_min < :idade_cliente) AND (sexo=:sexo_cliente OR sexo= 'Ambos') ORDER BY data_guia DESC";
             $queryExame = $db->prepare($sql);
             $queryExame->bindParam(":id_cliente", $id_cliente);
-            $queryExame->bindParam(":sexo_cliente", $_POST['sexo_cliente']);
+            $queryExame->bindParam(":sexo_cliente", $_SESSION['sexo_cliente']);
             $queryExame->bindParam(":idade_cliente", $idade);
             $queryExame->bindParam(":id_guia", $guia->id_guia);
             $queryExame->execute();
@@ -141,12 +143,14 @@ class AcessoCliente Extends ControllerSeguroCliente
     }
 
 
-    public function formPDF($id_guia)
+    public function formPDF()
     {
     $db = Conexao::connect();
 
+    $id_guia = $_SESSION['id_guia'];
+
     $agora = new DateTime("now");
-    $nasc = new DateTime($_POST['datanascimento_cliente']);
+    $nasc = new DateTime($_SESSION['datanascimento_cliente']);
     $idade_cliente = date_diff($nasc, $agora);
     $idade = $idade_cliente->format('%Y anos %m meses e %d dias');
 
@@ -180,7 +184,7 @@ class AcessoCliente Extends ControllerSeguroCliente
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $query->bindParam(":idade_cliente", $idade);
-    $query->bindParam(":sexo_cliente", $_POST['sexo_cliente']);
+    $query->bindParam(":sexo_cliente", $_SESSION['sexo_cliente']);
     $resultado = $query->execute();
 
     $guiasexames = $query->fetchAll();
@@ -194,43 +198,6 @@ class AcessoCliente Extends ControllerSeguroCliente
     $usuarios = $query_usuarios->fetchAll();
 
     echo $this->template->twig->render('guia/montaPDF.html.twig', compact('guiasexames', 'linha', 'usuarios', 'idade'));
-    }
-    public function MontaPDF($id_guia)
-    {
-        require "../vendor/autoload.php";
-
-    /*
-    // reference the Dompdf namespace
-    use Dompdf\Dompdf;
-
-    // instantiate and use the dompdf class
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml('/guia/formPDF/');
-    // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'landscape');
-    // Render the HTML as PDF
-        $dompdf->render();
-    // Output the generated PDF to Browser
-        $dompdf->stream();
-
-        ob_start();
-
-        include('montaPDF.html.twig');
-        include('cssVenda.html');
-        $html = ob_get_clean();
-        ob_end_clean();
-
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-        $pdf->SetFont('dejavusans', '', 10);
-        $pdf->AddPage();
-
-        $pdf->writeHTML($html, true, false, true, false, '');
-
-        $pdf->Output('nome-do-arquivo.pdf','I');
-
-        echo $html;
-    */
     }
 
 }

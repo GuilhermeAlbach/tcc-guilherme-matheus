@@ -185,20 +185,31 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "INSERT INTO guiasexames (exame_guiaexame, guia_guiaexame, preco_guiaexame, prazo_guiaexame)
-                VALUES (:exame_guiaexame, :guia_guiaexame, :preco_guiaexame, :prazo_guiaexame)";
+        $sqlCheckar = "SELECT * FROM guiasexames WHERE exame_guiaexame=:exame_guiaexame AND guia_guiaexame=:guia_guiaexame";
 
-        $query = $db->prepare($sql);
+        $query = $db->prepare($sqlCheckar);
         $query->bindParam(":guia_guiaexame" , $_POST['guia_guiaexame']);
-        $query->bindParam(":preco_guiaexame", $_POST['preco_guiaexame']);
-        $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
         $query->bindParam(":exame_guiaexame", $_POST['exame_guiaexame']);
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Exame cadastrado com sucesso');
+            $this->retornaErro('Exame já cadastrado');
         }else{
-            $this->retornaErro('Erro ao inserir os dados');
+            $sql = "INSERT INTO guiasexames (exame_guiaexame, guia_guiaexame, preco_guiaexame, prazo_guiaexame)
+                    VALUES (:exame_guiaexame, :guia_guiaexame, :preco_guiaexame, :prazo_guiaexame)";
+
+            $query = $db->prepare($sql);
+            $query->bindParam(":guia_guiaexame" , $_POST['guia_guiaexame']);
+            $query->bindParam(":preco_guiaexame", $_POST['preco_guiaexame']);
+            $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
+            $query->bindParam(":exame_guiaexame", $_POST['exame_guiaexame']);
+            $query->execute();
+
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Exame cadastrado com sucesso');
+            }else{
+                $this->retornaErro('Erro ao inserir os dados');
+            }
         }
     }
 
@@ -206,22 +217,33 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "UPDATE guiasexames SET guia_guiaexame=:guia_guiaexame,prazo_guiaexame=:prazo_guiaexame,
-                        exame_guiaexame=:exame_guiaexame,preco_guiaexame=:preco_guiaexame 
-                WHERE id_guiaexame=:id_guiaexame";
+        $sqlCheckar = "SELECT * FROM guiasexames WHERE exame_guiaexame=:exame_guiaexame AND guia_guiaexame=:guia_guiaexame";
 
-        $query = $db->prepare($sql);
-        $query->bindParam(":guia_guiaexame"    , $_POST['guia_guiaexame']);
-        $query->bindParam(":preco_guiaexame" , $_POST['preco_guiaexame']);
-        $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
-        $query->bindParam(":exame_guiaexame"  , $_POST['exame_guiaexame']);
-        $query->bindParam(":id_guiaexame"      , $_POST['id_guiaexame']);
+        $query = $db->prepare($sqlCheckar);
+        $query->bindParam(":guia_guiaexame" , $_POST['guia_guiaexame']);
+        $query->bindParam(":exame_guiaexame", $_POST['exame_guiaexame']);
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Exame alterado com sucesso');
+            $this->retornaErro('Exame já cadastrado');
         }else{
-            $this->retornaErro ('Nenhum dado alterado');
+            $sql = "UPDATE guiasexames SET guia_guiaexame=:guia_guiaexame,prazo_guiaexame=:prazo_guiaexame,
+                            exame_guiaexame=:exame_guiaexame,preco_guiaexame=:preco_guiaexame 
+                    WHERE id_guiaexame=:id_guiaexame";
+
+            $query = $db->prepare($sql);
+            $query->bindParam(":guia_guiaexame"    , $_POST['guia_guiaexame']);
+            $query->bindParam(":preco_guiaexame" , $_POST['preco_guiaexame']);
+            $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
+            $query->bindParam(":exame_guiaexame"  , $_POST['exame_guiaexame']);
+            $query->bindParam(":id_guiaexame"      , $_POST['id_guiaexame']);
+            $query->execute();
+
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Exame alterado com sucesso');
+            }else{
+                $this->retornaErro ('Nenhum dado alterado');
+            }
         }
     }
 

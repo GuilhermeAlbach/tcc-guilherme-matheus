@@ -130,3 +130,24 @@
 .content-header {
     padding: 10px .5rem;
 }
+
+.carousel-item {
+    border-radius: 20px;
+    background-color: #95bf75;
+    padding: 20px 0px 10px 0px;
+}
+
+.carousel {
+    width: 85% !important;
+    margin: auto;
+}
+
+.carousel-title {
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.carousel-text {
+    padding-top: 5px;
+    font-size: 18px;
+}

@@ -30,11 +30,7 @@
                             <div class="form-group row">
                                 <h3>Editar Dados Pessoais</h3>
                                 <div class="form-group col">
-                                    <form method="POST" action="/AcessoCliente/ListaDeExames/{{linha['id_cliente']}}">
-                                        <input type="hidden" name="datanascimento_cliente" value="{{linha['datanascimento_cliente']}}">
-                                        <input type="hidden" name="sexo_cliente" value="{{linha['sexo_cliente']}}">
-                                        <input type="submit" value="Visualizar Exames" class="btn btn-info float-right">
-                                    </form>
+                                    <a role="button" class="btn btn-info float-right" href="/AcessoCliente/ListaDeExames/{{linha['id_cliente']}}">Visualizar Exames</a>
                                 </div>
                     <form role="form" action="/AcessoCliente/salvareditar" method="post" class="jsonForm">
                             </div>

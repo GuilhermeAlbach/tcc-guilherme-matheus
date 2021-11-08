@@ -1,8 +1,8 @@
 {% extends 'layouts/dashboard.html.twig' %}
 
-
 {% block title %} | Início{% endblock %}
 {% block stylesheet %}
+    <link rel="stylesheet" href="/dist/css/Carousel.css">
 
 {% endblock %}
 
@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">A</h1>
+                    <h1 class="m-0 text-dark"></h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,252 +28,170 @@
 
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Online Store Visitors</h3>
-                            <a href="javascript:void(0);">View Report</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">820</span>
-                                <span>Visitors Over Time</span>
-                            </p>
-                            <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 12.5%
-                    </span>
-                                <span class="text-muted">Since last week</span>
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
 
-                        <div class="position-relative mb-4">
-                            <canvas id="visitors-chart" height="200"></canvas>
-                        </div>
-
-                        <div class="d-flex flex-row justify-content-end">
-                  <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> This Week
-                  </span>
-
-                            <span>
-                    <i class="fas fa-square text-gray"></i> Last Week
-                  </span>
-                        </div>
-                    </div>
+<div class="carousel">
+  <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/microscopio.jpg" class="card-img" style="height:350px; width:575px;">
                 </div>
-                <!-- /.card -->
-
-                <div class="card">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">Products</h3>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-tool btn-sm">
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-tool btn-sm">
-                                <i class="fas fa-bars"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-striped table-valign-middle">
-                            <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Sales</th>
-                                <th>More</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                    Some Product
-                                </td>
-                                <td>$13 USD</td>
-                                <td>
-                                    <small class="text-success mr-1">
-                                        <i class="fas fa-arrow-up"></i>
-                                        12%
-                                    </small>
-                                    12,000 Sold
-                                </td>
-                                <td>
-                                    <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                    Another Product
-                                </td>
-                                <td>$29 USD</td>
-                                <td>
-                                    <small class="text-warning mr-1">
-                                        <i class="fas fa-arrow-down"></i>
-                                        0.5%
-                                    </small>
-                                    123,234 Sold
-                                </td>
-                                <td>
-                                    <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                    Amazing Product
-                                </td>
-                                <td>$1,230 USD</td>
-                                <td>
-                                    <small class="text-danger mr-1">
-                                        <i class="fas fa-arrow-down"></i>
-                                        3%
-                                    </small>
-                                    198 Sold
-                                </td>
-                                <td>
-                                    <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                    Perfect Item
-                                    <span class="badge bg-danger">NEW</span>
-                                </td>
-                                <td>$199 USD</td>
-                                <td>
-                                    <small class="text-success mr-1">
-                                        <i class="fas fa-arrow-up"></i>
-                                        63%
-                                    </small>
-                                    87 Sold
-                                </td>
-                                <td>
-                                    <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col-md-6 -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Sales</h3>
-                            <a href="javascript:void(0);">View Report</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">$18,230.00</span>
-                                <span>Sales Over Time</span>
-                            </p>
-                            <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 33.1%
-                    </span>
-                                <span class="text-muted">Since last month</span>
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
-
-                        <div class="position-relative mb-4">
-                            <canvas id="sales-chart" height="200"></canvas>
-                        </div>
-
-                        <div class="d-flex flex-row justify-content-end">
-                  <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> This year
-                  </span>
-
-                            <span>
-                    <i class="fas fa-square text-gray"></i> Last year
-                  </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.card -->
-
-                <div class="card">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">Online Store Overview</h3>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-sm btn-tool">
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-tool">
-                                <i class="fas fa-bars"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                            <p class="text-success text-xl">
-                                <i class="ion ion-ios-refresh-empty"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                    <span class="font-weight-bold">
-                      <i class="ion ion-android-arrow-up text-success"></i> 12%
-                    </span>
-                                <span class="text-muted">CONVERSION RATE</span>
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
-                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                            <p class="text-warning text-xl">
-                                <i class="ion ion-ios-cart-outline"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                    <span class="font-weight-bold">
-                      <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                    </span>
-                                <span class="text-muted">SALES RATE</span>
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
-                        <div class="d-flex justify-content-between align-items-center mb-0">
-                            <p class="text-danger text-xl">
-                                <i class="ion ion-ios-people-outline"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                    <span class="font-weight-bold">
-                      <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                    </span>
-                                <span class="text-muted">REGISTRATION RATE</span>
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Microscópio</h5>
+                        <p class="card-text carousel-text">O microscópio é um instrumento óptico com capacidade de ampliar imagens de objetos muito pequenos graças ao seu poder de resolução.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
                     </div>
                 </div>
             </div>
-            <!-- /.col-md-6 -->
         </div>
-        <!-- /.row -->
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/mindray.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Analisador Hematológico</h5>
+                        <p class="card-text carousel-text">BC-2800 é um analisador de hematologia compacto, totalmente automático, com 19 parâmetros para teste e tecnologia de microamostragem. A interface simples facilita um fluxo de trabalho eficiente.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/Homogeneizador.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Homogeneizador de Sangue</h5>
+                        <p class="card-text carousel-text">O Homogeneizador Para Tubos De Sangue, é um equipamento que serve para manter as células sanguíneas em uma suspensão homogênea, podendo preparar suspensões, dissolver amostras e lavar precipitados.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/estufa.png" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Estufa de Secagem</h5>
+                        <p class="card-text carousel-text">A Estufa de secagem para laboratório é um aparelho elétrico utilizado para secagem de substancias sólida, evaporação lentas de líquido, armazenagem de substancias liquidas com temperaturas baixas e secagem de vidrarias</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/centrifuga.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Centrífuga de Tubos</h5>
+                        <p class="card-text carousel-text">A centrífuga de Tubos utiliza a técnica da centrifugação para separar partículas biológicas em suspensão. O motor do equipamento possui alta velocidade de rotação e faz com que os materiais com densidades diferentes se separem.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/banhomaria.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Banho-Maria</h5>
+                        <p class="card-text carousel-text">O banho maria para laboratório é destinado a tarefas de laboratório onde se necessita a secagem, destilação e condensação de analises químicas.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/contador.png" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Contador Diferencial de Células</h5>
+                        <p class="card-text carousel-text">Contador Diferencial de Células é um equipamento destinado à contagem manual de células sanguíneas. Realiza a contagem diferencial, os valores leucócitos absoluto e relativo, VCM, HCM e CHCM</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/analisador.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Analisador Bioquímico </h5>
+                        <p class="card-text carousel-text">O Analisador Bioquímico possui a função de mensurar os índices bioquímicos através de análise do sangue e de outros fluidos corporais, combinando informações clínicas, afim de obter o diagnóstico de uma doença, ou avaliar as funções dos órgãos, identificando o gene da doença ou determinando a norma para uma futura terapia.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="carousel-item ">
+        <div class="card mb-3" style="max-width: 1000px; margin:auto; padding-left: 10px">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="/dist/img/coagulacao.jpg" class="card-img" style="height:350px; width:575px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="margin-left: 220px">
+                        <h5 class="card-title carousel-title">Coagulometro</h5>
+                        <p class="card-text carousel-text">O Coagulômetro mede a variação no movimento de esferas magnéticas permitindo calcular o tempo da coagulação do plasma.</p>
+                        <p class="card-text"><small class="text-muted"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
     </div>
-    <!-- /.container-fluid -->
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev" >
+      <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
 
 {% endblock %}
 
@@ -283,15 +201,8 @@
 {% endblock %}
 
 {% block jquery %}
-    <script>
-        $(document).ready(function(){
-
-        });
-    </script>
 {% endblock %}
 
 {% block javascript %}
-<script src="/plugins/chart.js/Chart.min.js"></script>
-<script src="/dist/js/demo.js"></script>
-<script src="/dist/js/pages/dashboard3.js"></script>
+
 {% endblock %}

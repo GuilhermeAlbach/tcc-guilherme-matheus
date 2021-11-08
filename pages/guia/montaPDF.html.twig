@@ -6,6 +6,9 @@
         body {
             font-family: "Helvetica";
         }
+        .body-content{
+            padding-bottom: 5px;
+        }
         .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
             float: left;
         }
@@ -30,8 +33,16 @@
         .group-border {
             border: black 1px; border-style: solid none; padding:10px 0px 10px 5px;
         }
+        footer {
+            border-top: 1px solid #333;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            position: fixed;
+            width: 100%;        
+        }
     </style>
-    <section class="content">
+    <section class="content body-content">
 
         <div class="row">
             <div class="col-12">
@@ -173,9 +184,9 @@
                 </div>
             {% endfor %}
             </div>
-            <div class="card-footer" style="height: 1.25cm; background-color: white">
-                <div style="height: 0.2cm; width: 20.35cm; background-color:#ca1f27; margin-left:-10px;"></div>
-                </div>
+            <footer>
+                <div style="height: 0.2cm; width: 20.35cm; background-color:#ca1f27; bottom:0; margin-left:-33px;"></div>
+            </footer>
             </div>
         </div>
     </div>
