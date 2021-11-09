@@ -15,6 +15,8 @@ class PDF
     {
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
+		$pdfOptions->setChroot(getcwd());
+		$pdfOptions->setIsRemoteEnabled(true);
 
         $this->dompdf = new Dompdf();
 

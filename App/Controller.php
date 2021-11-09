@@ -12,6 +12,13 @@ class Controller
     public function __construct()
     {
         $this->template = new Template();
+
+		if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+		$this->template->twig->addGlobal('session', $_SESSION);
+
     }
 
 
