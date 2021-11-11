@@ -48,7 +48,7 @@ class unidademedida Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Unida de medida cadastrada com sucesso');
+            $this->retornaOK('Unidade de medida cadastrada com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -66,7 +66,7 @@ class unidademedida Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Unida de medida alterada com sucesso');
+            $this->retornaOK('Unidade de medida alterada com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
@@ -83,13 +83,14 @@ class unidademedida Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Excluído com sucesso');
+            $this->retornaOK('Unidade de medida excluída com sucesso');
         }else{
             $this->retornaErro('Erro ao excluir os dados');
         }
-    }catch (\PDOException $exception){
-        $this->retornaErro('Unidade de Medida não pode ser excluída.');
-    }
+        
+        }catch (\PDOException $exception){
+            $this->retornaErro('Unidade de Medida não pode ser excluída.');
+        }
 }
 
 

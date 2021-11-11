@@ -55,6 +55,11 @@ class Medico Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+        if ($_POST['especialidade_medico'] == ""){
+            $_POST['especialidade_medico'] = NULL;
+        }
+
+
         $sql = "INSERT INTO medicos (nome_medico, crm_medico, telefone_medico, especialidade_medico) 
                 VALUES (:nome_medico, :crm_medico, :telefone_medico, :especialidade_medico)";
 
@@ -75,6 +80,11 @@ class Medico Extends ControllerSeguroUsuario
     public function salvarEditar()
     {
         $db = Conexao::connect();
+
+        if ($_POST['especialidade_medico'] == ""){
+            $_POST['especialidade_medico'] = NULL;
+        }
+
 
         $sql = "UPDATE medicos SET nome_medico=:nome_medico,crm_medico=:crm_medico, 
                         telefone_medico=:telefone_medico, especialidade_medico=:especialidade_medico  
@@ -119,7 +129,7 @@ class Medico Extends ControllerSeguroUsuario
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_medico`, `nome_medico`, `crm_medico`, `telefone_medico`, `especialidade` FROM medicos INNER JOIN especialidades ON especialidade_medico = id_especialidade WHERE 1 ";
+        $sql = "SELECT `id_medico`, `nome_medico`, `crm_medico`, `telefone_medico`, `especialidade` FROM medicos LEFT JOIN especialidades ON especialidade_medico = id_especialidade WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (

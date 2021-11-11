@@ -68,6 +68,10 @@ class ValorReferencia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+        if (($_POST['valorreferencia'] == "" AND $_POST['valorreferencia_max'] == "" AND $_POST['valorreferencia_min'] == "")){
+            $this->retornaErro('Valor de Referência não preenchido');
+        }
+
         if($_POST['valorreferencia'] == ""){ $_POST['valorreferencia'] = NULL; }
         if($_POST['valorreferencia_min'] == ""){ $_POST['valorreferencia_min'] = NULL; }
         if($_POST['valorreferencia_max'] == ""){ $_POST['valorreferencia_max'] = NULL; }
@@ -101,6 +105,11 @@ class ValorReferencia Extends ControllerSeguroUsuario
     public function salvarEditar()
     {
         $db = Conexao::connect();
+
+        if (($_POST['valorreferencia'] == "" AND $_POST['valorreferencia_max'] == "" AND $_POST['valorreferencia_min'] == "")){
+            $this->retornaErro('Valor de Referência não preenchido');
+        }
+
 
         if($_POST['valorreferencia'] == ""){ $_POST['valorreferencia'] = NULL; }
         if($_POST['valorreferencia_min'] == ""){ $_POST['valorreferencia_min'] = NULL; }

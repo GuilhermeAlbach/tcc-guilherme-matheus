@@ -23,22 +23,20 @@
     <section class="content">
             {% for convenios in convenios %}
                 {% if convenios.id_convenio is odd%}
-                    <div class="col">
-                        <div class="conteudo">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="firstinfo">
-                                        <img src="/dist/img/user2-160x160.jpg">
-                                        <div class="profileinfo">
-                                            <h1> {{convenios.nome_convenio}} </h1>
-                                            <h3> {{convenios.responsavel_convenio}} </h3>
-                                            <p class="bio">{{convenios.cnpj_convenio}}</p>
+                        <div class="col">
+                            <div class="conteudo">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="firstinfo">
+                                            <div class="profileinfo">
+                                            <h1 style="padding-left: 45px"> {{convenios.nome_convenio}} </h1>
+                                            <h3 style="padding-left: 60px; {% if convenios.responsavel_convenio == "" %} color: white;" > A {% else %} > {{convenios.responsavel_convenio}} {% endif %}</h3>
+                                            <p  style="padding-left: 80px" class="bio">CNPJ: {{convenios.cnpj_convenio}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 </div>
                 {% endif %}
                 {% if convenios.id_convenio is even %}
@@ -48,11 +46,10 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="firstinfo">
-                                            <img src="/dist/img/user2-160x160.jpg">
                                             <div class="profileinfo">
-                                                <h1> {{convenios.nome_convenio}} </h1>
-                                                <h3> {{convenios.responsavel_convenio}} </h3>
-                                                <p class="bio">{{convenios.cnpj_convenio}}</p>
+                                            <h1 style="padding-left: 45px"> {{convenios.nome_convenio}} </h1>
+                                            <h3 style="padding-left: 60px; {% if convenios.responsavel_convenio == "" %} color: white;"> A {% else %} "> {{convenios.responsavel_convenio}} {% endif %}</h3>
+                                            <p  style="padding-left: 80px" class="bio">CNPJ: {{convenios.cnpj_convenio}}</p>
                                             </div>
                                         </div>
                                     </div>

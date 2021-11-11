@@ -23,7 +23,7 @@
 .conteudo {
     padding: 20px;
     height: 220px;
-    width: 520px;
+    width: 600px;
     animation: animatop 0.9s cubic-bezier(0.425, 1.140, 0.470, 1.125) forwards;
     position: relative;
     margin: 50px auto;

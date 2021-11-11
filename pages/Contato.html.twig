@@ -17,6 +17,29 @@
 
 
 {% block content %}
+    <style>
+    label{
+        font-size: 1.1rem;
+    }
+    p{
+        font-size: 1.05rem;
+    }
+    .form-group.row{
+        width: 500px;
+    }
+    .esquerda{
+        width: 40%;
+        height: 500px;
+        float: left;
+    }
+    .direita{
+    width: 60%;
+    background: #ffffff;
+    height: 500px;
+    margin-left: 40%;
+    }
+    </style>
+
     <section class="content">
 
         <div class="row">
@@ -27,41 +50,38 @@
                     <!-- form start -->
                     <form role="form" action="" class="jsonForm">
                         <div class="card-body" id="contato">
+                            <div class="esquerda">
                             <div class="form-group row">
                                 <h3>Informações Para Contato</h3>
                                 </div>
-                            <div class="form-group row">
-                                <div class="form-group col-md-6">
+                            <div class="form-group row" style="margin-top: 50px;">
+                                <div class="form-group col">
                                     <label for="data_guia">Número de Telefone (Whatsapp)</label>
-                                    <input type="text" readonly class="form-control" id="data_guia" value="(42) 99956-4307">
+                                    <p ><i class="fab fa-whatsapp" style="color:green"></i><a href="https://wa.me/554299564307" style="color: green"> (42) 99956-4307</a></p>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col">
                                     <label for="data_guia">E-mail</label>
-                                    <input type="text" readonly class="form-control" id="data_guia" value="StoAntonioLaboratorio@gmail.com">
+                                    <p><a href="https://mail.google.com/mail/?view=cm&to=stoantoniolaboratorio@gmail.com" style="color: green"> stoantoniolaboratorio@gmail.com</a></p>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col">
                                     <label for="nome_cliente">Endereço</label>
-                                    <input type="text" readonly class="form-control" id="nome_cliente" value="Rua 27 de Janeiro, 307 - Sala 03">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="nome_medico">⠀</label>
-                                    <input type="text" readonly class="form-control" id="nome_medico" value="Paulo Frontin - Paraná">
+                                    <p>Rua 22 de Janeiro, 307 - Sala 03 - Paulo Frontin - Paraná</p>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col">
                                     <label for="precototal_guia">Responsável</label>
-                                    <input type="text" readonly class="form-control" id="precototal_guia" value="Irene Wegrzyn ">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="prazo_guiaexame">⠀</label>
-                                    <input type="text" readonly class="form-control" id="prazo_guia" value="CRF/PR 12.431">
+                                    <p>Irene Wegrzyn - CRF/PR 12.431</p>
+                                    </div>
                                 </div>
                             </div>
+                                    <div class="direita" >
+                                    <iframe src="https://www.google.com/maps/embed?pb=!4v1636586458973!6m8!1m7!1sH61i51WnFNRf8vLJDJ3ljw!2m2!1d-26.04077200081241!2d-50.83443036260244!3f244.1664733306099!4f-8.547481674473488!5f0.7820865974627469" width="666" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
                         </div>
                     </div>
                 </div>

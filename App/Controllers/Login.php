@@ -12,7 +12,7 @@ class login Extends Controller
     
     public function index()
     {
-        if(isset($_SESSION['logado']) && $_SESSION['logado']){
+        if(isset($_SESSION['ClienteLogado']) || isset($_SESSION['UsuarioLogado'])){
             header("location: /");
             exit;
         }
@@ -22,7 +22,6 @@ class login Extends Controller
     
     public function verificarUsuario()
     {
-        session_start();
         
         try{
             
@@ -45,7 +44,9 @@ class login Extends Controller
                 $linha = $resultados->fetchObject();
 
                 $_SESSION['UsuarioLogado'] = true;
+                unset($_SESSION['ClienteLogado']);
                 $_SESSION['id_usuario'] = $linha->id_usuario;
+                $_SESSION['nome_usuario'] = $linha->nome_usuario;
 
                 $retorno['status'] = 1;
                 $retorno['mensagem'] = 'Acesso autorizado';
@@ -60,7 +61,7 @@ class login Extends Controller
 
                 $db = Conexao::connect();
 
-                $sql = "SELECT `datanascimento_cliente`, `id_cliente`, `sexo_cliente`, `usuario_cliente`, `senha_cliente` FROM clientes WHERE usuario_cliente=:user_usuario AND senha_cliente=:senha_usuario";
+                $sql = "SELECT `datanascimento_cliente`, `id_cliente`, `sexo_cliente`, `nome_cliente`, `usuario_cliente`, `senha_cliente` FROM clientes WHERE usuario_cliente=:user_usuario AND senha_cliente=:senha_usuario";
     
                 $resultados = $db ->prepare($sql);
     
@@ -72,10 +73,11 @@ class login Extends Controller
                     $linha = $resultados->fetchObject();
     
                     $_SESSION['ClienteLogado'] = true;
-                    $_SESSION['UsuarioLogado'] = false;
+                    unset($_SESSION['UsuarioLogado']);
                     $_SESSION['id_cliente'] = $linha->id_cliente;
                     $_SESSION['datanascimento_cliente'] = $linha->datanascimento_cliente;
                     $_SESSION['sexo_cliente'] = $linha->sexo_cliente;
+                    $_SESSION['nome_cliente'] = $linha->nome_cliente;
 
                     $retorno['status'] = 1;
                     $retorno['mensagem'] = 'Acesso autorizado';
@@ -92,7 +94,7 @@ class login Extends Controller
                     $usuario = $_POST['user_usuario'];
                     $senha = $_POST['senha_usuario'];
         
-                    $sql2 = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `convenio_guia`, `medico_guia`, `codigo_guia`, `senha_guia`, `id_cliente`, `datanascimento_cliente` FROM guias INNER JOIN clientes ON cliente_guia = id_cliente WHERE codigo_guia=:user_usuario AND senha_guia=:senha_usuario";
+                    $sql2 = "SELECT `id_guia`, `data_guia`, `cliente_guia`, `convenio_guia`, `medico_guia`, `codigo_guia`, `senha_guia`, `id_cliente`, `nome_cliente`, `datanascimento_cliente` FROM guias INNER JOIN clientes ON cliente_guia = id_cliente WHERE codigo_guia=:user_usuario AND senha_guia=:senha_usuario";
         
                     $resultados2 = $db ->prepare($sql2);
         
@@ -104,8 +106,10 @@ class login Extends Controller
                         $linha = $resultados2->fetchObject();
         
                         $_SESSION['ClienteLogado'] = true;
-                        $_SESSION['UsuarioLogado'] = false;    
+                        unset($_SESSION['UsuarioLogado']);
                         $_SESSION['id_guia'] = $linha->id_guia;
+                        $_SESSION['id_cliente'] = $linha->id_cliente;
+                        $_SESSION['nome_cliente'] = $linha->nome_cliente;
                         $_SESSION['datanascimento_cliente'] = $linha->datanascimento_cliente;
 
                         $retorno['status'] = 1;
@@ -114,6 +118,7 @@ class login Extends Controller
 
                         echo $this->jsonResponse($retorno);
                         exit;
+
                     }else{
                         $_SESSION['ClienteLogado'] = false;
                         $_SESSION['UsuarioLogado'] = false;    
@@ -127,47 +132,11 @@ class login Extends Controller
             $this->retornaErro('Erro de BD. <br>' . $error->getMessage());
         }
     }
-      
-    public function verificarGuia()
-    {
-        session_start();
-
-        try{
-
-            $db = Conexao::connect();
-
-            $usuario = $_POST['user_usuario'];
-            $senha = $_POST['senha_usuario'];
-
-            $sql2 = "SELECT * FROM guias WHERE codigo_guia=:user_usuario AND senha_guia=:senha_usuario";
-
-            $resultados2 = $db ->prepare($sql2);
-
-            $resultados2->bindParam(":user_usuario" , $usuario);
-            $resultados2->bindParam(":senha_usuario", $senha);
-            $resultados2->execute();
-
-            if($resultados2->rowCount()==1){
-                $linha2 = $resultados2->fetchObject();
-
-                $_SESSION['GuiaLogado'] = true;
-                $_SESSION['id_guia'] = $linha2->id_guia;
-                $this->retornaOK('Acesso autorizado.');
-            }else{
-                $_SESSION['GuiaLogado'] = false;
-                $this->retornaErro('Código ou senha incorretos');
-            }
-        }catch (\Exception $error){
-            $this->retornaErro('Erro de BD. <br>' . $error->getMessage());
-        }
-    }
-
     public function sair()
     {
         session_start();
-        unset($_SESSION['UserLogado']);
+        unset($_SESSION['UsuarioLogado']);
         unset($_SESSION['ClienteLogado']);
-        unset($_SESSION['GuiaLogado']);
         session_destroy();
 
         header("Location: /");

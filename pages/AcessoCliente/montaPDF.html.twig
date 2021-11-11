@@ -1,27 +1,82 @@
-{% extends 'layouts/dashboard.html.twig' %}
-{% block title %} | Área do Cliente{% endblock %}
-
+{# {% extends 'layouts/dashboard.html.twig' %} #}
+{% block title %}.{% endblock %}
 {% block content %}
-    <section class="content">
+
+    <style>
+        body {
+            font-family: "Arial";
+            font-size: 12pt;
+        }
+        .body-content{
+            padding-bottom: 5px;
+        }
+        .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
+            float: left;
+        }
+        .col-md-5 {
+            width: 41.666667%;
+        }
+        .col-md-4 {
+            width: 33.333333%;
+        }
+        .col-md-3 {
+            width: 25%;
+        }
+        .col-md-6{
+            width: 50%;
+        }
+        .row {
+            clear: both;
+        }
+        .form-group {
+            margin-bottom: 0.5rem !important;
+        }
+        .group-border {
+            border: black 1px; border-style: solid none; padding:10px 0px 10px 5px;
+        }
+        footer {
+            border-top: 1px solid #333;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            position: fixed;
+            width: 100%;        
+        }
+        header {
+            position: fixed;
+            top: -20px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+        }
+        h3 {
+            margin: 0;
+            font-size: 1.75rem;
+        }
+        #desc {
+
+        }
+
+    </style>
+    <section class="content body-content">
 
         <div class="row">
             <div class="col-12">
-
     <div class="row">
         <div class="col-12">
             <div class="card page">
-                <div class="card-header">
-                    <img src="/../dist/img/logo_lab.png" alt="Logo do Laboratorio" style="height:1.7cm; width: 4cm" align="left"><br><br>
-                    <div style="height: 0.3cm; width: 15.6cm; background-color:#ca1f27; float:right; margin-top:2px"></div>
-                </div>
+                <header class="card-header">
+                    <img src="dist/img/logo_lab.jpg" alt="Logo do Laboratorio" style="height:1.7cm; width: 4cm" align="left">
+                    <div style="height: 0.3cm; width: 14.6cm; margin-left: 4cm; background-color:#ca1f27;  margin-top:54px"></div>
+                </header>
                 <div class="card-body" id="pdf-body">
-                    <div id="desc" style="margin-top: 0px; line-height:1!important;">
-                        <div style="border: black 1px; border-style: solid none; padding:10px 0px 0px 5px">
+                    <div id="desc" style="margin-top: 15px; line-height:1!important;">
+                        <div style="border: black 1px; border-style: solid none none none; padding:-5px 0px -5px 5px;">
                             <p>Laboratório Santo Antonio, Rua 27 de Janeiro 307 sala:03 Paulo Frontin-PR - Telefone (42) 99956-4307<br>
                             CNPJ: 07.226.537/0001-13 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; Responsável Técnica: Dra. Irene Wegrzyn - CRF/PR 12.431</p>
                         </div>
-                        <div style="border: black 1px; border-style: solid none; padding:10px 0px 10px 5px">
-                            <div class="form-group row">
+                        <div style="border: black 1px; border-style: solid none none none; padding:10px 0px 10px 5px; margin-top: 10px">
+                            <div class="form-group row ">
                                 <div class="form-group col-md-5">
                                     Cliente:
                                         {{linha['nome_cliente'] }}
@@ -39,20 +94,21 @@
                                 <div class="form-group col-md-5">
                                     Solicitação:
                                         {{linha['nome_medico'] }}
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        Guia:
-                                            {{linha['id_guia'] }}
-                                    </div>
                                 </div>
-                            <div class="form-group row">
+                                <div class="form-group col-md-3">
+                                </div>
                                 <div class="form-group col-md-4">
+                                    Guia:
+                                        {{linha['id_guia'] }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="form-group col-md-5">
                                     Data da Coleta:
                                         {{linha['data_guia'] }}
                                 </div>    
-                                <div class="form-group col-md-4">    
+                                <div class="form-group col-md-3">
                                 </div>
                                 <div class="form-group col-md-4">    
                                     Laudo Impresso em:
@@ -61,17 +117,18 @@
                             </div>
                         </div>
                     </div>
+                    <div style="margin: 15px;"></div>
             {% for guiasexames in guiasexames %}
-                <div id="exames" style="border: black 1px; border-style: solid none; padding:10px 0px 10px 5px">
+                <div id="exames" class="group-border">
                     <div class="form-group row font-weight-bold">
                         <div class="form-group col-md-6">
                             <h3> {{guiasexames['nome_exame']}}</h3>
                         </div>
                         <div class="form-group col-md-6">
                         Método:
-                            {{linha['metodo'] }}<br>
+                            {{guiasexames['metodo'] }}<br>
                         Material:
-                            {{linha['material'] }}
+                            {{guiasexames['material'] }}
                         </div>
                     </div>
                     <div class=" form-group row">
@@ -138,35 +195,19 @@
                     </div>
                     <div class=" form-group row">
                         <div class=" form-group col">
-                            Observações: {{guiasexames['laudo_resultado']}}
                         </div>
                     </div>
                 </div>
             {% endfor %}
             </div>
-        </div>
-            <div class="card-footer" style="height: 1.25cm; background-color: white">
-                    <div style="height: 0.2cm; width: 20.35cm; background-color:#ca1f27; margin-left:-10px;"></div>
+            <footer>
+                <div style="height: 0.2cm; width: 20.35cm; background-color:#ca1f27; bottom:0; margin-left:-33px;"></div>
+            </footer>
             </div>
-            </div>
-                    <table id="grid-data" class="table table-head-fixed text-nowrap table-hover table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th data-column-id="id_guiaexame" >Código</th>
-                            <th data-column-id="nome_exame" data-order="asc" data-sortable="true">Exame</th>
-                            <th data-column-id="preco_guiaexame" data-sortable="true">Valor</th>
-                            <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo</th>
-                            <th data-column-id="resultado" data-sortable="true">Resultado</th>
-                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-            <a href="/guia/montaPDF/{{linha[id_guia]}}" class="btn btn-success" style="float: right">Gerar PDF</a>
-
         </div>
     </div>
 </div>
+
 
 
 {% endblock %}

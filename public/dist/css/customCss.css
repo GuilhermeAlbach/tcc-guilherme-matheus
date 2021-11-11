@@ -62,12 +62,7 @@
 }
 
 #contato {
-    background-image: url(/dist/img/logo_lab.png);
-    background-position: bottom right;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-size: 50%;
-    background-position: right center;
+    margin: 0 auto;
 }
 
 #lista {
@@ -139,6 +134,7 @@
 
 .carousel {
     width: 85% !important;
+    margin-top: 150px !important;
     margin: auto;
 }
 
@@ -150,7 +146,4 @@
 .carousel-text {
     padding-top: 5px;
     font-size: 18px;
-}
-.carousel-inner{
-
 }

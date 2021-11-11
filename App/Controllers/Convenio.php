@@ -39,7 +39,12 @@ class Convenio Extends ControllerSeguroUsuario
 
     public function salvarCadastrar()
     {
+        
         $db = Conexao::connect();
+        
+        if ($_POST['telefone_convenio'] == ""){
+            $_POST['telefone_convenio'] = NULL;
+        }   
 
         $sql = "INSERT INTO convenios (nome_convenio, cnpj_convenio, responsavel_convenio, telefone_convenio) 
                 VALUES (:nome_convenio, :cnpj_convenio, :responsavel_convenio, :telefone_convenio)";
@@ -61,6 +66,10 @@ class Convenio Extends ControllerSeguroUsuario
     public function salvarEditar()
     {
         $db = Conexao::connect();
+
+        if ($_POST['telefone_convenio'] == ""){
+            $_POST['telefone_convenio'] = NULL;
+        }   
 
         $sql = "UPDATE convenios SET nome_convenio=:nome_convenio,cnpj_convenio=:cnpj_convenio,responsavel_convenio=:responsavel_convenio,telefone_convenio=:telefone_convenio  WHERE id_convenio=:id_convenio";
 

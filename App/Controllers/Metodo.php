@@ -48,7 +48,7 @@ class metodo Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Metodo cadastrado com sucesso');
+            $this->retornaOK('Método cadastrado com sucesso');
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
@@ -66,7 +66,7 @@ class metodo Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Metodo alterado com sucesso');
+            $this->retornaOK('Método alterado com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
@@ -83,12 +83,12 @@ class metodo Extends ControllerSeguroUsuario
             $query->execute();
 
             if ($query->rowCount()==1) {
-                $this->retornaOK('Excluído com sucesso');
+                $this->retornaOK('Método excluído com sucesso');
             }else{
                 $this->retornaErro('Erro ao excluir os dados');
             }
         }catch (\PDOException $exception){
-            $this->retornaErro('Metodo não pode ser excluído.');
+            $this->retornaErro('Método não pode ser excluído.');
         }
         }
 

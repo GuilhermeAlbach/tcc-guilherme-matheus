@@ -1,6 +1,6 @@
-function iziToastExcluir(id){
+function iziToastExcluir(id) {
     iziToast.show({
-        timeout: 20000,
+        timeout: 4000,
         icon: 'fa fa-trash-o',
         close: false,
         overlay: true,
@@ -12,13 +12,13 @@ function iziToastExcluir(id){
         message: 'Deseja realmente excluir?',
         position: 'center',
         buttons: [
-            ['<button><b>SIM</b></button>', function (instance, toast) {
+            ['<button><b>SIM</b></button>', function(instance, toast) {
 
                 excluir(id);
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
             }],
-            ['<button>NÃO</button>', function (instance, toast) {
+            ['<button>NÃO</button>', function(instance, toast) {
 
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 

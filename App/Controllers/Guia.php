@@ -52,7 +52,7 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio LEFT JOIN guiasexames ON guia_guiaexame = id_guia LEFT JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
+        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `nome_convenio`, `id_guiaexame`, `exame_guiaexame`, `guia_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `nome_exame`, `precototal_guia`,`prazofinal_guia` FROM guias LEFT JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente LEFT JOIN convenios ON convenio_guia = id_convenio LEFT JOIN guiasexames ON guia_guiaexame = id_guia LEFT JOIN exames ON exame_guiaexame = id_exame WHERE id_guia=:id_guia LIMIT 0, 1";
         $query = $db->prepare($sql);
         $query->bindParam(":id_guia", $id_guia);
         $resultado = $query->execute();
@@ -93,6 +93,13 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+        if ($_POST['convenio_guia'] == ""){
+            $_POST['convenio_guia'] = NULL;
+        }
+        if ($_POST['medico_guia'] == ""){
+            $_POST['medico_guia'] = NULL;
+        }
+
         $sql = "INSERT INTO guias (data_guia, cliente_guia, convenio_guia, medico_guia,
                             codigo_guia,senha_guia) 
                 VALUES (NOW(), :cliente_guia, :convenio_guia, :medico_guia, 
@@ -127,7 +134,6 @@ class guia Extends ControllerSeguroUsuario
                 WHERE id_guia=:id_guia";
 
         $query = $db->prepare($sql);
-   //     $query->bindParam(":data_guia"      , $_POST['data_guia']);
         $query->bindParam(":cliente_guia"   , $_POST['cliente_guia']);
         $query->bindParam(":convenio_guia"  , $_POST['convenio_guia']);
         $query->bindParam(":medico_guia"    , $_POST['medico_guia']);
@@ -139,7 +145,7 @@ class guia Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('guia alterado com sucesso');
+            $this->retornaOK('guia alterada com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
@@ -155,7 +161,7 @@ class guia Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('guia excluído com sucesso');
+            $this->retornaOK('guia excluída com sucesso');
         }else{
             $this->retornaErro('Erro ao excluir guia');
         }
@@ -166,7 +172,7 @@ class guia Extends ControllerSeguroUsuario
     public function bootgrid()
     {
         $busca = addslashes($_POST['searchPhrase']);
-        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio WHERE 1 ";
+        $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`, `nome_medico`, `nome_cliente`, `nome_convenio` FROM guias LEFT JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente LEFT JOIN convenios ON convenio_guia = id_convenio WHERE 1 ";
 
         if ($busca!=''){
             $sql .= " and (
@@ -217,25 +223,15 @@ class guia Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        $sqlCheckar = "SELECT * FROM guiasexames WHERE exame_guiaexame=:exame_guiaexame AND guia_guiaexame=:guia_guiaexame";
-
-        $query = $db->prepare($sqlCheckar);
-        $query->bindParam(":guia_guiaexame" , $_POST['guia_guiaexame']);
-        $query->bindParam(":exame_guiaexame", $_POST['exame_guiaexame']);
-        $query->execute();
-
-        if ($query->rowCount()==1) {
-            $this->retornaErro('Exame já cadastrado');
-        }else{
             $sql = "UPDATE guiasexames SET guia_guiaexame=:guia_guiaexame,prazo_guiaexame=:prazo_guiaexame,
                             exame_guiaexame=:exame_guiaexame,preco_guiaexame=:preco_guiaexame 
                     WHERE id_guiaexame=:id_guiaexame";
 
             $query = $db->prepare($sql);
             $query->bindParam(":guia_guiaexame"    , $_POST['guia_guiaexame']);
-            $query->bindParam(":preco_guiaexame" , $_POST['preco_guiaexame']);
-            $query->bindParam(":prazo_guiaexame", $_POST['prazo_guiaexame']);
-            $query->bindParam(":exame_guiaexame"  , $_POST['exame_guiaexame']);
+            $query->bindParam(":preco_guiaexame"   , $_POST['preco_guiaexame']);
+            $query->bindParam(":prazo_guiaexame"   , $_POST['prazo_guiaexame']);
+            $query->bindParam(":exame_guiaexame"   , $_POST['exame_guiaexame']);
             $query->bindParam(":id_guiaexame"      , $_POST['id_guiaexame']);
             $query->execute();
 
@@ -245,7 +241,6 @@ class guia Extends ControllerSeguroUsuario
                 $this->retornaErro ('Nenhum dado alterado');
             }
         }
-    }
 
     public function excluirExame(){
         $db = Conexao::connect();
@@ -268,7 +263,7 @@ class guia Extends ControllerSeguroUsuario
     {
         $busca = addslashes($_POST['searchPhrase']);
         $id_guia = addslashes($_POST['id_guia']);
-        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE guia_guiaexame = {$id_guia} ";
+        $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado` FROM guiasexames INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN guias ON guia_guiaexame = id_guia LEFT JOIN resultados ON id_guiaexame = guia_resultado WHERE guia_guiaexame = {$id_guia} ";
     
         if ($busca!=''){
             $sql .= " and (
@@ -315,11 +310,17 @@ public function formEditarResultado($id_guia)
 {
     $db = Conexao::connect();
 
-    $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `laudo_resultado`, `observacao_resultado`, `guia_guiaexame` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame LEFT JOIN resultados ON guia_resultado = id_guiaexame WHERE id_guia=:id_guia LIMIT 0, 1";
+    $sql = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i') as `data_guia`, `cliente_guia`, `medico_guia`, `convenio_guia`, `codigo_guia`, `senha_guia`,`precototal_guia`, `prazofinal_guia`, `nome_medico`, `id_cliente`, `nome_cliente`, `sexo_cliente`, `datanascimento_cliente`, `nome_convenio`, `id_resultado`, `data_resultado`, `guia_resultado`, `resultado`, `responsavel_resultado`, `observacao_resultado`, `guia_guiaexame` FROM guias INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame LEFT JOIN resultados ON guia_resultado = id_guiaexame WHERE id_guia=:id_guia LIMIT 0, 1";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $resultado = $query->execute();
 
+    if ($query->rowCount()==0) {
+        $retorno['status'] = 0;
+        $retorno['mensagem'] = 'Não há exames cadastrados';
+        echo $this->jsonResponse($retorno);
+        exit;
+}
     $linha = $query->fetch();
 
     $sql = "SELECT * FROM usuarios ORDER BY nome_usuario";
@@ -335,14 +336,15 @@ public function salvarCadastrarResultado()
 {
     $db = Conexao::connect();
 
-    $sql = "INSERT INTO resultados (data_resultado, guia_resultado, responsavel_resultado, resultado, laudo_resultado, observacao_resultado)
-            VALUES (NOW(), :guia_resultado, :responsavel_resultado, :resultado, :laudo_resultado, :observacao_resultado)";
+    try{
+ 
+    $sql = "INSERT INTO resultados (data_resultado, guia_resultado, responsavel_resultado, resultado, observacao_resultado)
+            VALUES (NOW(), :guia_resultado, :responsavel_resultado, :resultado, :observacao_resultado)";
 
     $query = $db->prepare($sql);
     $query->bindParam(":guia_resultado"       , $_POST['guia_resultado']);
     $query->bindParam(":responsavel_resultado", $_POST['responsavel_resultado']);
     $query->bindParam(":resultado"            , $_POST['resultado']);
-    $query->bindParam(":laudo_resultado"      , $_POST['laudo_resultado']);
     $query->bindParam(":observacao_resultado" , $_POST['observacao_resultado']);
     $query->execute();
 
@@ -351,6 +353,11 @@ public function salvarCadastrarResultado()
     }else{
         $this->retornaErro('Erro ao inserir os dados');
     }
+
+    }catch (\Exception $error){
+        $this->retornaErro('Resultado Já Cadastrado');
+    }
+
 }
 
 public function salvarEditarResultado()
@@ -358,14 +365,13 @@ public function salvarEditarResultado()
     $db = Conexao::connect();
 
     $sql = "UPDATE resultados SET guia_resultado=:guia_resultado,responsavel_resultado=:responsavel_resultado, data_resultado=NOW(),
-                    resultado=:resultado,observacao_resultado=:observacao_resultado,laudo_resultado=:laudo_resultado
+                    resultado=:resultado,observacao_resultado=:observacao_resultado
             WHERE id_resultado=:id_resultado";
 
     $query = $db->prepare($sql);
     $query->bindParam(":guia_resultado"       , $_POST['guia_resultado']);
     $query->bindParam(":responsavel_resultado", $_POST['responsavel_resultado']);
     $query->bindParam(":resultado"            , $_POST['resultado']);
-    $query->bindParam(":laudo_resultado"      , $_POST['laudo_resultado']);
     $query->bindParam(":observacao_resultado" , $_POST['observacao_resultado']);
     $query->bindParam(":id_resultado"         , $_POST['id_resultado']);
     $query->execute();
@@ -413,7 +419,7 @@ public function formPDF($id_guia)
 
     $linha = $query->fetch();
 
-    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, `laudo_resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max >= :idade_cliente OR idade_min <= :idade_cliente) ORDER BY data_guia DESC";
+    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `material`, `metodo`, `resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN metodos on id_metodo=metodo_exame INNER JOIN materiais on id_material=material_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max >= :idade_cliente OR idade_min <= :idade_cliente) ORDER BY data_guia DESC";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $query->bindValue(":idade_cliente", $idade_cliente->format("%Y"));

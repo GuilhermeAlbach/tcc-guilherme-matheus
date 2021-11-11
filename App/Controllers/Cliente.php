@@ -44,9 +44,14 @@ class Cliente Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        if($this->validaCPF($_POST['cpf_cliente'])==false) {
-            $this->retornaErro('CPF Inválido.');
+        if ($_POST['cpf_cliente'] != ""){
+            if($this->validaCPF($_POST['cpf_cliente'])==false) {
+                $this->retornaErro('CPF Inválido.');
+            }
         }
+        else if ($_POST['cpf_cliente'] == ""){
+            $_POST['cpf_cliente'] = NULL;
+        }   
 
         $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,cep_cliente,rg_cliente,
                             telefone_cliente,celular_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
@@ -61,7 +66,7 @@ class Cliente Extends ControllerSeguroUsuario
         $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
         $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
         $query->bindParam(":cep_cliente"           , $_POST['cep_cliente']);
-        $query->bindParam(":rg_cliente"           , $_POST['rg_cliente']);
+        $query->bindParam(":rg_cliente"            , $_POST['rg_cliente']);
         $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
         $query->bindParam(":celular_cliente"       , $_POST['celular_cliente']);
         $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
@@ -82,9 +87,14 @@ class Cliente Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
-        if($this->validaCPF($_POST['cpf_cliente'])==false) {
-            $this->retornaErro('CPF Inválido.');
+        if ($_POST['cpf_cliente'] != ""){
+            if($this->validaCPF($_POST['cpf_cliente'])==false) {
+                $this->retornaErro('CPF Inválido.');
+            }
         }
+        else if ($_POST['cpf_cliente'] == ""){
+            $_POST['cpf_cliente'] = NULL;
+        }   
 
         $sql = "UPDATE clientes SET nome_cliente=:nome_cliente, endereco_cliente=:endereco_cliente, 
                         cpf_cliente=:cpf_cliente,rg_cliente=:rg_cliente,cep_cliente=:cep_cliente, telefone_cliente=:telefone_cliente, celular_cliente=:celular_cliente,

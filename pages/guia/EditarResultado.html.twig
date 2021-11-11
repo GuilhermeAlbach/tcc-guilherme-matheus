@@ -86,7 +86,6 @@
                             <th data-column-id="preco_guiaexame" data-sortable="true">Preço</th>
                             <th data-column-id="prazo_guiaexame" data-sortable="true">Prazo (em horas)</th>
                             <th data-column-id="resultado" data-sortable="true">Resultado</th>
-                            <th data-column-id="laudo_resultado" data-sortable="true">Laudo</th>
                             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ações</th>
                         </tr>
                         </thead>
@@ -116,10 +115,6 @@
                                                     <option value="{{ usuarios.id_usuario }}">{{ usuarios.nome_usuario }} </option>
                                                 {% endfor %}
                                             </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="laudo_resultado">Laudo</label>
-                                            <input type="text" class="form-control" id="laudo_resultado" name="laudo_resultado" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="observacao_resultado">Observação</label>
@@ -165,10 +160,6 @@
                                                     <option value="{{ usuarios.id_usuario }}" {{ selected }}>{{ usuarios.nome_usuario }}</option>
                                                 {% endfor %}
                                             </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="laudo_resultado">Laudo</label>
-                                            <input type="text" class="form-control" id="laudo_resultado" name="laudo_resultado" required value="{{linha['laudo_resultado']}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="observacao_resultado">Observação</label>

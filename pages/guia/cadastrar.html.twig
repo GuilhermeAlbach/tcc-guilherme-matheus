@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group col">
                                     <label for="medico_guia">Médico</label>
-                                    <select id="medico_guia" class="form-control select2" name="medico_guia" required>
+                                    <select id="medico_guia" class="form-control select2" name="medico_guia">
                                         <option value="">- Selecione -</option>
                                         {% for medicos in medicos %}
                                             <option value="{{ medicos.id_medico }}">{{ medicos.nome_medico }}</option>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="form-group col">
                                     <label for="convenio_guia">Convênio</label>
-                                    <select id="convenio_guia" class="form-control select2" name="convenio_guia" required>
+                                    <select id="convenio_guia" class="form-control select2" name="convenio_guia">
                                         <option value="">- Selecione -</option>
                                         {% for convenios in convenios %}
                                             <option value="{{ convenios.id_convenio }}">{{ convenios.nome_convenio }}</option>

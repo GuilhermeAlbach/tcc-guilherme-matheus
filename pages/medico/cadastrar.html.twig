@@ -55,7 +55,7 @@
                             <div class="form-group row">
                                 <div class="form-group col">
                                     <label for="especialidade_medico">Especialidade</label>
-                                    <select class="form-control select2" id="especialidade_medico" name="especialidade_medico" required data-live-search="true">
+                                    <select class="form-control select2" id="especialidade_medico" name="especialidade_medico" data-live-search="true">
                                         <option value="" selected disabled>-Selecione a Especialidade-</option>
                                             {% for especialidades in especialidades %}
                                                 <option value="{{ especialidades.id_especialidade }}">{{ especialidades.especialidade }}</option>
