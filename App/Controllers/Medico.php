@@ -121,7 +121,7 @@ class Medico Extends ControllerSeguroUsuario
             $this->retornaErro('Erro ao excluir medico');
         }    
     }catch (\PDOException $exception){
-            $this->retornaErro('Tipo não pode ser excluído.');
+            $this->retornaErro('Médico não pode ser excluído.');
     }
     }
 

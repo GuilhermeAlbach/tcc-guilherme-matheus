@@ -33,6 +33,7 @@
                                 <h3>Cadastrar Resultado</h3>
                                     <div class="form-group col">
                                         <a role="button" href="/guia/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
+                                        <a role="button" href="/guia/formEditar/{{linha['id_guia']}}" class="btn btn-primary float-right"   ><span class="fas fa-edit"></span></a>
                                         <a role="button" href="/guia/formCadastrar" class="btn btn-success float-right"><span class="fas fa-user-plus"></span></a> 
                                     </div>
                                 </div>
@@ -218,7 +219,7 @@
                     "commands": function(column, row)
                     {
                         return "<button type=\"button\" class=\"btn btn-success command-cadastro\" data-toggle=\"modal\" data-target=\"#adicionarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-pen\"></span></button> " +
-                         " <button type=\"button\" class=\"btn btn-warning command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>";
+                         " <button type=\"button\" class=\"btn btn-primary command-editar\" data-toggle=\"modal\" data-target=\"#editarguia\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button>";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function()

@@ -72,7 +72,7 @@
                 <div class="card-body" id="pdf-body">
                     <div id="desc" style="margin-top: 15px; line-height:1!important;">
                         <div style="border: black 1px; border-style: solid none none none; padding:-5px 0px -5px 5px;">
-                            <p>Laboratório Santo Antonio, Rua 27 de Janeiro 307 sala:03 Paulo Frontin-PR - Telefone (42) 99956-4307<br>
+                            <p>Laboratório Santo Antonio, Rua 22 de Janeiro 307 sala:03 Paulo Frontin-PR - Telefone (42) 99956-4307<br>
                             CNPJ: 07.226.537/0001-13 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp; Responsável Técnica: Dra. Irene Wegrzyn - CRF/PR 12.431</p>
                         </div>
                         <div style="border: black 1px; border-style: solid none none none; padding:10px 0px 10px 5px; margin-top: 10px">
@@ -93,7 +93,7 @@
                             <div class="form-group row">
                                 <div class="form-group col-md-5">
                                     Solicitação:
-                                        {{linha['nome_medico'] }}
+                                {% if linha['nome_medico'] == NULL %} Solicitado pelo cliente {% else %} {{linha['nome_medico'] }} {% endif %}
                                 </div>
                                 <div class="form-group col-md-3">
                                 </div>

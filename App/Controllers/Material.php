@@ -88,7 +88,7 @@ class material Extends ControllerSeguroUsuario
             $this->retornaErro('Erro ao excluir material');
         }
     }catch (\PDOException $exception){
-        $this->retornaErro("Este Material não pode ser excluído");
+        $this->retornaErro("Material não pode ser excluído");
     }
 }
 

@@ -150,7 +150,7 @@ class Exame Extends ControllerSeguroUsuario
             $this->retornaErro('Erro ao excluir Exame');
         }
     }catch (\PDOException $exception){
-        $this->retornaErro('Tipo não pode ser excluído.');
+        $this->retornaErro('Exame não pode ser excluído.');
 }
     }
 

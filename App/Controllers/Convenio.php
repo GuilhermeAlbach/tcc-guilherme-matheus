@@ -99,13 +99,13 @@ class Convenio Extends ControllerSeguroUsuario
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Convenio excluído com sucesso');
+            $this->retornaOK('Convênio excluído com sucesso');
         }else{
             $this->retornaErro('Erro ao excluir convenio');
         }
     
     }catch (\PDOException $exception){
-        $this->retornaErro('Tipo não pode ser excluído.');
+        $this->retornaErro('Convênio não pode ser excluído.');
 }
     }
 

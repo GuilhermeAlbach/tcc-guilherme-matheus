@@ -108,7 +108,7 @@ class AcessoCliente Extends ControllerSeguroCliente
         $query->execute();
 
         if ($query->rowCount()==1) {
-            $this->retornaOK('Cliente alterado com sucesso');
+            $this->retornaOK('Dados alterados com sucesso');
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }

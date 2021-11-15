@@ -90,6 +90,8 @@
                                 <textarea class="form-control" id="observacao_cliente" name="observacao_cliente" placeholder="Editar Observação sobre o Cliente">{{ linha['observacao_cliente'] }}</textarea>
                             </div>
                         </div>
+                                    <input type="hidden" class="form-control" id="usuario_cliente" name="usuario_cliente" value="{{ linha['usuario_cliente'] }}">
+                                    <input type="hidden" class="form-control" id="senha_cliente" name="senha_cliente" value="{{ linha['senha_cliente'] }}">
                         <!-- /.box-body -->
 
                         <div class="card-footer">

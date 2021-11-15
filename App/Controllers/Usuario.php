@@ -92,6 +92,19 @@ class usuario Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+        $sql = "SELECT `senha_usuario` FROM usuarios WHERE user_usuario=:user_usuario";
+        $query = $db->prepare($sql);
+        $query->bindParam(":user_usuario", $_POST['user_usuario']);
+        $resultado = $query->execute();
+
+        $linha = $query->fetchObject();
+        if ($linha->senha_usuario != $_POST['senha_usuario']) {
+            $criptografaSenha = $this->criptografa($_POST['senha_usuario']);
+        }else{
+            $criptografaSenha = $_POST['senha_usuario'];
+        }
+
+
         if($this->validaCPF($_POST['cpf_usuario'])==false) {
             $this->retornaErro('CPF Inválido.');
         }
@@ -123,6 +136,7 @@ class usuario Extends ControllerSeguroUsuario
     }
 
     public function excluir(){
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM usuarios WHERE id_usuario=:id_usuario";
@@ -136,6 +150,10 @@ class usuario Extends ControllerSeguroUsuario
         }else{
             $this->retornaErro('Erro ao excluir os dados');
         }
+    }catch (\Exception $error){
+        $this->retornaErro('Usuário não pode ser excluído');
+    }
+
     }
 
 

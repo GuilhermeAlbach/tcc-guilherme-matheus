@@ -123,22 +123,30 @@ class Cliente Extends ControllerSeguroUsuario
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
-    }
+}
 
     public function excluir(){
-        $db = Conexao::connect();
 
-        $sql = "DELETE FROM clientes WHERE id_cliente=:id_cliente";
+        try{
 
-        $query = $db->prepare($sql);
-        $query->bindParam(":id_cliente", $_POST['id_cliente']);
-        $query->execute();
+            $db = Conexao::connect();
 
-        if ($query->rowCount()==1) {
-            $this->retornaOK('Cliente exclu�do com sucesso');
-        }else{
-            $this->retornaErro('Erro ao excluir cliente');
+            $sql = "DELETE FROM clientes WHERE id_cliente=:id_cliente";
+
+            $query = $db->prepare($sql);
+            $query->bindParam(":id_cliente", $_POST['id_cliente']);
+            $query->execute();
+
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Cliente excluído com sucesso');
+            }else{
+                $this->retornaErro('Erro ao excluir cliente');
+            }
+
+        }catch (\Exception $error){
+            $this->retornaErro('Cliente não pode ser excluído');
         }
+
     }
 
 

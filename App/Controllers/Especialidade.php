@@ -88,7 +88,7 @@ class especialidade Extends ControllerSeguroUsuario
             $this->retornaErro('Erro ao excluir especialidade');
         }
     }catch (\PDOException $exception){
-        $this->retornaErro('Tipo não pode ser excluído.');
+        $this->retornaErro('Especialidade não pode ser excluída.');
 }
     }
 

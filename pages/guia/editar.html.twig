@@ -35,8 +35,8 @@
                                 <h3>Editar Guia</h3>
                                     <div class="form-group col">
                                         <a role="button" href="/guia/" class="btn btn-info float-right"   ><span class="fas fa-list"></span></a>
-                                        <a role="button" href="/guia/formEditarResultado/{{linha['id_guia']}}" class="btn btn-success float-right"><span class="fas fa-tasks"></span></a>
-                                        <a role="button" href="/guia/formCadastrar" class="btn btn-primary float-right"><span class="fas fa-user-plus"></span></a>
+                                        <a role="button" href="/guia/formEditarResultado/{{linha['id_guia']}}" class="btn btn-primary float-right"><span class="fas fa-tasks"></span></a>
+                                        <a role="button" href="/guia/formCadastrar" class="btn btn-success float-right"><span class="fas fa-user-plus"></span></a>
                                     </div>
                                 </div>
                             <form role="form" action="/guia/salvareditar" method="post" class="jsonForm">
@@ -115,7 +115,7 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-warning float-right">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-right">Salvar</button>
                         </div>
                     </form>
 
@@ -168,7 +168,7 @@
     <section>
         <div class="row">
             <div class="col-12">
-                <a role="button" id="btn-listagem" class="btn btn-primary" data-toggle="modal" data-target="#adicionarguia"><span>Adicionar Exame</span></a> 
+                <a role="button" id="btn-listagem" class="btn btn-success" data-toggle="modal" data-target="#adicionarguia"><span>Adicionar Exame</span></a> 
                 <table id="grid-data" class="table table-condensed table-bordered table-hover table-striped table-light">
                     <thead class="thead-light">
                     <tr>
@@ -284,7 +284,7 @@
                 formatters: {
                     "commands": function(column, row)
                     {
-                        return "<button type=\"button\" class=\"btn btn-warning command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button> " +
+                        return "<button type=\"button\" class=\"btn btn-primary command-edit\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-edit\"></span></button> " +
                          "<button type=\"button\" class=\"btn btn-danger command-delete\" data-row-id=\"" + row.id_guiaexame + "\"><span class=\"fa fa-trash\"></span></button> ";
                     }
                 }

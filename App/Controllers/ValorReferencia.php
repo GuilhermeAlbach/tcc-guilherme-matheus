@@ -143,6 +143,8 @@ class ValorReferencia Extends ControllerSeguroUsuario
     }
 
     public function excluir(){
+        
+        try{
         $db = Conexao::connect();
 
         $sql = "DELETE FROM valoresreferencia WHERE id_valorreferencia=:id_valorreferencia";
@@ -156,6 +158,10 @@ class ValorReferencia Extends ControllerSeguroUsuario
         }else{
             $this->retornaErro('Erro ao excluir os dados');
         }
+    }catch (\Exception $error){
+        $this->retornaErro('Valor de Referência não pode ser excluído');
+    }
+
     }
 
 
