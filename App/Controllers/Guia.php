@@ -423,7 +423,7 @@ public function formPDF($id_guia)
 
     $linha = $query->fetch();
 
-    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `material`, `metodo`, `resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN metodos on id_metodo=metodo_exame INNER JOIN materiais on id_material=material_exame LEFT JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max >= :idade_cliente OR idade_min <= :idade_cliente) ORDER BY data_guia DESC";
+    $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `material`, `metodo`, `resultado`, `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN metodos on id_metodo=metodo_exame INNER JOIN materiais on id_material=material_exame LEFT JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max >= :idade_cliente OR idade_min <= :idade_cliente OR (idade_max IS NULL AND idade_min IS NULL)) AND (sexo = sexo_cliente OR sexo = 'Ambos') ORDER BY data_guia DESC";
     $query = $db->prepare($sql);
     $query->bindParam(":id_guia", $id_guia);
     $query->bindValue(":idade_cliente", $idade_cliente->format("%Y"));
@@ -446,42 +446,4 @@ public function formPDF($id_guia)
     $pdf->exibir($conteudoPDF, uniqid());
 
 }
-public function MontaPDF($id_guia)
-{
-    require "../vendor/autoload.php";
-
-/*
-// reference the Dompdf namespace
-   use Dompdf\Dompdf;
-
-// instantiate and use the dompdf class
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml('/guia/formPDF/');
-// (Optional) Setup the paper size and orientation
-    $dompdf->setPaper('A4', 'landscape');
-// Render the HTML as PDF
-    $dompdf->render();
-// Output the generated PDF to Browser
-    $dompdf->stream();
-
-    ob_start();
-
-    include('montaPDF.html.twig');
-    include('cssVenda.html');
-    $html = ob_get_clean();
-    ob_end_clean();
-
-    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-    $pdf->SetFont('dejavusans', '', 10);
-    $pdf->AddPage();
-
-    $pdf->writeHTML($html, true, false, true, false, '');
-
-    $pdf->Output('nome-do-arquivo.pdf','I');
-
-    echo $html;
-*/
-}
-
 }

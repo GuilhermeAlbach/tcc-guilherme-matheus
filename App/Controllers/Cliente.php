@@ -42,49 +42,55 @@ class Cliente Extends ControllerSeguroUsuario
 
     public function salvarCadastrar()
     {
-        $db = Conexao::connect();
+        try{  
+            $db = Conexao::connect();
 
-        if ($_POST['cpf_cliente'] != ""){
-            if($this->validaCPF($_POST['cpf_cliente'])==false) {
-                $this->retornaErro('CPF Inválido.');
+            if ($_POST['cpf_cliente'] != ""){
+                if($this->validaCPF($_POST['cpf_cliente'])==false) {
+                    $this->retornaErro('CPF Inválido.');
+                }
             }
+            else if ($_POST['cpf_cliente'] == ""){
+                $_POST['cpf_cliente'] = NULL;
+            }   
+
+            $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,cep_cliente,rg_cliente,
+                                telefone_cliente,celular_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
+                                usuario_cliente,senha_cliente) 
+                    VALUES (:nome_cliente,:cidade_cliente,:endereco_cliente,:cpf_cliente,:cep_cliente,:rg_cliente,:telefone_cliente,:celular_cliente,
+                            :sexo_cliente,:datanascimento_cliente,:observacao_cliente,:usuario_cliente,
+                            :senha_cliente)";
+
+            $query = $db->prepare($sql);
+            $query->bindParam(":nome_cliente"          , $_POST['nome_cliente']);
+            $query->bindParam(":cidade_cliente"        , $_POST['cidade_cliente']);
+            $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
+            $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
+            $query->bindParam(":cep_cliente"           , $_POST['cep_cliente']);
+            $query->bindParam(":rg_cliente"            , $_POST['rg_cliente']);
+            $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
+            $query->bindParam(":celular_cliente"       , $_POST['celular_cliente']);
+            $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
+            $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
+            $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);
+            $query->bindParam(":usuario_cliente"       , $_POST['usuario_cliente']);
+            $query->bindParam(":senha_cliente"         , $_POST['senha_cliente']);
+            $query->execute();
+
+            if ($query->rowCount()==1) {
+                $this->retornaOK('Cliente cadastrado com sucesso');
+            }else{
+                $this->retornaErro('Erro ao inserir cliente');
+            }
+        }catch (\Exception $error){
+            $this->retornaErro('CPF já cadastrado');
         }
-        else if ($_POST['cpf_cliente'] == ""){
-            $_POST['cpf_cliente'] = NULL;
-        }   
-
-        $sql = "INSERT INTO clientes(nome_cliente,cidade_cliente,endereco_cliente,cpf_cliente,cep_cliente,rg_cliente,
-                            telefone_cliente,celular_cliente,sexo_cliente,datanascimento_cliente,observacao_cliente,
-                            usuario_cliente,senha_cliente) 
-                VALUES (:nome_cliente,:cidade_cliente,:endereco_cliente,:cpf_cliente,:cep_cliente,:rg_cliente,:telefone_cliente,:celular_cliente,
-                        :sexo_cliente,:datanascimento_cliente,:observacao_cliente,:usuario_cliente,
-                        :senha_cliente)";
-
-        $query = $db->prepare($sql);
-        $query->bindParam(":nome_cliente"          , $_POST['nome_cliente']);
-        $query->bindParam(":cidade_cliente"        , $_POST['cidade_cliente']);
-        $query->bindParam(":endereco_cliente"      , $_POST['endereco_cliente']);
-        $query->bindParam(":cpf_cliente"           , $_POST['cpf_cliente']);
-        $query->bindParam(":cep_cliente"           , $_POST['cep_cliente']);
-        $query->bindParam(":rg_cliente"            , $_POST['rg_cliente']);
-        $query->bindParam(":telefone_cliente"      , $_POST['telefone_cliente']);
-        $query->bindParam(":celular_cliente"       , $_POST['celular_cliente']);
-        $query->bindParam(":sexo_cliente"          , $_POST['sexo_cliente']);
-        $query->bindParam(":datanascimento_cliente", $_POST['datanascimento_cliente']);
-        $query->bindParam(":observacao_cliente"    , $_POST['observacao_cliente']);
-        $query->bindParam(":usuario_cliente"       , $_POST['usuario_cliente']);
-        $query->bindParam(":senha_cliente"         , $_POST['senha_cliente']);
-        $query->execute();
-
-        if ($query->rowCount()==1) {
-            $this->retornaOK('Cliente cadastrado com sucesso');
-        }else{
-            $this->retornaErro('Erro ao inserir cliente');
-        }
-    }
+}
 
     public function salvarEditar()
     {
+        try{
+        
         $db = Conexao::connect();
 
         if ($_POST['cpf_cliente'] != ""){
@@ -123,6 +129,10 @@ class Cliente Extends ControllerSeguroUsuario
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
+    }catch (\Exception $error){
+        $this->retornaErro('CPF já cadastrado');
+    }
+
 }
 
     public function excluir(){

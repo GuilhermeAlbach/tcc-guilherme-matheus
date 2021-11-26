@@ -57,6 +57,8 @@ class usuario Extends ControllerSeguroUsuario
     {
         $db = Conexao::connect();
 
+       try{
+
         if($this->validaCPF($_POST['cpf_usuario'])==false) {
             $this->retornaErro('CPF Inválido.');
         }
@@ -86,12 +88,17 @@ class usuario Extends ControllerSeguroUsuario
         }else{
             $this->retornaErro('Erro ao inserir os dados');
         }
+    }catch (\Exception $error){
+        $this->retornaErro('CPF já cadastrado');
+    }
+
     }
 
     public function salvarEditar()
     {
         $db = Conexao::connect();
 
+    try{
         $sql = "SELECT `senha_usuario` FROM usuarios WHERE user_usuario=:user_usuario";
         $query = $db->prepare($sql);
         $query->bindParam(":user_usuario", $_POST['user_usuario']);
@@ -133,6 +140,10 @@ class usuario Extends ControllerSeguroUsuario
         }else{
             $this->retornaOK('Nenhum dado alterado');
         }
+    }catch (\Exception $error){
+        $this->retornaErro('CPF já cadastrado');
+    }
+
     }
 
     public function excluir(){
