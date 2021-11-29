@@ -23,7 +23,7 @@ class AcessoCliente Extends ControllerSeguroCliente
 
         $id_cliente = $_SESSION['id_cliente'];
 
-        $sqlGuia = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i' ) as `data_guia`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `id_cliente`, `datanascimento_cliente`, `sexo_cliente` FROM guias INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN medicos ON medico_guia = id_medico WHERE cliente_guia=:id_cliente ORDER BY data_guia DESC";
+        $sqlGuia = "SELECT `id_guia`, DATE_FORMAT(`data_guia`, '%d/%m/%Y - %H:%i' ) as `data_guia_formatada`, `prazofinal_guia`, `nome_medico`, `nome_cliente`, `id_cliente`, `datanascimento_cliente`, `sexo_cliente` FROM guias INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN convenios ON convenio_guia = id_convenio INNER JOIN medicos ON medico_guia = id_medico WHERE cliente_guia=:id_cliente ORDER BY data_guia DESC";
         $queryGuia = $db->prepare($sqlGuia);
         $queryGuia->bindParam(":id_cliente", $id_cliente);
         $resultadoGuia = $queryGuia->execute();
@@ -36,7 +36,7 @@ class AcessoCliente Extends ControllerSeguroCliente
         while ($guia = $queryGuia->fetchObject()){
             $guiasDado = $guia;
 
-            $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, DATE_FORMAT(`data_guia`, '%d/%m/%Y' ) as `data_guia`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max > :idade_cliente OR idade_min < :idade_cliente) AND (sexo=:sexo_cliente OR sexo= 'Ambos') ORDER BY data_guia DESC";
+            $sql = "SELECT `id_guiaexame`, `preco_guiaexame`, `prazo_guiaexame`, `exame_guiaexame`, `nome_exame`, `preco_exame`, `tempo_exame`, `resultado`, DATE_FORMAT(`data_guia`, '%d/%m/%Y' ) as `data_guia_formatada`, `id_guia`, `nome_medico`, `medico_guia`, `id_medico`, `nome_cliente`, `valorreferencia`, `valorreferencia_min`, `valorreferencia_max`, `idade_min`, `idade_max`, `sexo`, `unidademedida_valorreferencia`, `exame_valorreferencia`, `unidademedida` FROM guias INNER JOIN guiasexames ON guia_guiaexame = id_guia INNER JOIN exames ON exame_guiaexame = id_exame INNER JOIN medicos ON medico_guia = id_medico INNER JOIN clientes ON cliente_guia = id_cliente INNER JOIN resultados ON id_guiaexame = guia_resultado INNER JOIN valoresreferencia ON exame_valorreferencia = id_exame INNER JOIN unidadesmedida ON unidademedida_valorreferencia = id_unidademedida WHERE (id_guia=:id_guia) AND (idade_max > :idade_cliente OR idade_min < :idade_cliente) AND (sexo=:sexo_cliente OR sexo= 'Ambos') ORDER BY data_guia DESC";
             $queryExame = $db->prepare($sql);
             $queryExame->bindParam(":id_cliente", $id_cliente);
             $queryExame->bindParam(":sexo_cliente", $_SESSION['sexo_cliente']);
